@@ -1,21 +1,5 @@
 #include <stdint.h>
 
-struct flags
-{
-  union
-  {
-    struct
-    {
-      uint8_t reserved : 4;
-      uint8_t cy : 1;
-      uint8_t h : 1;
-      uint8_t n : 1;
-      uint8_t zf : 1;
-    };
-    uint8_t F;
-  };
-};
-
 struct cpu
 {
   union 
@@ -71,21 +55,3 @@ struct cpu
   uint16_t SP;
   uint16_t PC;
 };
-
-//struct cpu{
-//  struct regs;
-//};
-
-//union
-//{
-//  struct
-//  {
-//    uint8_t A : 1;
-//    uint8_t B : 1;
-//    uint8_t C : 1;
-//    uint8_t D : 1;
-//    uint8_t E : 1;
-//    uint8_t F : 1;
-//  } f;
-//  uint8_t flags;
-//} flags;

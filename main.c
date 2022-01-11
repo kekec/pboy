@@ -24,7 +24,6 @@ void test()
   printf("flag is %x\n", rf.F);
   rf.zf = 1;
   printf("flag is %x\n", rf.F);
-
 }
 
 void main()
