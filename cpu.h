@@ -1,12 +1,19 @@
 #include <stdint.h>
 
-union flags
+struct flags
 {
-  struct
+  union
   {
-    uint8_t np;
+    struct
+    {
+      uint8_t reserved : 4;
+      uint8_t cy : 1;
+      uint8_t h : 1;
+      uint8_t n : 1;
+      uint8_t zf : 1;
+    };
+    uint8_t F;
   };
-  uint8_t F;
 };
 
 struct cpu
@@ -15,8 +22,19 @@ struct cpu
   {
     struct
     {
+      union //begin f
+      {
+        struct
+        {
+          uint8_t reserved : 4;
+          uint8_t cy : 1;
+          uint8_t h : 1;
+          uint8_t n : 1;
+          uint8_t zf : 1;
+        };
+        uint8_t F;
+      }; //end f
       uint8_t A;
-      union flags F;
     };
     uint16_t AF;
   };
