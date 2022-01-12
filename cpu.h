@@ -56,8 +56,8 @@ struct cpu
   uint16_t PC;
 };
 
-uint8_t mem[2^64];
+uint8_t *mem;
 struct cpu cp;
 
-void init();
-void step();
+void init(uint8_t *address);
+unsigned int step();

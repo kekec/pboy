@@ -1,37 +1,89 @@
 #include <stdio.h>
-#include "cpu.h"
-#include "tester.h"
+#include <stdlib.h>
+#include <getopt.h>
 
-void test_regs()
+#include "lib/tester.h"
+
+extern struct tester_operations myops;
+
+static struct tester_flags flags = {
+    .keep_going_on_mismatch = 0,
+    .enable_cb_instruction_testing = 1,
+    .print_tested_instruction = 0,
+    .print_verbose_inputs = 0,
+};
+
+static void print_usage(char *progname)
 {
-  struct cpu rf;
-  rf.A = 0xAA;
-  rf.B = 0xBB;
-  rf.C = 0xCC;
-  rf.DE = 0x1234;
-  rf.H = 0x50;
-  rf.L = 0x11;
-  rf.F = 0xFF;
- 
-  printf("size of regs %ld\n", sizeof(rf));
-  printf("B : %x C : %x BC : %x\n", rf.B, rf.C, rf.BC);
-  printf("D : %x E : %x DE : %x\n", rf.D, rf.E, rf.DE);
-  printf("H : %x L :  %x HL : %x\n", rf.H, rf.L, rf.HL);
-  printf("A : %x AF : %x F: %x\n", rf.A, rf.AF, rf.F);
-
-  rf.F = 0xFF;
-  printf("flag is %x\n", rf.F);
-  rf.F = 0x00;
-  printf("flag is %x\n", rf.F);
-  rf.zf = 1;
-  printf("flag is %x\n", rf.F);
+    printf("Usage: %s [option]...\n\n", progname);
+    printf("Game Boy Instruction Tester.\n\n");
+    printf("Options:\n");
+    printf(" -k, --keep-going       Skip to the next instruction on a mismatch "
+            "(instead of aborting all tests).\n");
+    printf(" -c, --no-enable-cb     Disable testing of CB prefixed "
+            "instructions.\n");
+    printf(" -p, --print-inst       Print instruction undergoing tests.\n");
+    printf(" -v, --print-input      Print every inputstate that is tested.\n");
+    printf(" -h, --help             Show this help.\n");
 }
 
-void main()
+static int parse_args(int argc, char **argv)
 {
-  test_regs();
-  init();
+    while (1) {
+        static struct option long_options[] = {
+            {"keep-going",   no_argument,        0,  'k'},
+            {"no-enable-cb", no_argument,        0,  'c'},
+            {"print-inst",   no_argument,        0,  'p'},
+            {"print-input",  no_argument,        0,  'v'},
+            {"help",         no_argument,        0,  'h'},
+            {0, 0, 0, 0}
+        };
 
-  for(int i=0; i<10; i++)
-    step();
+        char c = getopt_long(argc, argv, "kcpvh", long_options, NULL);
+
+        if (c == -1)
+            break;
+
+        switch (c) {
+            case 'k':
+                flags.keep_going_on_mismatch = 1;
+                break;
+
+            case 'c':
+                flags.enable_cb_instruction_testing = 0;
+                break;
+
+            case 'p':
+                flags.print_tested_instruction = 1;
+                break;
+
+            case 'v':
+                flags.print_verbose_inputs = 1;
+                break;
+
+            case 'h':
+                print_usage(argv[0]);
+                exit(0);
+
+            default:
+                print_usage(argv[0]);
+                return 1;
+        }
+    }
+
+    if (optind != argc) {
+        /* We should not have any leftover arguments. */
+        print_usage(argv[0]);
+        return 1;
+    }
+
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    if (parse_args(argc, argv))
+        return 1;
+
+    return tester_run(&flags, &myops);
 }
