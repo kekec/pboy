@@ -61,6 +61,8 @@ static void mycpu_get_state(struct state *state)
     state->reg16.HL = cp.HL;
     state->SP = cp.SP;
     state->PC = cp.PC;
+    state->halted = cp.halted;
+    state->interrupts_master_enabled = cp.interrupts_master_enabled;
 }
 
 /*

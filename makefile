@@ -1,7 +1,7 @@
 SUBDIR = gbit
 
 all: cpu.o main.o test_cpu.o testlib
-	gcc -L$(SUBDIR) main.o cpu.o test_cpu.o -o main -Bstatic -lgbit
+	gcc -L$(SUBDIR) main.o cpu.o test_cpu.o -o main -lgbit
 
 babytest: cpu.o babytest.o 
 	gcc babytest.o cpu.o -o babytest

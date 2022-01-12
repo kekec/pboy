@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 struct cpu
 {
@@ -52,8 +53,12 @@ struct cpu
     };
     uint16_t HL;
   };
+
   uint16_t SP;
   uint16_t PC;
+
+  bool halted;
+  bool interrupts_master_enabled;
 };
 
 uint8_t *mem;
