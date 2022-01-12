@@ -55,3 +55,9 @@ struct cpu
   uint16_t SP;
   uint16_t PC;
 };
+
+uint8_t mem[2^64];
+struct cpu cp;
+
+void init();
+void step();

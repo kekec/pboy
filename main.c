@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "cpu.h"
 
-void test()
+void test_regs()
 {
   struct cpu rf;
   rf.A = 0xAA;
@@ -28,5 +28,9 @@ void test()
 
 void main()
 {
-  test();
+  test_regs();
+  init();
+
+  for(int i=0; i<10; i++)
+    step();
 }
