@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "cpu.h"
+#include "tester.h"
 
 void test_regs()
 {
