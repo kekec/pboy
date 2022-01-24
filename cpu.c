@@ -1,7 +1,6 @@
 #include "string.h"
 #include "stdio.h"
 #include "cpu.h"
-#include "lib/tester.h"
 
 void init(uint8_t * address)
 {
