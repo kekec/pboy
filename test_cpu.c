@@ -19,6 +19,12 @@ static uint8_t *instruction_mem;
 static int num_mem_accesses;
 static struct mem_access mem_accesses[16];
 
+uint8_t mymmu_read(uint16_t address);
+void mymmu_write(uint16_t address, uint8_t data);
+
+extern uint8_t (*logReadMem)(uint16_t);
+extern void (*logWriteMem)(uint16_t, uint8_t);
+
 /*
  * Called once during startup. The area of memory pointed to by
  * tester_instruction_mem will contain instructions the tester will inject, and
@@ -30,6 +36,8 @@ static void mycpu_init(size_t tester_instruction_mem_size,
     instruction_mem_size = tester_instruction_mem_size;
     instruction_mem = tester_instruction_mem;
     init(tester_instruction_mem);
+    registerLogWriteMem(mymmu_write);
+    registerLogReadMem(mymmu_read);
 }
 
 /*
