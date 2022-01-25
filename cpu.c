@@ -1,11 +1,11 @@
 #include "string.h"
+#include <stdio.h>
 #include "stdio.h"
 #include "cpu.h"
 
 void init(uint8_t * address)
 {
   mem = address;
-  memset(&cp, sizeof(cp), 0);
   cp.PC = 0;
   logReadMem = NULL;
   logWriteMem = NULL;
@@ -13,45 +13,78 @@ void init(uint8_t * address)
 
 unsigned int step()
 {
-  uint8_t instr = readMem(cp.PC++);
-
+  uint8_t instr = readMem(cp.PC);
+  printf("instruction %x at addr %x\n", instr, cp.PC);
   switch(instr)
   {
+
     case 0x00:
+      printf("NOP");
+      cp.PC++;
       return 4; 
     case 0x01:
-      cp.C = readMem(cp.PC++);
-      cp.B = readMem(cp.PC++);
+      printf("Load BC with 16 bit num\n");
+      cp.C = readMem(++cp.PC);
+      cp.B = readMem(++cp.PC);
+      cp.PC++;
       return 12;
+    case 0x02:
+      printf("Load (BC) %x with A %X\n", cp.BC, cp.A);
+      writeMem(cp.BC, cp.A);
+      cp.PC++;
+      return 8;
     case 0x11:
-      cp.E = readMem(cp.PC++);
-      cp.D = readMem(cp.PC++);
+      printf("Load ED with 16 bit num\n");
+      cp.E = readMem(++cp.PC);
+      cp.D = readMem(++cp.PC);
+      cp.PC++;
       return 12;
+    case 0x12:
+      printf("LD (ED) into A");
+      writeMem(cp.BC, cp.A);
+      cp.PC++;
+      return 8;
     case 0x21:
-      cp.L = readMem(cp.PC++);
-      cp.H = readMem(cp.PC++);
+      printf("Load LH with 16 bit num\n");
+      cp.L = readMem(++cp.PC);
+      cp.H = readMem(++cp.PC);
+      cp.PC++;
       return 12;
+    case 0x22:
+      printf("LD (HL++) with A\n");
+      writeMem(cp.HL, cp.A);
+      cp.HL++;
+      cp.PC++;
+      return 8;
+    case 0x2A:
+      cp.A = readMem(cp.HL);
+      cp.HL++;
+      cp.SP++;
+      return 8;
     case 0x31:
-      cp.SP = readMem(cp.PC) | (readMem(cp.PC+1) << 8);
-      cp.PC = cp.PC + 2;
+      printf("Load SP with 16 bit num\n");
+      cp.SP = readMem(cp.PC+1) | (readMem(cp.PC+2) << 8);
+      cp.PC = cp.PC + 3;
       return 12;
+    case 0x32:
+      printf("Load (HL--) with A\n");
+      writeMem(cp.HL, cp.A);
+      cp.HL--;
+      cp.PC++;
+      return 4;
     default: 
-      printf("unknown instruction %x at addr %x\n", instr, cp.SP);
+      printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
   }
 }
 
 void writeMem(uint16_t addr, uint8_t data)
 {
-  if(logWriteMem != NULL)
-    (*logWriteMem)(addr, data);
   mem[addr] = data;   
 }
 
 uint8_t readMem(uint16_t addr)
 {
-  if(logReadMem != NULL)
-    (*logReadMem)(addr);
   return mem[addr];
 }
 

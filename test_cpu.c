@@ -36,8 +36,8 @@ static void mycpu_init(size_t tester_instruction_mem_size,
     instruction_mem_size = tester_instruction_mem_size;
     instruction_mem = tester_instruction_mem;
     init(tester_instruction_mem);
-    registerLogWriteMem(mymmu_write);
-    registerLogReadMem(mymmu_read);
+    registerLogWriteMem(NULL);
+    registerLogReadMem(NULL);
 }
 
 /*

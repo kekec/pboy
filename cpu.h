@@ -1,8 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define CPU_IN_TESTMODE 1
-
 struct cpu
 {
   union 
