@@ -21,18 +21,26 @@ unsigned int step()
     case 0x00:
       printf("NOP");
       cp.PC++;
-      return 4; 
+      break;
     case 0x01:
       printf("Load BC with 16 bit num\n");
-      cp.C = readMem(++cp.PC);
-      cp.B = readMem(++cp.PC);
+      printf("16bit num is: %x and %x", readMem(cp.PC+1), readMem(cp.PC+2));
+      cp.C = readMem(++(cp.PC));
+      cp.B = readMem(++(cp.PC));
       cp.PC++;
+      printf("PC is %x\n", cp.PC);
       return 12;
     case 0x02:
-      printf("Load (BC) %x with A %X\n", cp.BC, cp.A);
+      printf("PC is %x\n", cp.PC);
+      printf("Load address (BC) %x with A %x\n", cp.BC, cp.A);
       writeMem(cp.BC, cp.A);
       cp.PC++;
-      return 8;
+      printf("PC is %x\n", cp.PC);
+      break;
+    case 0x03:
+      cp.BC++;
+      cp.PC++;
+      break;
     case 0x11:
       printf("Load ED with 16 bit num\n");
       cp.E = readMem(++cp.PC);
@@ -41,9 +49,12 @@ unsigned int step()
       return 12;
     case 0x12:
       printf("LD (ED) into A");
-      writeMem(cp.BC, cp.A);
+      //writeMem(cp.DE, cp.A);
       cp.PC++;
       return 8;
+    case 0x13:
+      cp.DE++;
+      cp.PC++;
     case 0x21:
       printf("Load LH with 16 bit num\n");
       cp.L = readMem(++cp.PC);
@@ -52,14 +63,14 @@ unsigned int step()
       return 12;
     case 0x22:
       printf("LD (HL++) with A\n");
-      writeMem(cp.HL, cp.A);
+      //writeMem(cp.HL, cp.A);
       cp.HL++;
       cp.PC++;
       return 8;
     case 0x2A:
       cp.A = readMem(cp.HL);
       cp.HL++;
-      cp.SP++;
+      cp.PC++;
       return 8;
     case 0x31:
       printf("Load SP with 16 bit num\n");
@@ -68,7 +79,7 @@ unsigned int step()
       return 12;
     case 0x32:
       printf("Load (HL--) with A\n");
-      writeMem(cp.HL, cp.A);
+      //writeMem(cp.HL, cp.A);
       cp.HL--;
       cp.PC++;
       return 4;
@@ -80,11 +91,14 @@ unsigned int step()
 
 void writeMem(uint16_t addr, uint8_t data)
 {
-  mem[addr] = data;   
+  if( logWriteMem != NULL )
+    (*logWriteMem)(addr, data);
 }
 
 uint8_t readMem(uint16_t addr)
 {
+  if( logReadMem != NULL )
+    (*logReadMem)(addr);
   return mem[addr];
 }
 

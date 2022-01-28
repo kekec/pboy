@@ -12,6 +12,7 @@
 #include <string.h>
 #include "lib/tester.h"
 #include "cpu.h"
+#include "stdio.h"
 
 static size_t instruction_mem_size;
 static uint8_t *instruction_mem;
@@ -36,8 +37,8 @@ static void mycpu_init(size_t tester_instruction_mem_size,
     instruction_mem_size = tester_instruction_mem_size;
     instruction_mem = tester_instruction_mem;
     init(tester_instruction_mem);
-    registerLogWriteMem(NULL);
-    registerLogReadMem(NULL);
+    registerLogWriteMem(mymmu_write);
+    registerLogReadMem(mymmu_read);
 }
 
 /*
@@ -52,6 +53,9 @@ static void mycpu_set_state(struct state *state)
     cp.HL = state->reg16.HL;
     cp.SP = state->SP;
     cp.PC = state->PC;
+
+    printf("In set state, PC = %x\n", cp.PC);
+    num_mem_accesses = state->num_mem_accesses;
 }
 
 /*
@@ -79,6 +83,7 @@ static void mycpu_get_state(struct state *state)
  */
 static int mycpu_step(void)
 {
+    printf("Step has been called");
     int cycles = 0;
     cycles = step();
     return cycles;
