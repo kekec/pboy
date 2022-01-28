@@ -14,7 +14,6 @@ void init(uint8_t * address)
 unsigned int step()
 {
   uint8_t instr = readMem(cp.PC);
-  printf("instruction %x at addr %x\n", instr, cp.PC);
   switch(instr)
   {
 
@@ -49,12 +48,13 @@ unsigned int step()
       return 12;
     case 0x12:
       printf("LD (ED) into A");
-      //writeMem(cp.DE, cp.A);
+      writeMem(cp.DE, cp.A);
       cp.PC++;
       return 8;
     case 0x13:
       cp.DE++;
       cp.PC++;
+      break;
     case 0x21:
       printf("Load LH with 16 bit num\n");
       cp.L = readMem(++cp.PC);
@@ -63,10 +63,14 @@ unsigned int step()
       return 12;
     case 0x22:
       printf("LD (HL++) with A\n");
-      //writeMem(cp.HL, cp.A);
+      writeMem(cp.HL, cp.A);
       cp.HL++;
       cp.PC++;
-      return 8;
+      break;
+    case 0x23:
+      cp.HL++;
+      cp.PC++;
+      break;
     case 0x2A:
       cp.A = readMem(cp.HL);
       cp.HL++;
@@ -79,10 +83,14 @@ unsigned int step()
       return 12;
     case 0x32:
       printf("Load (HL--) with A\n");
-      //writeMem(cp.HL, cp.A);
+      writeMem(cp.HL, cp.A);
       cp.HL--;
       cp.PC++;
       return 4;
+    case 0x33:
+      cp.SP++;
+      cp.PC++;
+      break;
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
