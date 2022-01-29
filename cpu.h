@@ -72,3 +72,6 @@ uint8_t readMem(uint16_t addr);
 void writeMem(uint16_t addr, uint8_t data);
 void registerLogWriteMem(void (*func)(uint16_t, uint8_t));
 void registerLogReadMem(uint8_t (*func)(uint16_t));
+void ldToMem8(uint8_t data, uint16_t dest);
+void ldFromMem8(uint16_t src, uint8_t *data);
+void ldOp16FromMem(uint16_t src, uint16_t *dest);

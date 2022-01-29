@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "stdio.h"
 #include "cpu.h"
+#include "instruction.h"
 
 void init(uint8_t * address)
 {
@@ -13,83 +14,63 @@ void init(uint8_t * address)
 
 unsigned int step()
 {
-  uint8_t instr = readMem(cp.PC);
+  uint8_t instr = readMem(cp.PC++);
   switch(instr)
   {
 
-    case 0x00:
-      printf("NOP");
-      cp.PC++;
-      break;
+    case NOP:
+      cp.SP += (instructions[NOP].len - 1);
+      return instructions[NOP].cycles;
     case 0x01:
-      printf("Load BC with 16 bit num\n");
-      printf("16bit num is: %x and %x", readMem(cp.PC+1), readMem(cp.PC+2));
-      cp.C = readMem(++(cp.PC));
-      cp.B = readMem(++(cp.PC));
-      cp.PC++;
-      printf("PC is %x\n", cp.PC);
+      //printf("Load BC with 16 bit num\n");
+      ldOp16FromMem(cp.PC, &cp.BC);
+      cp.PC = cp.PC + 2;
       return 12;
     case 0x02:
-      printf("PC is %x\n", cp.PC);
-      printf("Load address (BC) %x with A %x\n", cp.BC, cp.A);
-      writeMem(cp.BC, cp.A);
-      cp.PC++;
-      printf("PC is %x\n", cp.PC);
+      //printf("Load address (BC) %x with A %x\n", cp.BC, cp.A);
+      ldToMem8(cp.A,cp.BC);
       break;
     case 0x03:
       cp.BC++;
-      cp.PC++;
       break;
     case 0x11:
-      printf("Load ED with 16 bit num\n");
-      cp.E = readMem(++cp.PC);
-      cp.D = readMem(++cp.PC);
-      cp.PC++;
+      //printf("Load DE with 16 bit num\n");
+      ldOp16FromMem(cp.PC, &cp.DE);
+      cp.PC = cp.PC + 2;
       return 12;
     case 0x12:
-      printf("LD (ED) into A");
-      writeMem(cp.DE, cp.A);
-      cp.PC++;
+      //printf("Load address (DE) %x with A %x\n", cp.DE, cp.A);
+      ldToMem8(cp.A,cp.DE);
       return 8;
     case 0x13:
       cp.DE++;
-      cp.PC++;
       break;
     case 0x21:
-      printf("Load LH with 16 bit num\n");
-      cp.L = readMem(++cp.PC);
-      cp.H = readMem(++cp.PC);
-      cp.PC++;
+      //printf("Load LH with 16 bit num\n");
+      ldOp16FromMem(cp.PC, &cp.HL);
+      cp.PC = cp.PC + 2;
       return 12;
     case 0x22:
-      printf("LD (HL++) with A\n");
-      writeMem(cp.HL, cp.A);
-      cp.HL++;
-      cp.PC++;
+      //printf("LD (HL++) with A\n");
+      ldToMem8(cp.A,cp.HL++);
       break;
     case 0x23:
       cp.HL++;
-      cp.PC++;
       break;
     case 0x2A:
-      cp.A = readMem(cp.HL);
-      cp.HL++;
-      cp.PC++;
+      cp.A = readMem(cp.HL++);
       return 8;
     case 0x31:
-      printf("Load SP with 16 bit num\n");
-      cp.SP = readMem(cp.PC+1) | (readMem(cp.PC+2) << 8);
-      cp.PC = cp.PC + 3;
+      //printf("Load SP with 16 bit num\n");
+      ldOp16FromMem(cp.PC, &cp.SP);
+      cp.PC = cp.PC + 2;
       return 12;
     case 0x32:
       printf("Load (HL--) with A\n");
-      writeMem(cp.HL, cp.A);
-      cp.HL--;
-      cp.PC++;
+      ldToMem8(cp.A,cp.HL--);
       return 4;
     case 0x33:
       cp.SP++;
-      cp.PC++;
       break;
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
@@ -114,7 +95,23 @@ void registerLogReadMem(uint8_t (*func) (uint16_t) )
 {
   logReadMem =  func;
 }
+
 void registerLogWriteMem( void (*func) (uint16_t, uint8_t) )
 {
   logWriteMem = func;
+}
+
+void ldToMem8(uint8_t data, uint16_t dest)
+{
+  writeMem(dest, data);
+}
+
+void ldFromMem8(uint16_t src, uint8_t *data)
+{
+  *data = readMem(src);
+}
+
+void ldOp16FromMem(uint16_t src, uint16_t *dest)
+{
+  *dest = readMem(src) | (readMem(src+1) << 8);
 }

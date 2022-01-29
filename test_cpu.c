@@ -54,6 +54,8 @@ static void mycpu_set_state(struct state *state)
     cp.SP = state->SP;
     cp.PC = state->PC;
     num_mem_accesses = state->num_mem_accesses;
+    cp.halted = state->halted;
+    cp.interrupts_master_enabled = state->interrupts_master_enabled;
 }
 
 /*
