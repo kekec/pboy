@@ -19,13 +19,14 @@ unsigned int step()
   {
 
     case NOP:
-      cp.SP += (instructions[NOP].len - 1);
-      return instructions[NOP].cycles;
-    case 0x01:
-      //printf("Load BC with 16 bit num\n");
+      PRINT_INS(NOP);
+      RETURN_FROM_INS(NOP);
+      break;
+    case LD_BC_IMM16:
+      PRINT_INS(LD_BC_IMM16);
       ldOp16FromMem(cp.PC, &cp.BC);
-      cp.PC = cp.PC + 2;
-      return 12;
+      RETURN_FROM_INS(LD_BC_IMM16);
+      break;
     case 0x02:
       //printf("Load address (BC) %x with A %x\n", cp.BC, cp.A);
       ldToMem8(cp.A,cp.BC);
@@ -115,3 +116,14 @@ void ldOp16FromMem(uint16_t src, uint16_t *dest)
 {
   *dest = readMem(src) | (readMem(src+1) << 8);
 }
+
+static inline void print_ins(uint8_t opcode)
+{
+  printf("%s \n", instructions[opcode].string);
+}
+
+static inline void move_pc(uint8_t opcode)
+{
+  cp.PC += instructions[opcode].len-1;
+}
+
