@@ -96,6 +96,19 @@ unsigned int step()
     case 0x33:
       cp.SP++;
       break;
+    case INC_star_HL:
+      PRINT_INS(INC_star_HL)
+      {
+        uint8_t data;
+        ldFromMem8(cp.HL, &data);
+        inc8(&data);
+        ldToMem8(data, cp.HL);
+      }
+      RETURN_FROM_INS(INC_star_HL)
+    case INC_A:
+      PRINT_INS(INC_A)
+      inc8(&cp.A);
+      RETURN_FROM_INS(INC_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -111,8 +124,7 @@ void writeMem(uint16_t addr, uint8_t data)
 uint8_t readMem(uint16_t addr)
 {
   if( logReadMem != NULL )
-    (*logReadMem)(addr);
-  return mem[addr];
+    return (*logReadMem)(addr);
 }
 
 void registerLogReadMem(uint8_t (*func) (uint16_t) )
@@ -157,8 +169,10 @@ void inc8(uint8_t *data)
   cp.n = 0;
   if(*data == 0xFF)
     cp.zf = 1;
-  if(*data == 0xF || *data == 0xFF)
+
+  if((*data & 0xF) == 0xF)
     cp.h = 1;
+
   (*data)++;
 }
 

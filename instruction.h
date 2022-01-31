@@ -10,6 +10,8 @@
 #define INC_E 0x1C
 #define INC_L 0x24
 #define INC_H 0x2C
+#define INC_star_HL 0x34
+#define INC_A 0x3C
 
 struct instruction
 {
@@ -64,4 +66,20 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //2A
   {"dummy B",1,4},       //2B
   {"INC L",1,4},         //2C
+  {"dummy",1,4},         //2D
+  {"dummy B",1,4},       //2E
+  {"dummy B",1,4},       //2F
+  {"dummy B",1,4},       //30
+  {"dummy B",1,4},       //31
+  {"dummy B",1,4},       //32
+  {"dummy B",1,4},       //33
+  {"INC (HL)",1,4},      //34
+  {"dummy B",1,4},       //35
+  {"dummy B",1,4},       //36
+  {"dummy B",1,4},       //37
+  {"dummy B",1,4},       //38
+  {"dummy B",1,4},       //39
+  {"dummy B",1,4},       //3A
+  {"dummy B",1,4},       //3B
+  {"INC A",1,4},         //3C
 };
