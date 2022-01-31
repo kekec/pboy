@@ -2,8 +2,9 @@
 #include <stdbool.h>
 #include "stdio.h"
 
-#define PRINT_INS(arg) print_ins(arg)
-#define RETURN_FROM_INS(arg) do {move_pc(arg);break;} while(0)
+//#define PRINT_INS(arg) print_ins(arg);
+#define PRINT_INS(arg)
+#define RETURN_FROM_INS(arg) move_pc(arg); break;
 
 struct cpu
 {
@@ -16,7 +17,7 @@ struct cpu
         struct
         {
           uint8_t reserved : 4;
-          uint8_t cy : 1;
+          uint8_t cf: 1;
           uint8_t h : 1;
           uint8_t n : 1;
           uint8_t zf : 1;
@@ -52,8 +53,8 @@ struct cpu
   {
     struct
     {
-       uint8_t L;
        uint8_t H;
+       uint8_t L;
     };
     uint16_t HL;
   };
@@ -76,10 +77,10 @@ uint8_t readMem(uint16_t addr);
 void writeMem(uint16_t addr, uint8_t data);
 void registerLogWriteMem(void (*func)(uint16_t, uint8_t));
 void registerLogReadMem(uint8_t (*func)(uint16_t));
+static inline void move_pc(uint8_t opcode);
+static inline void print_ins(uint8_t opcode);
 void ldToMem8(uint8_t data, uint16_t dest);
 void ldFromMem8(uint16_t src, uint8_t *data);
 void ldOp16FromMem(uint16_t src, uint16_t *dest);
-static inline void move_pc(uint8_t opcode);
-static inline void print_ins(uint8_t opcode);
-
+void inc8(uint8_t *data);
 

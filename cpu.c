@@ -19,21 +19,28 @@ unsigned int step()
   {
 
     case NOP:
-      PRINT_INS(NOP);
-      RETURN_FROM_INS(NOP);
-      break;
+      PRINT_INS(NOP)
+      RETURN_FROM_INS(NOP)
     case LD_BC_IMM16:
-      PRINT_INS(LD_BC_IMM16);
+      PRINT_INS(LD_BC_IMM16)
       ldOp16FromMem(cp.PC, &cp.BC);
-      RETURN_FROM_INS(LD_BC_IMM16);
-      break;
-    case 0x02:
-      //printf("Load address (BC) %x with A %x\n", cp.BC, cp.A);
+      RETURN_FROM_INS(LD_BC_IMM16)
+    case LD_star_BC_A:
+      PRINT_INS(LD_star_BC_A)
       ldToMem8(cp.A,cp.BC);
-      break;
-    case 0x03:
+      RETURN_FROM_INS(LD_star_BC_A)
+    case INC_BC:
+      PRINT_INS(INC_BC)
       cp.BC++;
-      break;
+      RETURN_FROM_INS(INC_BC)
+    case INC_B:
+      PRINT_INS(INC_B)
+      inc8(&cp.B);
+      RETURN_FROM_INS(INC_B)
+    case INC_C:
+      PRINT_INS(INC_C)
+      inc8(&cp.C);
+      RETURN_FROM_INS(INC_C)
     case 0x11:
       //printf("Load DE with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.DE);
@@ -46,6 +53,14 @@ unsigned int step()
     case 0x13:
       cp.DE++;
       break;
+    case INC_D:
+      PRINT_INS(INC_D)
+      inc8(&cp.D);
+      RETURN_FROM_INS(INC_D)
+    case INC_E:
+      //PRINT_INS(INC_E)
+      inc8(&cp.E);
+      RETURN_FROM_INS(INC_E)
     case 0x21:
       //printf("Load LH with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.HL);
@@ -58,9 +73,17 @@ unsigned int step()
     case 0x23:
       cp.HL++;
       break;
+    case INC_H:
+      PRINT_INS(INC_H)
+      inc8(&cp.H);
+      RETURN_FROM_INS(INC_H)
     case 0x2A:
       cp.A = readMem(cp.HL++);
       return 8;
+    case INC_L:
+      PRINT_INS(INC_L)
+      inc8(&cp.L);
+      RETURN_FROM_INS(INC_L)
     case 0x31:
       //printf("Load SP with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.SP);
@@ -102,6 +125,16 @@ void registerLogWriteMem( void (*func) (uint16_t, uint8_t) )
   logWriteMem = func;
 }
 
+static inline void print_ins(uint8_t opcode)
+{
+  printf("%s \n", instructions[opcode].string);
+}
+
+static inline void move_pc(uint8_t opcode)
+{
+  cp.PC += instructions[opcode].len-1;
+}
+
 void ldToMem8(uint8_t data, uint16_t dest)
 {
   writeMem(dest, data);
@@ -117,13 +150,16 @@ void ldOp16FromMem(uint16_t src, uint16_t *dest)
   *dest = readMem(src) | (readMem(src+1) << 8);
 }
 
-static inline void print_ins(uint8_t opcode)
+void inc8(uint8_t *data)
 {
-  printf("%s \n", instructions[opcode].string);
+  cp.zf = 0;
+  cp.h = 0;
+  cp.n = 0;
+  if(*data == 0xFF)
+    cp.zf = 1;
+  if(*data == 0xF || *data == 0xFF)
+    cp.h = 1;
+  (*data)++;
 }
 
-static inline void move_pc(uint8_t opcode)
-{
-  cp.PC += instructions[opcode].len-1;
-}
 
