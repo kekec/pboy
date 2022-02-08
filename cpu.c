@@ -46,9 +46,9 @@ unsigned int step()
       inc8(&cp.C);
       RETURN_FROM_INS(INC_C)
     case DEC_C:
-      PRINT_INS(INC_C)
+      PRINT_INS(DEC_C)
       dec8(&cp.C);
-      RETURN_FROM_INS(INC_C)
+      RETURN_FROM_INS(DEC_C)
     case 0x11:
       //printf("Load DE with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.DE);
