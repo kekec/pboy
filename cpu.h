@@ -83,4 +83,7 @@ void ldToMem8(uint8_t data, uint16_t dest);
 void ldFromMem8(uint16_t src, uint8_t *data);
 void ldOp16FromMem(uint16_t src, uint16_t *dest);
 void inc8(uint8_t *data);
+void dec8(uint8_t *data);
+void incMem(uint16_t memAddr);
+void decMem(uint16_t memAddr);
 

@@ -37,9 +37,17 @@ unsigned int step()
       PRINT_INS(INC_B)
       inc8(&cp.B);
       RETURN_FROM_INS(INC_B)
+    case DEC_B:
+      PRINT_INS(DEC_B)
+      dec8(&cp.B);
+      RETURN_FROM_INS(DEC_B)
     case INC_C:
       PRINT_INS(INC_C)
       inc8(&cp.C);
+      RETURN_FROM_INS(INC_C)
+    case DEC_C:
+      PRINT_INS(INC_C)
+      dec8(&cp.C);
       RETURN_FROM_INS(INC_C)
     case 0x11:
       //printf("Load DE with 16 bit num\n");
@@ -57,10 +65,18 @@ unsigned int step()
       PRINT_INS(INC_D)
       inc8(&cp.D);
       RETURN_FROM_INS(INC_D)
+    case DEC_D:
+      PRINT_INS(DEC_D)
+      dec8(&cp.D);
+      RETURN_FROM_INS(DEC_D)
     case INC_E:
-      //PRINT_INS(INC_E)
+      PRINT_INS(INC_E)
       inc8(&cp.E);
       RETURN_FROM_INS(INC_E)
+    case DEC_E:
+      PRINT_INS(DEC_E)
+      dec8(&cp.E);
+      RETURN_FROM_INS(DEC_E)
     case 0x21:
       //printf("Load LH with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.HL);
@@ -77,6 +93,10 @@ unsigned int step()
       PRINT_INS(INC_H)
       inc8(&cp.H);
       RETURN_FROM_INS(INC_H)
+    case DEC_H:
+      PRINT_INS(DEC_H)
+      dec8(&cp.H);
+      RETURN_FROM_INS(DEC_H)
     case 0x2A:
       cp.A = readMem(cp.HL++);
       return 8;
@@ -84,6 +104,10 @@ unsigned int step()
       PRINT_INS(INC_L)
       inc8(&cp.L);
       RETURN_FROM_INS(INC_L)
+    case DEC_L:
+      PRINT_INS(DEC_L)
+      dec8(&cp.L);
+      RETURN_FROM_INS(DEC_L)
     case 0x31:
       //printf("Load SP with 16 bit num\n");
       ldOp16FromMem(cp.PC, &cp.SP);
@@ -98,17 +122,20 @@ unsigned int step()
       break;
     case INC_star_HL:
       PRINT_INS(INC_star_HL)
-      {
-        uint8_t data;
-        ldFromMem8(cp.HL, &data);
-        inc8(&data);
-        ldToMem8(data, cp.HL);
-      }
+      incMem(cp.HL);
       RETURN_FROM_INS(INC_star_HL)
+    case DEC_star_HL:
+      PRINT_INS(DEC_star_HL)
+      decMem(cp.HL);
+      RETURN_FROM_INS(DEC_star_HL)
     case INC_A:
       PRINT_INS(INC_A)
       inc8(&cp.A);
       RETURN_FROM_INS(INC_A)
+    case DEC_A:
+      PRINT_INS(DEC_A)
+      dec8(&cp.A);
+      RETURN_FROM_INS(DEC_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -174,6 +201,37 @@ void inc8(uint8_t *data)
     cp.h = 1;
 
   (*data)++;
+}
+
+void dec8(uint8_t *data)
+{
+  cp.n = 1;
+  if((*data & 0xF) == 0)
+    cp.h = 1;
+  else
+    cp.h = 0;
+  if(*data == 0x01)
+    cp.zf = 1;
+  else
+    cp.zf = 0;
+
+  (*data)--;
+}
+
+void incMem(uint16_t memAddr)
+{
+  uint8_t data;
+  ldFromMem8(memAddr, &data);
+  inc8(&data);
+  ldToMem8(data, memAddr);
+} 
+
+void decMem(uint16_t memAddr)
+{
+  uint8_t data;
+  ldFromMem8(memAddr, &data);
+  dec8(&data);
+  ldToMem8(data, memAddr);
 }
 
 
