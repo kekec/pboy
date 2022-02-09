@@ -9,8 +9,10 @@
 #define LD_B_IMM8 0x06
 #define INC_C 0x0C
 #define DEC_C 0x0D
+#define LD_C_IMM8 0x0E
 #define INC_D 0x14
 #define DEC_D 0x15
+#define LD_D_IMM8 0x16
 #define INC_E 0x1C
 #define DEC_E 0x1D
 #define INC_L 0x24
@@ -44,7 +46,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       // B
   {"INC C",1,4},         // C
   {"DEC C",1,4},         // D
-  {"dummy B",1,4},       // E
+  {"LD C, imm8",2,8},    // E
   {"dummy B",1,4},       // F
   {"dummy B",1,4},       //10
   {"dummy B",1,4},       //11
@@ -52,7 +54,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //13
   {"INC D",1,4},         //14
   {"DEC D",1,4},         //15
-  {"dummy B",1,4},       //16
+  {"LD D, imm8",2,8},    //16
   {"dummy B",1,4},       //17
   {"dummy B",1,4},       //18
   {"dummy B",1,4},       //19
