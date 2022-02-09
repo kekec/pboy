@@ -79,9 +79,11 @@ void registerLogWriteMem(void (*func)(uint16_t, uint8_t));
 void registerLogReadMem(uint8_t (*func)(uint16_t));
 static inline void move_pc(uint8_t opcode);
 static inline void print_ins(uint8_t opcode);
-void ldToMem8(uint8_t data, uint16_t dest);
-void ldFromMem8(uint16_t src, uint8_t *data);
+void ldOp8ToMem(uint8_t data, uint16_t dest);
+void ldOp8FromMemAtPC(uint8_t *dest);
+void ldOp8FromMem(uint16_t src, uint8_t *dest);
 void ldOp16FromMem(uint16_t src, uint16_t *dest);
+
 void inc8(uint8_t *data);
 void dec8(uint8_t *data);
 void incMem(uint16_t memAddr);

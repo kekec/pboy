@@ -6,6 +6,7 @@
 #define INC_BC 0x03
 #define INC_B 0x04
 #define DEC_B 0x05
+#define LD_B_IMM8 0x06
 #define INC_C 0x0C
 #define DEC_C 0x0D
 #define INC_D 0x14
@@ -35,7 +36,7 @@ static struct instruction instructions[] =
   {"INC BC",1,8},        // 3
   {"INC B",1,4},         // 4
   {"DEC B",1,4},         // 5
-  {"dummy B",1,4},       // 6
+  {"LD B, imm8",2,8},    // 6
   {"dummy B",1,4},       // 7
   {"dummy B",1,4},       // 8
   {"dummy B",1,4},       // 9

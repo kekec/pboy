@@ -27,7 +27,7 @@ unsigned int step()
       RETURN_FROM_INS(LD_BC_IMM16)
     case LD_star_BC_A:
       PRINT_INS(LD_star_BC_A)
-      ldToMem8(cp.A,cp.BC);
+      ldOp8ToMem(cp.A,cp.BC);
       RETURN_FROM_INS(LD_star_BC_A)
     case INC_BC:
       PRINT_INS(INC_BC)
@@ -41,6 +41,10 @@ unsigned int step()
       PRINT_INS(DEC_B)
       dec8(&cp.B);
       RETURN_FROM_INS(DEC_B)
+    case LD_B_IMM8:
+      PRINT_INS(LD_B_IMM8)
+      ldOp8FromMemAtPC(&cp.B);
+      RETURN_FROM_INS(LD_B_IMM8)
     case INC_C:
       PRINT_INS(INC_C)
       inc8(&cp.C);
@@ -56,7 +60,7 @@ unsigned int step()
       return 12;
     case 0x12:
       //printf("Load address (DE) %x with A %x\n", cp.DE, cp.A);
-      ldToMem8(cp.A,cp.DE);
+      ldOp8ToMem(cp.A,cp.DE);
       return 8;
     case 0x13:
       cp.DE++;
@@ -84,7 +88,7 @@ unsigned int step()
       return 12;
     case 0x22:
       //printf("LD (HL++) with A\n");
-      ldToMem8(cp.A,cp.HL++);
+      ldOp8ToMem(cp.A,cp.HL++);
       break;
     case 0x23:
       cp.HL++;
@@ -115,7 +119,7 @@ unsigned int step()
       return 12;
     case 0x32:
       printf("Load (HL--) with A\n");
-      ldToMem8(cp.A,cp.HL--);
+      ldOp8ToMem(cp.A,cp.HL--);
       return 4;
     case 0x33:
       cp.SP++;
@@ -174,14 +178,19 @@ static inline void move_pc(uint8_t opcode)
   cp.PC += instructions[opcode].len-1;
 }
 
-void ldToMem8(uint8_t data, uint16_t dest)
+void ldOp8ToMem(uint8_t data, uint16_t dest)
 {
   writeMem(dest, data);
 }
 
-void ldFromMem8(uint16_t src, uint8_t *data)
+void ldOp8FromMem(uint16_t src, uint8_t *data)
 {
   *data = readMem(src);
+}
+
+void ldOp8FromMemAtPC(uint8_t *dest)
+{
+  ldOp8FromMem(cp.PC, dest);
 }
 
 void ldOp16FromMem(uint16_t src, uint16_t *dest)
@@ -221,17 +230,17 @@ void dec8(uint8_t *data)
 void incMem(uint16_t memAddr)
 {
   uint8_t data;
-  ldFromMem8(memAddr, &data);
+  ldOp8FromMem(memAddr, &data);
   inc8(&data);
-  ldToMem8(data, memAddr);
+  ldOp8ToMem(data, memAddr);
 } 
 
 void decMem(uint16_t memAddr)
 {
   uint8_t data;
-  ldFromMem8(memAddr, &data);
+  ldOp8FromMem(memAddr, &data);
   dec8(&data);
-  ldToMem8(data, memAddr);
+  ldOp8ToMem(data, memAddr);
 }
 
 
