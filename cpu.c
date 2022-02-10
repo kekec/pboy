@@ -45,6 +45,25 @@ unsigned int step()
       PRINT_INS(LD_B_IMM8)
       ldOp8FromMemAtPC(&cp.B);
       RETURN_FROM_INS(LD_B_IMM8)
+    case RLCA:
+      PRINT_INS(RLCA)
+      rlcOp8(&cp.A);
+      RETURN_FROM_INS(RLCA)
+    case LD_A16_SP:
+      PRINT_INS(LD_A16_SP)
+      {
+        uint16_t addr;
+	uint16_t SP = cp.SP;
+	ldOp16FromMemAtPC(&addr);
+	ldOp8ToMem(SP & 0xFF, addr);
+	SP = SP >> 8;
+	ldOp8ToMem(SP, addr+1);
+      }
+      RETURN_FROM_INS(LD_A16_SP)
+    case LD_A_star_BC:
+      PRINT_INS(LD_A_star_BC)
+      ldOp8FromMem(cp.BC, &cp.A);
+      RETURN_FROM_INS(LD_A_star_BC);
     case INC_C:
       PRINT_INS(INC_C)
       inc8(&cp.C);
@@ -57,18 +76,18 @@ unsigned int step()
       PRINT_INS(LD_C_IMM8)
       ldOp8FromMemAtPC(&cp.C);
       RETURN_FROM_INS(LD_C_IMM8)
-    case 0x11:
-      //printf("Load DE with 16 bit num\n");
+    case LD_DE_IMM16:
+      PRINT_INS(LD_DE_IMM16)
       ldOp16FromMem(cp.PC, &cp.DE);
-      cp.PC = cp.PC + 2;
-      return 12;
-    case 0x12:
-      //printf("Load address (DE) %x with A %x\n", cp.DE, cp.A);
+      RETURN_FROM_INS(LD_DE_IMM16)
+    case LD_star_DE_A:
+      PRINT_INS(LD_star_DE_A)
       ldOp8ToMem(cp.A,cp.DE);
-      return 8;
-    case 0x13:
+      RETURN_FROM_INS(LD_star_DE_A)
+    case INC_DE:
+      PRINT_INS(INC_DE)
       cp.DE++;
-      break;
+      RETURN_FROM_INS(INC_DE)
     case INC_D:
       PRINT_INS(INC_D)
       inc8(&cp.D);
@@ -81,6 +100,14 @@ unsigned int step()
       PRINT_INS(LD_D_IMM8)
       ldOp8FromMemAtPC(&cp.D);
       RETURN_FROM_INS(LD_D_IMM8)
+    case RLA:
+      PRINT_INS(RLA)
+      rl(&cp.A);
+      RETURN_FROM_INS(RLA)
+    case LD_A_star_DE:
+      PRINT_INS(LD_A_star_DE)
+      ldOp8FromMem(cp.DE, &cp.A);
+      RETURN_FROM_INS(LD_A_star_DE)
     case INC_E:
       PRINT_INS(INC_E)
       inc8(&cp.E);
@@ -137,10 +164,10 @@ unsigned int step()
       ldOp16FromMem(cp.PC, &cp.SP);
       cp.PC = cp.PC + 2;
       return 12;
-    case 0x32:
-      printf("Load (HL--) with A\n");
+    case LD_star_HL_minus_A:
+      PRINT_INS(LD_star_HL_minus_A)
       ldOp8ToMem(cp.A,cp.HL--);
-      return 4;
+      RETURN_FROM_INS(LD_star_HL_minus_A)
     case 0x33:
       cp.SP++;
       break;
@@ -160,6 +187,10 @@ unsigned int step()
 	ldOp8ToMem(data, cp.HL);
       }
       RETURN_FROM_INS(LD_star_HL_IMM8)
+    case LD_A_star_HL_minus:
+      PRINT_INS(LD_A_star_HL_minus)
+      ldOp8FromMem(cp.HL--, &cp.A);
+      RETURN_FROM_INS(LD_A_star_HL_minus)
     case INC_A:
       PRINT_INS(INC_A)
       inc8(&cp.A);
@@ -230,6 +261,11 @@ void ldOp16FromMem(uint16_t src, uint16_t *dest)
   *dest = readMem(src) | (readMem(src+1) << 8);
 }
 
+void ldOp16FromMemAtPC(uint16_t *dest)
+{
+  ldOp16FromMem(cp.PC, dest);
+}
+
 void inc8(uint8_t *data)
 {
   cp.zf = 0;
@@ -275,4 +311,29 @@ void decMem(uint16_t memAddr)
   ldOp8ToMem(data, memAddr);
 }
 
+void rlcOp8(uint8_t *data)
+{
+  uint8_t temp = *data;
+  cp.zf = cp.n = cp.h = cp.cf = 0;
+  *data = *data << 1;
+  //if there is a carry from the shift set flag and put the carry to lsb
+  if(temp & 0x80)
+  {
+    cp.cf = 1;
+    *data  = *data | 0x1;
+  }
 
+}
+void rl(uint8_t *data)
+{
+  uint8_t temp = *data;
+  uint8_t old_carry = cp.cf;
+
+  cp.zf = cp.n = cp.h = cp.cf = 0;
+  *data = *data << 1;
+  *data = *data | old_carry;
+
+  if(temp & 0x80)
+    cp.cf = 1;
+
+}
