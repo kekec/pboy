@@ -15,14 +15,19 @@
 #define LD_D_IMM8 0x16
 #define INC_E 0x1C
 #define DEC_E 0x1D
+#define LD_E_IMM8 0x1E
 #define INC_L 0x24
 #define DEC_L 0x25
+#define LD_L_IMM8 0x26
 #define INC_H 0x2C
 #define DEC_H 0x2D
+#define LD_H_IMM8 0x2E
 #define INC_star_HL 0x34
 #define DEC_star_HL 0x35
+#define LD_star_HL_IMM8 0x36
 #define INC_A 0x3C
 #define DEC_A 0x3D
+#define LD_A_IMM8 0x3E
 
 struct instruction
 {
@@ -62,7 +67,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //1B
   {"INC E",1,4},         //1C
   {"DEC E",1,4},         //1D
-  {"dummy B",1,4},       //1E
+  {"LD E, imm8",2,8},    //1E
   {"dummy B",1,4},       //1F
   {"dummy B",1,4},       //20
   {"dummy B",1,4},       //21
@@ -70,7 +75,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //23
   {"INC H",1,4},         //24
   {"DEC H",1,4},         //25
-  {"dummy B",1,4},       //26
+  {"LD H, imm8",2,8},    //26
   {"dummy B",1,4},       //27
   {"dummy B",1,4},       //28
   {"dummy B",1,4},       //29
@@ -78,7 +83,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //2B
   {"INC L",1,4},         //2C
   {"DEC L",1,4},         //2D
-  {"dummy B",1,4},       //2E
+  {"LD L",2,8},          //2E
   {"dummy B",1,4},       //2F
   {"dummy B",1,4},       //30
   {"dummy B",1,4},       //31
@@ -86,7 +91,7 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //33
   {"INC (HL)",1,4},      //34
   {"DEC (HL)",1,4},      //35
-  {"dummy B",1,4},       //36
+  {"LD (HL), imm8",2,12},//36
   {"dummy B",1,4},       //37
   {"dummy B",1,4},       //38
   {"dummy B",1,4},       //39
@@ -94,4 +99,5 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //3B
   {"INC A",1,4},         //3C
   {"DEC A",1,4},         //3D
+  {"LD A, imm8",2,8},    //3E
 };
