@@ -22,15 +22,19 @@
 #define DEC_D 0x15
 #define LD_D_IMM8 0x16
 #define RLA 0x17
+#define ADD_HL_DE 0x19
 #define LD_A_star_DE 0x1A
 #define DEC_DE 0x1B
 #define INC_E 0x1C
 #define DEC_E 0x1D
 #define LD_E_IMM8 0x1E
+#define LD_HL_IMM16 0x21
+#define LD_star_HL_plus_A 0x22
 #define INC_HL 0x23
 #define INC_L 0x24
 #define DEC_L 0x25
 #define LD_L_IMM8 0x26
+#define ADD_HL_HL 0x29
 #define DEC_HL 0x2B
 #define INC_H 0x2C
 #define DEC_H 0x2D
@@ -40,6 +44,7 @@
 #define INC_star_HL 0x34
 #define DEC_star_HL 0x35
 #define LD_star_HL_IMM8 0x36
+#define ADD_HL_SP 0x39
 #define LD_A_star_HL_minus 0x3A
 #define DEC_SP 0x3B
 #define INC_A 0x3C
@@ -87,8 +92,8 @@ static struct instruction instructions[] =
   {"LD E, imm8",2,8},    //1E
   {"dummy B",1,4},       //1F
   {"dummy B",1,4},       //20
-  {"dummy B",1,4},       //21
-  {"dummy B",1,4},       //22
+  {"LD HL, imm16",3,12}, //21
+  {"LD (HL+), A",1,8},   //22
   {"INC HL",1,8},        //23
   {"INC H",1,4},         //24
   {"DEC H",1,4},         //25

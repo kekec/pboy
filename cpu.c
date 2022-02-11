@@ -68,6 +68,10 @@ unsigned int step()
       PRINT_INS(LD_A_star_BC)
       ldOp8FromMem(cp.BC, &cp.A);
       RETURN_FROM_INS(LD_A_star_BC);
+    case DEC_BC:
+      PRINT_INS(DEC_BC)
+      cp.BC--;
+      RETURN_FROM_INS(DEC_BC)
     case INC_C:
       PRINT_INS(INC_C)
       inc8(&cp.C);
@@ -108,10 +112,18 @@ unsigned int step()
       PRINT_INS(RLA)
       rl(&cp.A);
       RETURN_FROM_INS(RLA)
+    case ADD_HL_DE:
+      PRINT_INS(ADD_HL_DE)
+      add16(&cp.HL, &cp.DE);
+      RETURN_FROM_INS(ADD_HL_DE)
     case LD_A_star_DE:
       PRINT_INS(LD_A_star_DE)
       ldOp8FromMem(cp.DE, &cp.A);
       RETURN_FROM_INS(LD_A_star_DE)
+    case DEC_DE:
+      PRINT_INS(DEC_DE);
+      cp.DE--;
+      RETURN_FROM_INS(DEC_DE);
     case INC_E:
       PRINT_INS(INC_E)
       inc8(&cp.E);
@@ -124,18 +136,18 @@ unsigned int step()
       PRINT_INS(LD_E_IMM8)
       ldOp8FromMemAtPC(&cp.E);
       RETURN_FROM_INS(LD_E_IMM8)
-    case 0x21:
-      //printf("Load LH with 16 bit num\n");
+    case LD_HL_IMM16:
+      PRINT_INS(LD_HL_IMM16)
       ldOp16FromMem(cp.PC, &cp.HL);
-      cp.PC = cp.PC + 2;
-      return 12;
-    case 0x22:
-      //printf("LD (HL++) with A\n");
+      RETURN_FROM_INS(LD_HL_IMM16)
+    case LD_star_HL_plus_A:
+      PRINT_INS(LD_star_HL_plus_A)
       ldOp8ToMem(cp.A,cp.HL++);
-      break;
-    case 0x23:
+      RETURN_FROM_INS(LD_star_HL_plus_A)
+    case INC_HL:
+      PRINT_INS(INC_HL)
       cp.HL++;
-      break;
+      RETURN_FROM_INS(INC_HL)
     case INC_H:
       PRINT_INS(INC_H)
       inc8(&cp.H);
@@ -148,9 +160,17 @@ unsigned int step()
       PRINT_INS(LD_H_IMM8)
       ldOp8FromMemAtPC(&cp.H);
       RETURN_FROM_INS(LD_H_IMM8)
+    case ADD_HL_HL:
+      PRINT_INS(ADD_HL_HL)
+      add16(&cp.HL,&cp.HL);
+      RETURN_FROM_INS(ADD_HL_HL)
     case 0x2A:
       cp.A = readMem(cp.HL++);
       return 8;
+    case DEC_HL:
+      PRINT_INS(DEC_HL)
+      cp.HL--;
+      RETURN_FROM_INS(DEC_HL)
     case INC_L:
       PRINT_INS(INC_L)
       inc8(&cp.L);
@@ -191,10 +211,18 @@ unsigned int step()
 	ldOp8ToMem(data, cp.HL);
       }
       RETURN_FROM_INS(LD_star_HL_IMM8)
+    case ADD_HL_SP:
+      PRINT_INS(ADD_HL_SP)
+      add16(&cp.HL, &cp.SP);
+      RETURN_FROM_INS(ADD_HL_SP)
     case LD_A_star_HL_minus:
       PRINT_INS(LD_A_star_HL_minus)
       ldOp8FromMem(cp.HL--, &cp.A);
       RETURN_FROM_INS(LD_A_star_HL_minus)
+   case DEC_SP:
+      PRINT_INS(DEC_SP)
+      cp.SP--;
+      RETURN_FROM_INS(DEC_SP)
     case INC_A:
       PRINT_INS(INC_A)
       inc8(&cp.A);
@@ -302,11 +330,11 @@ void dec8(uint8_t *data)
 void add16(uint16_t *op1, uint16_t *op2)
 {
   uint32_t overflow16 = ((*op1 + *op2) >> 16);
-  uint16_t overflow8 = ((*op1 & 0x7FF) + (*op2 & 0x7FF)) >> 11;
+  uint16_t overflow11 = ((*op1 & 0x7FF) + (*op2 & 0x7FF)) >> 11;
   cp.n = cp.h = cp.cf = 0;
   if(overflow16)
     cp.cf = 1;
-  if(overflow8)
+  if(overflow11)
     cp.h = 1;
   *op1 += *op2;
 }
