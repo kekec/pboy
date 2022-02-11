@@ -87,6 +87,7 @@ void ldOp16FromMemAtPC(uint16_t *out);
 
 void inc8(uint8_t *data);
 void dec8(uint8_t *data);
+void add16(uint16_t *op1, uint16_t *op2);
 void incMem(uint16_t memAddr);
 void decMem(uint16_t memAddr);
 

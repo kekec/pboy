@@ -9,7 +9,9 @@
 #define LD_B_IMM8 0x06
 #define RLCA 0x07
 #define LD_A16_SP 0x08
+#define ADD_HL_BC 0x09
 #define LD_A_star_BC 0x0A
+#define DEC_BC 0x0B
 #define INC_C 0x0C
 #define DEC_C 0x0D
 #define LD_C_IMM8 0x0E
@@ -21,20 +23,25 @@
 #define LD_D_IMM8 0x16
 #define RLA 0x17
 #define LD_A_star_DE 0x1A
+#define DEC_DE 0x1B
 #define INC_E 0x1C
 #define DEC_E 0x1D
 #define LD_E_IMM8 0x1E
+#define INC_HL 0x23
 #define INC_L 0x24
 #define DEC_L 0x25
 #define LD_L_IMM8 0x26
+#define DEC_HL 0x2B
 #define INC_H 0x2C
 #define DEC_H 0x2D
 #define LD_H_IMM8 0x2E
 #define LD_star_HL_minus_A 0x32
+#define INC_SP 0x33
 #define INC_star_HL 0x34
 #define DEC_star_HL 0x35
 #define LD_star_HL_IMM8 0x36
 #define LD_A_star_HL_minus 0x3A
+#define DEC_SP 0x3B
 #define INC_A 0x3C
 #define DEC_A 0x3D
 #define LD_A_IMM8 0x3E
@@ -56,9 +63,9 @@ static struct instruction instructions[] =
   {"LD B, imm8",2,8},    // 6
   {"RLCA",1,4},          // 7
   {"LD (a16), SP",3,20}, // 8
-  {"dummy B",1,4},       // 9
+  {"ADD HL,BC",1,8},     // 9
   {"LD A, (BC)",1,8},    // A
-  {"dummy B",1,4},       // B
+  {"DEC BC",1,8},        // B
   {"INC C",1,4},         // C
   {"DEC C",1,4},         // D
   {"LD C, imm8",2,8},    // E
@@ -72,9 +79,9 @@ static struct instruction instructions[] =
   {"LD D, imm8",2,8},    //16
   {"RLA",1,4},           //17
   {"dummy B",1,4},       //18
-  {"dummy B",1,4},       //19
+  {"ADD HL,DE",1,8},     //19
   {"LD A, (DE)",1,8},    //1A
-  {"dummy B",1,4},       //1B
+  {"DEC DE",1,8},        //1B
   {"INC E",1,4},         //1C
   {"DEC E",1,4},         //1D
   {"LD E, imm8",2,8},    //1E
@@ -82,15 +89,15 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //20
   {"dummy B",1,4},       //21
   {"dummy B",1,4},       //22
-  {"dummy B",1,4},       //23
+  {"INC HL",1,8},        //23
   {"INC H",1,4},         //24
   {"DEC H",1,4},         //25
   {"LD H, imm8",2,8},    //26
   {"dummy B",1,4},       //27
   {"dummy B",1,4},       //28
-  {"dummy B",1,4},       //29
+  {"ADD HL,HL",1,8},     //29
   {"dummy B",1,4},       //2A
-  {"dummy B",1,4},       //2B
+  {"DEC HL",1,8},        //2B
   {"INC L",1,4},         //2C
   {"DEC L",1,4},         //2D
   {"LD L",2,8},          //2E
@@ -98,15 +105,15 @@ static struct instruction instructions[] =
   {"dummy B",1,4},       //30
   {"dummy B",1,4},       //31
   {"LD (HL-), A",1,8},   //32
-  {"dummy B",1,4},       //33
+  {"INC SP",1,8},        //33
   {"INC (HL)",1,4},      //34
   {"DEC (HL)",1,4},      //35
   {"LD (HL), imm8",2,12},//36
   {"dummy B",1,4},       //37
   {"dummy B",1,4},       //38
-  {"dummy B",1,4},       //39
+  {"ADD HL,SP",1,8},     //39
   {"LD A, (HL-)",1,8},   //3A
-  {"dummy B",1,4},       //3B
+  {"DEC SP",1,8},        //3B
   {"INC A",1,4},         //3C
   {"DEC A",1,4},         //3D
   {"LD A, imm8",2,8},    //3E

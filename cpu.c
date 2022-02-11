@@ -60,6 +60,10 @@ unsigned int step()
 	ldOp8ToMem(SP, addr+1);
       }
       RETURN_FROM_INS(LD_A16_SP)
+    case ADD_HL_BC:
+      PRINT_INS(ADD_HL_BC)
+      add16(&cp.HL, &cp.BC);
+      RETURN_FROM_INS(ADD_HL_BC);
     case LD_A_star_BC:
       PRINT_INS(LD_A_star_BC)
       ldOp8FromMem(cp.BC, &cp.A);
@@ -293,6 +297,18 @@ void dec8(uint8_t *data)
     cp.zf = 0;
 
   (*data)--;
+}
+
+void add16(uint16_t *op1, uint16_t *op2)
+{
+  uint32_t overflow16 = ((*op1 + *op2) >> 16);
+  uint16_t overflow8 = ((*op1 & 0x7FF) + (*op2 & 0x7FF)) >> 11;
+  cp.n = cp.h = cp.cf = 0;
+  if(overflow16)
+    cp.cf = 1;
+  if(overflow8)
+    cp.h = 1;
+  *op1 += *op2;
 }
 
 void incMem(uint16_t memAddr)
