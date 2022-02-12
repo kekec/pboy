@@ -188,6 +188,7 @@ unsigned int step()
       dec8(&cp.H);
       RETURN_FROM_INS(DEC_H)
     case LD_H_IMM8:
+      PRINT_INS(LD_H_IMM8)
       ldOp8FromMemAtPC(&cp.H);
       RETURN_FROM_INS(LD_H_IMM8)
     case DAA:
@@ -226,6 +227,11 @@ unsigned int step()
       PRINT_INS(LD_L_IMM8)
       ldOp8FromMemAtPC(&cp.L);
       RETURN_FROM_INS(LD_L_IMM8)
+    case CPL:
+      PRINT_INS(CPL)
+      cp.A = ~cp.A;
+      cp.h = cp.n = 1;
+      RETURN_FROM_INS(CPL)
     case JR_NC_IMM8:
       PRINT_INS(JR_NC_IMM8)
       if(cp.cf == 0)
@@ -262,7 +268,11 @@ unsigned int step()
 	ldOp8ToMem(data, cp.HL);
       }
       RETURN_FROM_INS(LD_star_HL_IMM8)
-    //case SCF:
+    case SCF:
+      PRINT_INS(SCF)
+      cp.n = cp.h = 0;
+      cp.cf = 1;
+      RETURN_FROM_INS(SCF)
     case JR_C_IMM8:
       PRINT_INS(JR_C_IMM8)
       if(cp.cf)
@@ -296,6 +306,11 @@ unsigned int step()
       PRINT_INS(LD_A_IMM8)
       ldOp8FromMemAtPC(&cp.A);
       RETURN_FROM_INS(LD_A_IMM8)
+    case CCF:
+      PRINT_INS(CCF)
+      cp.n = cp.h = 0;
+      cp.cf = ~cp.cf;
+      RETURN_FROM_INS(CCF)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;

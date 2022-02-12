@@ -63,7 +63,7 @@
 #define INC_A 0x3C
 #define DEC_A 0x3D
 #define LD_A_IMM8 0x3E
-#define CFF 0x3F
+#define CCF 0x3F
 
 struct instruction
 {
