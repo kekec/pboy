@@ -84,6 +84,15 @@ unsigned int step()
       PRINT_INS(LD_C_IMM8)
       ldOp8FromMemAtPC(&cp.C);
       RETURN_FROM_INS(LD_C_IMM8)
+    case RRCA:
+      PRINT_INS(RRCA)
+      rrcOp8(&cp.A);
+      RETURN_FROM_INS(RRCA)
+    case STOP:
+      PRINT_INS(STOP)
+      //RETURN_FROM_INS(STOP)
+      cp.halted = 1;
+      break;
     case LD_DE_IMM16:
       PRINT_INS(LD_DE_IMM16)
       ldOp16FromMem(cp.PC, &cp.DE);
@@ -110,8 +119,16 @@ unsigned int step()
       RETURN_FROM_INS(LD_D_IMM8)
     case RLA:
       PRINT_INS(RLA)
-      rl(&cp.A);
+      rlOp8(&cp.A);
       RETURN_FROM_INS(RLA)
+    case JR_IMM8:
+      PRINT_INS(JR_IMM8)
+      {
+        int8_t data;
+        ldOp8FromMemAtPC(&data);
+	cp.PC += data;
+      }
+      RETURN_FROM_INS(JR_IMM8)
     case ADD_HL_DE:
       PRINT_INS(ADD_HL_DE)
       add16(&cp.HL, &cp.DE);
@@ -136,6 +153,20 @@ unsigned int step()
       PRINT_INS(LD_E_IMM8)
       ldOp8FromMemAtPC(&cp.E);
       RETURN_FROM_INS(LD_E_IMM8)
+    case RRA:
+      PRINT_INS(RRA)
+      rrOp8(&cp.A);
+      RETURN_FROM_INS(RRA)
+    case JR_NZ_imm8:
+      PRINT_INS(JR_NZ_imm8)
+      if(cp.zf == 0)
+      {
+        int8_t data;
+	ldOp8FromMemAtPC(&data);
+        cp.PC += data;
+	//TODO: cycles += 4;
+      }
+      RETURN_FROM_INS(JR_NZ_imm8)
     case LD_HL_IMM16:
       PRINT_INS(LD_HL_IMM16)
       ldOp16FromMem(cp.PC, &cp.HL);
@@ -157,9 +188,21 @@ unsigned int step()
       dec8(&cp.H);
       RETURN_FROM_INS(DEC_H)
     case LD_H_IMM8:
-      PRINT_INS(LD_H_IMM8)
       ldOp8FromMemAtPC(&cp.H);
       RETURN_FROM_INS(LD_H_IMM8)
+    case DAA:
+      PRINT_INS(DAA)
+      //no idea how du adjust acc reg
+      RETURN_FROM_INS(DAA)
+    case JR_Z_IMM8:
+      PRINT_INS(JR_Z_IMM8)
+      if(cp.zf == 1)
+      {
+         int8_t data;
+	 ldOp8FromMemAtPC(&data);
+	 cp.PC += data;
+      }
+      RETURN_FROM_INS(JR_Z_IMM8)
     case ADD_HL_HL:
       PRINT_INS(ADD_HL_HL)
       add16(&cp.HL,&cp.HL);
@@ -183,11 +226,19 @@ unsigned int step()
       PRINT_INS(LD_L_IMM8)
       ldOp8FromMemAtPC(&cp.L);
       RETURN_FROM_INS(LD_L_IMM8)
-    case 0x31:
-      //printf("Load SP with 16 bit num\n");
+    case JR_NC_IMM8:
+      PRINT_INS(JR_NC_IMM8)
+      if(cp.cf == 0)
+      {
+        int8_t data;
+	ldOp8FromMemAtPC(&data);
+	cp.PC += data;
+      }
+      RETURN_FROM_INS(JR_NC_IMM8)
+    case LD_SP_IMM16:
+      PRINT_INS(LD_SP_IMM16)
       ldOp16FromMem(cp.PC, &cp.SP);
-      cp.PC = cp.PC + 2;
-      return 12;
+      RETURN_FROM_INS(LD_SP_IMM16)
     case LD_star_HL_minus_A:
       PRINT_INS(LD_star_HL_minus_A)
       ldOp8ToMem(cp.A,cp.HL--);
@@ -211,6 +262,16 @@ unsigned int step()
 	ldOp8ToMem(data, cp.HL);
       }
       RETURN_FROM_INS(LD_star_HL_IMM8)
+    //case SCF:
+    case JR_C_IMM8:
+      PRINT_INS(JR_C_IMM8)
+      if(cp.cf)
+      {
+        int8_t data;
+	ldOp8FromMemAtPC(&data);
+	cp.PC += data;
+      }
+      RETURN_FROM_INS(JR_C_IMM8)
     case ADD_HL_SP:
       PRINT_INS(ADD_HL_SP)
       add16(&cp.HL, &cp.SP);
@@ -368,7 +429,7 @@ void rlcOp8(uint8_t *data)
   }
 
 }
-void rl(uint8_t *data)
+void rlOp8(uint8_t *data)
 {
   uint8_t temp = *data;
   uint8_t old_carry = cp.cf;
@@ -380,4 +441,30 @@ void rl(uint8_t *data)
   if(temp & 0x80)
     cp.cf = 1;
 
+}
+void rrcOp8(uint8_t *data)
+{
+  uint8_t temp = *data;
+  cp.zf = cp.n = cp.h = cp.cf = 0;
+  *data = *data >> 1;
+  //if there is a carry from the shift set flag and put the carry to msb
+  if(temp & 0x01)
+  {
+    cp.cf = 1;
+    *data  = *data | 0x80;
+  }
+
+
+}
+void rrOp8(uint8_t *data)
+{
+  uint8_t temp = *data;
+  uint8_t old_carry = cp.cf;
+
+  cp.zf = cp.n = cp.h = cp.cf = 0;
+  *data = *data >> 1;
+  *data = *data | (old_carry << 7);
+
+  if(temp & 0x01)
+    cp.cf = 1;
 }

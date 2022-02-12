@@ -92,5 +92,10 @@ void incMem(uint16_t memAddr);
 void decMem(uint16_t memAddr);
 
 void rlcOp8(uint8_t *data);
-void rl(uint8_t *data);
+void rlOp8(uint8_t *data);
+
+void rrcOp8(uint8_t *data);
+void rrOp8(uint8_t *data);
+
+
 
