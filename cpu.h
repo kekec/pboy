@@ -98,5 +98,7 @@ void rlOp8(uint8_t *data);
 void rrcOp8(uint8_t *data);
 void rrOp8(uint8_t *data);
 
+void daa();
+
 
 

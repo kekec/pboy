@@ -191,9 +191,9 @@ unsigned int step()
       PRINT_INS(LD_H_IMM8)
       ldOp8FromMemAtPC(&cp.H);
       RETURN_FROM_INS(LD_H_IMM8)
-    case DAA:
+    case DAA: //thanks to: https://forums.nesdev.org/viewtopic.php?t=15944
       PRINT_INS(DAA)
-      //no idea how du adjust acc reg
+      daa();
       RETURN_FROM_INS(DAA)
     case JR_Z_IMM8:
       PRINT_INS(JR_Z_IMM8)
@@ -482,4 +482,19 @@ void rrOp8(uint8_t *data)
 
   if(temp & 0x01)
     cp.cf = 1;
+}
+void daa()
+{
+  if(cp.n == 0) //if called after addition
+  {
+    if(cp.cf || cp.A > 0x99) { cp.A += 0x60; cp.cf = 1; }
+    if(cp.h || ((cp.A & 0xF) > 9)) { cp.A += 0x06; }
+  }
+  else //if called after subtraction
+  {
+    if(cp.cf) { cp.A -= 0x60; }
+    if(cp.h) { cp.A -= 0x06; }
+  }
+  cp.zf = (cp.A == 0);
+  cp.h = 0;
 }
