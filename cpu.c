@@ -182,7 +182,7 @@ unsigned int step()
     case INC_H:
       PRINT_INS(INC_H)
       inc8(&cp.H);
-      RETURN_FROM_INS(INC_H)
+     RETURN_FROM_INS(INC_H)
     case DEC_H:
       PRINT_INS(DEC_H)
       dec8(&cp.H);
@@ -208,9 +208,10 @@ unsigned int step()
       PRINT_INS(ADD_HL_HL)
       add16(&cp.HL,&cp.HL);
       RETURN_FROM_INS(ADD_HL_HL)
-    case 0x2A:
+    case LD_A_star_HL_plus:
+      PRINT_INS(LD_A_star_HL_plus)
       cp.A = readMem(cp.HL++);
-      return 8;
+      RETURN_FROM_INS(LD_A_star_HL_plus)
     case DEC_HL:
       PRINT_INS(DEC_HL)
       cp.HL--;
@@ -249,9 +250,10 @@ unsigned int step()
       PRINT_INS(LD_star_HL_minus_A)
       ldOp8ToMem(cp.A,cp.HL--);
       RETURN_FROM_INS(LD_star_HL_minus_A)
-    case 0x33:
+    case INC_SP:
+      PRINT_INS(INC_SP)
       cp.SP++;
-      break;
+      RETURN_FROM_INS(INC_SP)
     case INC_star_HL:
       PRINT_INS(INC_star_HL)
       incMem(cp.HL);
@@ -311,6 +313,37 @@ unsigned int step()
       cp.n = cp.h = 0;
       cp.cf = ~cp.cf;
       RETURN_FROM_INS(CCF)
+    case LD_B_B:
+      PRINT_INS(LD_B_B)
+      RETURN_FROM_INS(LD_B_B)
+    case LD_B_C:
+      PRINT_INS(LD_B_C)
+      cp.B = cp.C;
+      RETURN_FROM_INS(LD_B_C)
+    case LD_B_D:
+      PRINT_INS(LD_B_D)
+      cp.B = cp.D;
+      RETURN_FROM_INS(LD_B_D)
+    case LD_B_E:
+      PRINT_INS(LD_B_E)
+      cp.B = cp.E;
+      RETURN_FROM_INS(LD_B_E)
+    case LD_B_H:
+      PRINT_INS(LD_B_H)
+      cp.B = cp.H;
+      RETURN_FROM_INS(LD_B_H)
+    case LD_B_L:
+      PRINT_INS(LD_B_L)
+      cp.B = cp.L;
+      RETURN_FROM_INS(LD_B_L)
+    case LD_B_star_HL:
+      PRINT_INS(LD_B_star_HL)
+      ldOp8FromMem(cp.HL, &cp.B);
+      RETURN_FROM_INS(LD_B_star_HL)
+    case LD_B_A:
+      PRINT_INS(LD_B_A)
+      cp.B = cp.A;
+      RETURN_FROM_INS(LD_B_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;

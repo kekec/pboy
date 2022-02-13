@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "stdio.h"
 
-//#define PRINT_INS(arg) print_ins(arg);
+#define PRINT_INS_FOO(arg) print_ins(arg);
 #define PRINT_INS(arg)
 #define RETURN_FROM_INS(arg) move_pc(arg); break;
 
@@ -53,8 +53,8 @@ struct cpu
   {
     struct
     {
-       uint8_t H;
        uint8_t L;
+       uint8_t H;
     };
     uint16_t HL;
   };
