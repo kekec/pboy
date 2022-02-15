@@ -137,6 +137,78 @@
 #define LD_A_star_HL 0x7E
 #define LD_A_A 0x7F
 
+#define ADD_A_B 0x80
+#define ADD_A_C 0x81
+#define ADD_A_D 0x82
+#define ADD_A_E 0x83
+#define ADD_A_H 0x84
+#define ADD_A_L 0x85
+#define ADD_A_star_HL 0x86
+#define ADD_A_A 0x87
+
+#define ADC_A_B 0x88
+#define ADC_A_C 0x89
+#define ADC_A_D 0x8A
+#define ADC_A_E 0x8B
+#define ADC_A_H 0x8C
+#define ADC_A_L 0x8D
+#define ADC_A_star_HL 0x8E
+#define ADC_A_A 0x8F
+
+#define SUB_B 0x90
+#define SUB_C 0x91
+#define SUB_D 0x92
+#define SUB_E 0x93
+#define SUB_H 0x94
+#define SUB_L 0x95
+#define SUB_star_HL 0x96
+#define SUB_A 0x97
+
+#define SBC_B 0x98
+#define SBC_C 0x99
+#define SBC_D 0x9A
+#define SBC_E 0x9B
+#define SBC_H 0x9C
+#define SBC_L 0x9D
+#define SBC_star_HL 0x9E
+#define SBC_A 0x9F
+
+#define AND_B 0xA0
+#define AND_C 0xA1
+#define AND_D 0xA2
+#define AND_E 0xA3
+#define AND_H 0xA4
+#define AND_L 0xA5
+#define AND_star_HL 0xA6
+#define AND_A 0xA7
+
+#define XOR_B 0xA8
+#define XOR_C 0xA9
+#define XOR_D 0xAA
+#define XOR_E 0xAB
+#define XOR_H 0xAC
+#define XOR_L 0xAD
+#define XOR_star_HL 0xAE
+#define XOR_A 0xAF
+
+#define OR_B 0xB0
+#define OR_C 0xB1
+#define OR_D 0xB2
+#define OR_E 0xB3
+#define OR_H 0xB4
+#define OR_L 0xB5
+#define OR_star_HL 0xB6
+#define OR_A 0xB7
+
+#define CP_B 0xB8
+#define CP_C 0xB9
+#define CP_D 0xBA
+#define CP_E 0xBB
+#define CP_H 0xBC
+#define CP_L 0xBD
+#define CP_star_HL 0xBE
+#define CP_A 0xBF
+
 struct instruction
 {
   char * string;
@@ -273,4 +345,69 @@ static struct instruction instructions[] =
   {"LD A, L", 1, 4},     //7d
   {"LD A, (HL)", 1, 8},  //7e
   {"LD A, A", 1, 4},     //7f
+  {"ADD A, B", 1, 4},    //80
+  {"ADD A, C", 1, 4},    //81
+  {"ADD A, D", 1, 4},    //82
+  {"ADD A, E", 1, 4},    //83
+  {"ADD A, H", 1, 4},    //84
+  {"ADD A, L", 1, 4},    //85
+  {"ADD A, (HL)", 1, 8}, //86
+  {"ADD A, A", 1, 4},    //87
+  {"ADC A, B", 1, 4},    //88
+  {"ADC A, C", 1, 4},    //89
+  {"ADC A, D", 1, 4},    //8A
+  {"ADC A, E", 1, 4},    //8B
+  {"ADC A, H", 1, 4},    //8C
+  {"ADC A, L", 1, 4},    //8D
+  {"ADC A, (HL)", 1, 8}, //8E
+  {"ADC A, A", 1, 4},    //8F
+  {"SUB B", 1, 4},       //90
+  {"SUB C", 1, 4},       //91
+  {"SUB D", 1, 4},       //92
+  {"SUB E", 1, 4},       //93
+  {"SUB H", 1, 4},       //94
+  {"SUB L", 1, 4},       //95
+  {"SUB (HL)", 1, 8},    //96
+  {"SUB A", 1, 4},       //97
+  {"SBC B", 1, 4},       //98
+  {"SBC C", 1, 4},       //99
+  {"SBC D", 1, 4},       //9A
+  {"SBC E", 1, 4},       //9B
+  {"SBC H", 1, 4},       //9C
+  {"SBC L", 1, 4},       //9D
+  {"SBC (HL)", 1, 8},    //9E
+  {"SBC A", 1, 4},       //9F
+  {"AND B", 1, 4},       //A0
+  {"AND C", 1, 4},       //A1
+  {"AND D", 1, 4},       //A2
+  {"AND E", 1, 4},       //A3
+  {"AND H", 1, 4},       //A4
+  {"AND L", 1, 4},       //A5
+  {"AND (HL)", 1, 8},    //A6
+  {"AND A", 1, 4},       //A7
+  {"XOR B", 1, 4},       //A8
+  {"XOR C", 1, 4},       //A9
+  {"XOR D", 1, 4},       //AA
+  {"XOR E", 1, 4},       //AB
+  {"XOR H", 1, 4},       //AC
+  {"XOR L", 1, 4},       //AD
+  {"XOR (HL)", 1, 8},    //AE
+  {"XOR A", 1, 4},       //AF
+  {"OR B", 1, 4},        //B0
+  {"OR C", 1, 4},        //B1
+  {"OR D", 1, 4},        //B2
+  {"OR E", 1, 4},        //B3
+  {"OR H", 1, 4},        //B4
+  {"OR L", 1, 4},        //B5
+  {"OR (HL)", 1, 8},     //B6
+  {"OR A", 1, 4},        //B7
+  {"CP B", 1, 4},        //B8
+  {"CP C", 1, 4},        //B9
+  {"CP D", 1, 4},        //BA
+  {"CP E", 1, 4},        //BB
+  {"CP H", 1, 4},        //BC
+  {"CP L", 1, 4},        //BD
+  {"CP (HL)", 1, 8},     //BE
+  {"CP A", 1, 4},        //BF
+
 };

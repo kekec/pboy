@@ -563,6 +563,42 @@ unsigned int step()
     case LD_A_A:
       PRINT_INS(LD_A_A)
       RETURN_FROM_INS(LD_A_A)
+    case ADD_A_B:
+      PRINT_INS(ADD_A_B)
+      add8(&cp.A, &cp.B);
+      RETURN_FROM_INS(ADD_A_B)
+    case ADD_A_C:
+      PRINT_INS(ADD_A_C)
+      add8(&cp.A, &cp.C);
+      RETURN_FROM_INS(ADD_A_C)
+    case ADD_A_D:
+      PRINT_INS(ADD_A_D)
+      add8(&cp.A, &cp.D);
+      RETURN_FROM_INS(ADD_A_D)
+    case ADD_A_E:
+      PRINT_INS(ADD_A_E)
+      add8(&cp.A, &cp.E);
+      RETURN_FROM_INS(ADD_A_E)
+    case ADD_A_H:
+      PRINT_INS(ADD_A_H)
+      add8(&cp.A, &cp.H);
+      RETURN_FROM_INS(ADD_A_H)
+    case ADD_A_L:
+      PRINT_INS(ADD_A_L)
+      add8(&cp.A, &cp.L);
+      RETURN_FROM_INS(ADD_A_L)
+    case ADD_A_star_HL:
+      PRINT_INS(ADD_A_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        add8(&cp.A, &data);
+      }
+      RETURN_FROM_INS(ADD_A_star_HL)
+    case ADD_A_A:
+      PRINT_INS(ADD_A_A)
+      add8(&cp.A, &cp.A);
+      RETURN_FROM_INS(ADD_A_A)
  
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
@@ -666,6 +702,21 @@ void add16(uint16_t *op1, uint16_t *op2)
   if(overflow11)
     cp.h = 1;
   *op1 += *op2;
+}
+
+void add8(uint8_t *op1, uint8_t *op2)
+{
+  uint16_t overflow8 = ((*op1 + *op2) >> 8);
+  uint8_t overflow3 = ((*op1 & 0x7) + (*op2 & 0x7)) >> 3;
+  cp.n = cp.h = cp.cf = cp.zf = 0;
+  if(overflow8)
+    cp.cf = 1;
+  if(overflow3)
+    cp.h = 1;
+  *op1 += *op2;
+
+  if(*op1 == 0)
+    cp.zf = 1;
 }
 
 void incMem(uint16_t memAddr)
