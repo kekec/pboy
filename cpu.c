@@ -344,6 +344,226 @@ unsigned int step()
       PRINT_INS(LD_B_A)
       cp.B = cp.A;
       RETURN_FROM_INS(LD_B_A)
+    case LD_C_B:
+      PRINT_INS(LD_C_B)
+      cp.C = cp.B;
+      RETURN_FROM_INS(LD_C_B)
+    case LD_C_C:
+      PRINT_INS(LD_C_C)
+      RETURN_FROM_INS(LD_C_C)
+    case LD_C_D:
+      PRINT_INS(LD_C_D)
+      cp.C = cp.D;
+      RETURN_FROM_INS(LD_C_D)
+    case LD_C_E:
+      PRINT_INS(LD_C_E)
+      cp.C = cp.E;
+      RETURN_FROM_INS(LD_C_E)
+    case LD_C_H:
+      PRINT_INS(LD_C_H)
+      cp.C = cp.H;
+      RETURN_FROM_INS(LD_C_H)
+    case LD_C_L:
+      PRINT_INS(LD_C_L)
+      cp.C = cp.L;
+      RETURN_FROM_INS(LD_C_L)
+    case LD_C_star_HL:
+      PRINT_INS(LD_C_star_HL)
+      ldOp8FromMem(cp.HL, &cp.C);
+      RETURN_FROM_INS(LD_C_star_HL)
+    case LD_C_A:
+      PRINT_INS(LD_C_A)
+      cp.C = cp.A;
+      RETURN_FROM_INS(LD_C_A)
+    case LD_D_B:
+      PRINT_INS(LD_D_B)
+      cp.D = cp.B;
+      RETURN_FROM_INS(LD_D_B)
+    case LD_D_C:
+      PRINT_INS(LD_D_C)
+      cp.D = cp.C;
+      RETURN_FROM_INS(LD_D_C)
+    case LD_D_D:
+      PRINT_INS(LD_D_D)
+      RETURN_FROM_INS(LD_D_D)
+    case LD_D_E:
+      PRINT_INS(LD_D_E)
+      cp.D = cp.E;
+      RETURN_FROM_INS(LD_D_E)
+    case LD_D_H:
+      PRINT_INS(LD_D_H)
+      cp.D = cp.H;
+      RETURN_FROM_INS(LD_D_H)
+    case LD_D_L:
+      PRINT_INS(LD_D_L)
+      cp.D = cp.L;
+      RETURN_FROM_INS(LD_D_L)
+    case LD_D_star_HL:
+      PRINT_INS(LD_D_star_HL)
+      ldOp8FromMem(cp.HL, &cp.D);
+      RETURN_FROM_INS(LD_D_star_HL)
+    case LD_D_A:
+      PRINT_INS(LD_D_A)
+      cp.D = cp.A;
+      RETURN_FROM_INS(LD_D_A)
+    case LD_E_B:
+      PRINT_INS(LD_E_B)
+      cp.E = cp.B;
+      RETURN_FROM_INS(LD_E_B)
+    case LD_E_C:
+      PRINT_INS(LD_E_C)
+      cp.E = cp.C;
+      RETURN_FROM_INS(LD_E_C)
+    case LD_E_D:
+      PRINT_INS(LD_E_D)
+      cp.E = cp.D;
+      RETURN_FROM_INS(LD_E_D)
+    case LD_E_E:
+      PRINT_INS(LD_E_E)
+      RETURN_FROM_INS(LD_E_E)
+    case LD_E_H:
+      PRINT_INS(LD_E_H)
+      cp.E = cp.H;
+      RETURN_FROM_INS(LD_E_H)
+    case LD_E_L:
+      PRINT_INS(LD_E_L)
+      cp.E = cp.L;
+      RETURN_FROM_INS(LD_E_L)
+    case LD_E_star_HL:
+      PRINT_INS(LD_E_star_HL)
+      ldOp8FromMem(cp.HL, &cp.E);
+      RETURN_FROM_INS(LD_E_star_HL)
+    case LD_E_A:
+      PRINT_INS(LD_E_A)
+      cp.E = cp.A;
+      RETURN_FROM_INS(LD_E_A)
+    case LD_H_B:
+      PRINT_INS(LD_H_B)
+      cp.H = cp.B;
+      RETURN_FROM_INS(LD_H_B)
+    case LD_H_C:
+      PRINT_INS(LD_H_C)
+      cp.H = cp.C;
+      RETURN_FROM_INS(LD_H_C)
+    case LD_H_D:
+      PRINT_INS(LD_H_D)
+      cp.H = cp.D;
+      RETURN_FROM_INS(LD_H_D)
+    case LD_H_E:
+      PRINT_INS(LD_H_E)
+      cp.H = cp.E;
+      RETURN_FROM_INS(LD_H_E)
+    case LD_H_H:
+      PRINT_INS(LD_H_H)
+      RETURN_FROM_INS(LD_H_H)
+    case LD_H_L:
+      PRINT_INS(LD_H_L)
+      cp.H = cp.L;
+      RETURN_FROM_INS(LD_H_L)
+    case LD_H_star_HL:
+      PRINT_INS(LD_H_star_HL)
+      ldOp8FromMem(cp.HL, &cp.H);
+      RETURN_FROM_INS(LD_H_star_HL)
+    case LD_H_A:
+      PRINT_INS(LD_H_A)
+      cp.H = cp.A;
+      RETURN_FROM_INS(LD_H_A)
+    case LD_L_B:
+      PRINT_INS(LD_L_B)
+      cp.L = cp.B;
+      RETURN_FROM_INS(LD_L_B)
+    case LD_L_C:
+      PRINT_INS(LD_L_C)
+      cp.L = cp.C;
+      RETURN_FROM_INS(LD_L_C)
+    case LD_L_D:
+      PRINT_INS(LD_L_D)
+      cp.L = cp.D;
+      RETURN_FROM_INS(LD_L_D)
+    case LD_L_E:
+      PRINT_INS(LD_L_E)
+      cp.L = cp.E;
+      RETURN_FROM_INS(LD_L_E)
+    case LD_L_H:
+      PRINT_INS(LD_L_H)
+      cp.L = cp.H;
+      RETURN_FROM_INS(LD_L_H)
+    case LD_L_L:
+      PRINT_INS(LD_L_L)
+      RETURN_FROM_INS(LD_L_L)
+    case LD_L_star_HL:
+      PRINT_INS(LD_L_star_HL)
+      ldOp8FromMem(cp.HL, &cp.L);
+      RETURN_FROM_INS(LD_L_star_HL)
+    case LD_L_A:
+      PRINT_INS(LD_L_A)
+      cp.L = cp.A;
+      RETURN_FROM_INS(LD_L_A)
+    case LD_star_HL_B:
+      PRINT_INS(LD_star_HL_B)
+      ldOp8ToMem(cp.B, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_B)
+    case LD_star_HL_C:
+      PRINT_INS(LD_star_HL_C)
+      ldOp8ToMem(cp.C, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_C)
+    case LD_star_HL_D:
+      PRINT_INS(LD_star_HL_D)
+      ldOp8ToMem(cp.D, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_D)
+    case LD_star_HL_E:
+      PRINT_INS(LD_star_HL_E)
+      ldOp8ToMem(cp.E, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_E)
+    case LD_star_HL_H:
+      PRINT_INS(LD_star_HL_H)
+      ldOp8ToMem(cp.H, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_H)
+    case LD_star_HL_L:
+      PRINT_INS(LD_star_HL_L)
+      ldOp8ToMem(cp.L, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_L)
+    case LD_star_HL_star_HL:
+      PRINT_INS(LD_star_HL_star_HL)
+      cp.halted = true;
+      break;
+//      RETURN_FROM_INS(LD_star_HL_star_HL)
+    case LD_star_HL_A:
+      PRINT_INS(LD_star_HL_A)
+      ldOp8ToMem(cp.A, cp.HL);
+      RETURN_FROM_INS(LD_star_HL_A)
+    case LD_A_B:
+      PRINT_INS(LD_A_B)
+      cp.A = cp.B;
+      RETURN_FROM_INS(LD_A_B)
+    case LD_A_C:
+      PRINT_INS(LD_A_C)
+      cp.A = cp.C;
+      RETURN_FROM_INS(LD_A_C)
+    case LD_A_D:
+      PRINT_INS(LD_A_D)
+      cp.A = cp.D;
+      RETURN_FROM_INS(LD_A_D)
+    case LD_A_E:
+      PRINT_INS(LD_A_E)
+      cp.A = cp.E;
+      RETURN_FROM_INS(LD_A_E)
+    case LD_A_H:
+      PRINT_INS(LD_A_H)
+      cp.A = cp.H;
+      RETURN_FROM_INS(LD_A_H)
+    case LD_A_L:
+      PRINT_INS(LD_A_L)
+      cp.A = cp.L;
+      RETURN_FROM_INS(LD_A_L)
+    case LD_A_star_HL:
+      PRINT_INS(LD_A_star_HL)
+      ldOp8FromMem(cp.HL, &cp.A);
+      RETURN_FROM_INS(LD_A_star_HL)
+    case LD_A_A:
+      PRINT_INS(LD_A_A)
+      RETURN_FROM_INS(LD_A_A)
+ 
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
