@@ -599,7 +599,42 @@ unsigned int step()
       PRINT_INS(ADD_A_A)
       add8(&cp.A, &cp.A);
       RETURN_FROM_INS(ADD_A_A)
- 
+    case ADC_A_B:
+      PRINT_INS(ADC_A_B)
+      adc8(&cp.A, &cp.B);
+      RETURN_FROM_INS(ADC_A_B)
+    case ADC_A_C:
+      PRINT_INS(ADC_A_C)
+      adc8(&cp.A, &cp.C);
+      RETURN_FROM_INS(ADC_A_C)
+    case ADC_A_D:
+      PRINT_INS(ADC_A_D)
+      adc8(&cp.A, &cp.D);
+      RETURN_FROM_INS(ADC_A_D)
+    case ADC_A_E:
+      PRINT_INS(ADC_A_E)
+      adc8(&cp.A, &cp.E);
+      RETURN_FROM_INS(ADC_A_E)
+    case ADC_A_H:
+      PRINT_INS(ADC_A_H)
+      adc8(&cp.A, &cp.H);
+      RETURN_FROM_INS(ADC_A_H)
+    case ADC_A_L:
+      PRINT_INS(ADC_A_L)
+      adc8(&cp.A, &cp.L);
+      RETURN_FROM_INS(ADC_A_L)
+    case ADC_A_star_HL:
+      PRINT_INS(ADC_A_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        adc8(&cp.A, &data);
+      }
+      RETURN_FROM_INS(ADC_A_star_HL)
+    case ADC_A_A:
+      PRINT_INS(ADC_A_A)
+      adc8(&cp.A, &cp.A);
+      RETURN_FROM_INS(ADC_A_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -717,6 +752,28 @@ void add8(uint8_t *op1, uint8_t *op2)
 
   if(*op1 == 0)
     cp.zf = 1;
+}
+
+void adc8(uint8_t *op1, uint8_t *op2)
+{
+  cp.n = 0;
+  uint16_t result;
+  uint8_t halfcarry;
+  halfcarry = (*op1 & 0xF) + (*op2 & 0xF) + cp.cf;
+  result = *op1 + *op2 + cp.cf;
+
+  if(halfcarry >> 4)
+    cp.h = 1;
+  else
+    cp.h = 0;
+
+  if(result >> 8)
+    cp.cf = 1;
+  else
+    cp.cf = 0;
+
+   *op1 = (result & 0xFF);
+   cp.zf = (*op1 == 0);
 }
 
 void incMem(uint16_t memAddr)
