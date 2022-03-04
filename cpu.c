@@ -635,6 +635,78 @@ unsigned int step()
       PRINT_INS(ADC_A_A)
       adc8(&cp.A, &cp.A);
       RETURN_FROM_INS(ADC_A_A)
+    case SUB_B:
+      PRINT_INS(SUB_B)
+      sub8(&cp.B);
+      RETURN_FROM_INS(SUB_B)
+    case SUB_C:
+      PRINT_INS(SUB_C)
+      sub8(&cp.C);
+      RETURN_FROM_INS(SUB_C)
+     case SUB_D:
+      PRINT_INS(SUB_D)
+      sub8(&cp.D);
+      RETURN_FROM_INS(SUB_D)
+     case SUB_E:
+      PRINT_INS(SUB_E)
+      sub8(&cp.E);
+      RETURN_FROM_INS(SUB_E)
+     case SUB_H:
+      PRINT_INS(SUB_H)
+      sub8(&cp.H);
+      RETURN_FROM_INS(SUB_H)
+     case SUB_L:
+      PRINT_INS(SUB_L)
+      sub8(&cp.L);
+      RETURN_FROM_INS(SUB_L)
+     case SUB_star_HL:
+      PRINT_INS(SUB_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        sub8(&data);
+      }
+      RETURN_FROM_INS(SUB_star_HL)
+     case SUB_A:
+      PRINT_INS(SUB_A)
+      sub8(&cp.A);
+      RETURN_FROM_INS(SUB_A)
+     case SBC_B:
+      PRINT_INS(SBC_B)
+      sbc8(&cp.B);
+      RETURN_FROM_INS(SBC_B)
+     case SBC_C:
+      PRINT_INS(SBC_C)
+      sbc8(&cp.C);
+      RETURN_FROM_INS(SBC_C)
+     case SBC_D:
+      PRINT_INS(SBC_D)
+      sbc8(&cp.D);
+      RETURN_FROM_INS(SBC_D)
+     case SBC_E:
+      PRINT_INS(SBC_E)
+      sbc8(&cp.E);
+      RETURN_FROM_INS(SBC_E)
+     case SBC_H:
+      PRINT_INS(SBC_H)
+      sbc8(&cp.H);
+      RETURN_FROM_INS(SBC_H)
+     case SBC_L:
+      PRINT_INS(SBC_L)
+      sbc8(&cp.L);
+      RETURN_FROM_INS(SBC_L)
+     case SBC_star_HL:
+      PRINT_INS(SBC_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        sbc8(&data);
+      }
+      RETURN_FROM_INS(SBC_star_HL)
+    case SBC_A:
+      PRINT_INS(SBC_A)
+      sbc8(&cp.A);
+      RETURN_FROM_INS(SBC_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -725,6 +797,41 @@ void dec8(uint8_t *data)
     cp.zf = 0;
 
   (*data)--;
+}
+
+void sub8(uint8_t *op)
+{
+  cp.h = 0;
+  cp.cf = 0;
+  cp.n = 1;
+
+  if(*op > cp.A)
+    cp.cf = 1;
+
+  if((*op & 0xF) > (cp.A & 0xF))
+    cp.h = 1;
+
+  cp.A =  cp.A - *op;
+  cp.zf = (cp.A == 0);
+}
+
+void sbc8(uint8_t *op)
+{
+  cp.n = 1;
+  cp.h = 0;
+  uint8_t carry = 0;
+  if( (*op + cp.cf) > cp.A )
+    carry = 1;
+
+  int8_t halfcarry;
+  halfcarry = (cp.A & 0xF) - (*op & 0xF) - cp.cf;
+  if( halfcarry < 0 )
+    cp.h = 1;
+
+  cp.A =  cp.A - *op - cp.cf;
+
+  cp.cf = carry;
+  cp.zf = (cp.A == 0);
 }
 
 void add16(uint16_t *op1, uint16_t *op2)
