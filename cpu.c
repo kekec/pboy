@@ -643,23 +643,23 @@ unsigned int step()
       PRINT_INS(SUB_C)
       sub8(&cp.C);
       RETURN_FROM_INS(SUB_C)
-     case SUB_D:
+    case SUB_D:
       PRINT_INS(SUB_D)
       sub8(&cp.D);
       RETURN_FROM_INS(SUB_D)
-     case SUB_E:
+    case SUB_E:
       PRINT_INS(SUB_E)
       sub8(&cp.E);
       RETURN_FROM_INS(SUB_E)
-     case SUB_H:
+    case SUB_H:
       PRINT_INS(SUB_H)
       sub8(&cp.H);
       RETURN_FROM_INS(SUB_H)
-     case SUB_L:
+    case SUB_L:
       PRINT_INS(SUB_L)
       sub8(&cp.L);
       RETURN_FROM_INS(SUB_L)
-     case SUB_star_HL:
+    case SUB_star_HL:
       PRINT_INS(SUB_star_HL)
       {
 	uint8_t data;
@@ -667,35 +667,35 @@ unsigned int step()
         sub8(&data);
       }
       RETURN_FROM_INS(SUB_star_HL)
-     case SUB_A:
+    case SUB_A:
       PRINT_INS(SUB_A)
       sub8(&cp.A);
       RETURN_FROM_INS(SUB_A)
-     case SBC_B:
+    case SBC_B:
       PRINT_INS(SBC_B)
       sbc8(&cp.B);
       RETURN_FROM_INS(SBC_B)
-     case SBC_C:
+    case SBC_C:
       PRINT_INS(SBC_C)
       sbc8(&cp.C);
       RETURN_FROM_INS(SBC_C)
-     case SBC_D:
+    case SBC_D:
       PRINT_INS(SBC_D)
       sbc8(&cp.D);
       RETURN_FROM_INS(SBC_D)
-     case SBC_E:
+    case SBC_E:
       PRINT_INS(SBC_E)
       sbc8(&cp.E);
       RETURN_FROM_INS(SBC_E)
-     case SBC_H:
+    case SBC_H:
       PRINT_INS(SBC_H)
       sbc8(&cp.H);
       RETURN_FROM_INS(SBC_H)
-     case SBC_L:
+    case SBC_L:
       PRINT_INS(SBC_L)
       sbc8(&cp.L);
       RETURN_FROM_INS(SBC_L)
-     case SBC_star_HL:
+    case SBC_star_HL:
       PRINT_INS(SBC_star_HL)
       {
 	uint8_t data;
@@ -707,6 +707,150 @@ unsigned int step()
       PRINT_INS(SBC_A)
       sbc8(&cp.A);
       RETURN_FROM_INS(SBC_A)
+    case AND_B:
+      PRINT_INS(AND_B)
+      and8(&cp.B);
+      RETURN_FROM_INS(AND_B)
+    case AND_C:
+      PRINT_INS(AND_C)
+      and8(&cp.C);
+      RETURN_FROM_INS(AND_C)
+    case AND_D:
+      PRINT_INS(AND_D)
+      and8(&cp.D);
+      RETURN_FROM_INS(AND_D)
+    case AND_E:
+      PRINT_INS(AND_E)
+      and8(&cp.E);
+      RETURN_FROM_INS(AND_E)
+    case AND_H:
+      PRINT_INS(AND_H)
+      and8(&cp.H);
+      RETURN_FROM_INS(AND_H)
+    case AND_L:
+      PRINT_INS(AND_L)
+      and8(&cp.L);
+      RETURN_FROM_INS(AND_L)
+    case AND_star_HL:
+      PRINT_INS(SBC_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        and8(&data);
+      }
+      RETURN_FROM_INS(AND_star_HL)
+    case AND_A:
+      PRINT_INS(AND_A)
+      and8(&cp.A);
+      RETURN_FROM_INS(AND_A)
+    case XOR_B:
+      PRINT_INS(XOR_B)
+      xor8(&cp.B);
+      RETURN_FROM_INS(XOR_B)
+    case XOR_C:
+      PRINT_INS(XOR_C)
+      xor8(&cp.C);
+      RETURN_FROM_INS(XOR_C)
+    case XOR_D:
+      PRINT_INS(XOR_D)
+      xor8(&cp.D);
+      RETURN_FROM_INS(XOR_D)
+    case XOR_E:
+      PRINT_INS(XOR_E)
+      xor8(&cp.E);
+      RETURN_FROM_INS(XOR_E)
+    case XOR_H:
+      PRINT_INS(XOR_H)
+      xor8(&cp.H);
+      RETURN_FROM_INS(XOR_H)
+    case XOR_L:
+      PRINT_INS(XOR_L)
+      xor8(&cp.L);
+      RETURN_FROM_INS(XOR_L)
+    case XOR_star_HL:
+      PRINT_INS(SBC_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        xor8(&data);
+      }
+      RETURN_FROM_INS(XOR_star_HL)
+    case XOR_A:
+      PRINT_INS(XOR_A)
+      xor8(&cp.A);
+      RETURN_FROM_INS(XOR_A)
+    case OR_B:
+      PRINT_INS(OR_B)
+      or8(&cp.B);
+      RETURN_FROM_INS(OR_B)
+    case OR_C:
+      PRINT_INS(OR_C)
+      or8(&cp.C);
+      RETURN_FROM_INS(OR_C)
+    case OR_D:
+      PRINT_INS(OR_D)
+      or8(&cp.D);
+      RETURN_FROM_INS(OR_D)
+    case OR_E:
+      PRINT_INS(OR_E)
+      or8(&cp.E);
+      RETURN_FROM_INS(OR_E)
+    case OR_H:
+      PRINT_INS(OR_H)
+      or8(&cp.H);
+      RETURN_FROM_INS(OR_H)
+    case OR_L:
+      PRINT_INS(OR_L)
+      or8(&cp.L);
+      RETURN_FROM_INS(OR_L)
+    case OR_star_HL:
+      PRINT_INS(SBC_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        or8(&data);
+      }
+      RETURN_FROM_INS(OR_star_HL)
+    case OR_A:
+      PRINT_INS(OR_A)
+      or8(&cp.A);
+      RETURN_FROM_INS(OR_A)
+    case CP_B:
+      PRINT_INS(CP_B)
+      cp8(&cp.B);
+      RETURN_FROM_INS(CP_B)
+    case CP_C:
+      PRINT_INS(CP_C)
+      cp8(&cp.C);
+      RETURN_FROM_INS(CP_C)
+    case CP_D:
+      PRINT_INS(CP_D)
+      cp8(&cp.D);
+      RETURN_FROM_INS(CP_D)
+    case CP_E:
+      PRINT_INS(CP_E)
+      cp8(&cp.E);
+      RETURN_FROM_INS(CP_E)
+    case CP_H:
+      PRINT_INS(CP_H)
+      cp8(&cp.H);
+      RETURN_FROM_INS(CP_H)
+    case CP_L:
+      PRINT_INS(CP_L)
+      cp8(&cp.L);
+      RETURN_FROM_INS(CP_L)
+    case CP_star_HL:
+      PRINT_INS(SBC_star_HL)
+      {
+	uint8_t data;
+	ldOp8FromMem(cp.HL, &data);
+        cp8(&data);
+      }
+      RETURN_FROM_INS(CP_star_HL)
+    case CP_A:
+      PRINT_INS(CP_A)
+      cp8(&cp.A);
+      RETURN_FROM_INS(CP_A)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -832,6 +976,49 @@ void sbc8(uint8_t *op)
 
   cp.cf = carry;
   cp.zf = (cp.A == 0);
+}
+
+void and8(uint8_t *op)
+{
+  cp.n = 0;
+  cp.h = 1; 
+  cp.cf = 0;
+
+  cp.A = cp.A & *op;
+  cp.zf = cp.A == 0;
+}
+void xor8(uint8_t *op)
+{
+  cp.n = 0;
+  cp.h = 0;
+  cp.cf = 0;
+
+  cp.A = cp.A ^ *op;
+  cp.zf = cp.A == 0;
+}
+void or8(uint8_t *op)
+{
+  cp.n = 0;
+  cp.h = 0;
+  cp.cf = 0;
+
+  cp.A = cp.A | *op;
+  cp.zf = cp.A == 0;
+}
+
+void cp8(uint8_t *op)
+{
+  cp.n = 1;
+  cp.h = 0;
+  cp.cf = 0;
+
+  if(cp.A < *op)
+    cp.cf = 1;
+
+  if( (cp.A & 0xF) < (*op & 0xF))
+    cp.h = 1;
+
+  cp.zf = cp.A == *op;
 }
 
 void add16(uint16_t *op1, uint16_t *op2)

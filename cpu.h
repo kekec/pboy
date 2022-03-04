@@ -92,6 +92,11 @@ void add8(uint8_t *op1, uint8_t *op2);
 void adc8(uint8_t *op1, uint8_t *op2);
 void sub8(uint8_t *op);
 void sbc8(uint8_t *op);
+void and8(uint8_t *op);
+void xor8(uint8_t *op);
+void or8(uint8_t *op);
+void cp8(uint8_t *op);
+
 void add16(uint16_t *op1, uint16_t *op2);
 void incMem(uint16_t memAddr);
 void decMem(uint16_t memAddr);
