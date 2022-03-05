@@ -916,10 +916,22 @@ unsigned int step()
       PRINT_INS(RST_3)
       rst(RST_3);
       RETURN_FROM_INS(RST_3)
+    case LD_star_IMM8_A:
+      PRINT_INS(LD_star_IMM8_A)
+      {
+        uint8_t offset;
+        ldOp8FromMemAtPC(&offset);
+        ldOp8ToMem(cp.A, 0xFF00 | offset);
+      }
+      RETURN_FROM_INS(LD_star_IMM8_A)
     case POP_HL:
       PRINT_INS(POP_HL)
       pop16(&cp.HL);
       RETURN_FROM_INS(POP_HL)
+    case LD_star_C_A:
+      PRINT_INS(LD_C_A)
+      ldOp8ToMem(cp.A, 0xFF00 | cp.C);
+      RETURN_FROM_INS(LD_C_A)
     case PUSH_HL:
       PRINT_INS(PUSH_HL)
       push16(cp.HL);
@@ -936,6 +948,14 @@ unsigned int step()
       PRINT_INS(RST_4)
       rst(RST_4);
       RETURN_FROM_INS(RST_4)
+    case LD_star_IMM16_A:
+      PRINT_INS(LD_star_IMM16_A)
+      {
+        uint16_t addr;
+        ldOp16FromMemAtPC(&addr);
+        ldOp8ToMem(cp.A, addr);
+      }
+      RETURN_FROM_INS(LD_star_IMM16_A)
     case XOR_IMM8:
       PRINT_INS(XOR_IMM8)
       {
@@ -948,10 +968,22 @@ unsigned int step()
       PRINT_INS(RST_5)
       rst(RST_5);
       RETURN_FROM_INS(RST_5)
+    case LD_A_star_IMM8:
+      PRINT_INS(LD_A_star_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        ldOp8FromMem(0xFF00 | helper, &cp.A);
+      }
+      RETURN_FROM_INS(LD_A_star_IMM8)
     case POP_AF:
       PRINT_INS(POP_AF)
       pop16AF();
       RETURN_FROM_INS(POP_AF)
+    case LD_A_star_C:
+      PRINT_INS(LD_A_star_C)
+      ldOp8FromMem(0xFF00 | cp.C, &cp.A);
+      RETURN_FROM_INS(LD_A_star_C)
     case PUSH_AF:
       PRINT_INS(PUSH_AF)
       push16(cp.AF);
@@ -968,6 +1000,32 @@ unsigned int step()
       PRINT_INS(RST_6)
       rst(RST_6);
       RETURN_FROM_INS(RST_6)
+    case LD_HL_SP_plus_IMM8:
+      PRINT_INS(LD_HL_SP_plus_IMM8)
+      {
+        int8_t op;
+	int16_t helper;
+	cp.zf = cp.n = cp.h = cp.cf = 0;
+	ldOp8FromMemAtPC(&op);
+	helper = cp.SP + op;
+
+	cp.cf = ((cp.SP & 0xFF) + (op & 0xFF)) > 0xFF;
+        cp.h =  ((cp.SP & 0xF) + (op & 0xF)) > 0xF;
+	cp.HL = cp.SP + op;
+      }
+      RETURN_FROM_INS(LD_HL_SP_plus_IMM8)
+    case LD_SP_HL:
+      PRINT_INS(LD_SP_HL)
+        cp.SP = cp.HL;
+      RETURN_FROM_INS(LD_SP_HL)
+    case LD_A_star_IMM16:
+      PRINT_INS(LD_A_star_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        ldOp8FromMem(helper, &cp.A);  
+      }
+      RETURN_FROM_INS(LD_A_star_IMM16)
     case CP_IMM8:
       PRINT_INS(CP_IMM8)
       {

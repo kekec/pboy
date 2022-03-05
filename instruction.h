@@ -215,22 +215,33 @@
 #define RST_0 0xC7
 #define ADC_A_IMM8 0xCE
 #define RST_1 0xCF
+
 #define POP_DE  0xD1
 #define PUSH_DE 0xD5
 #define SUB_IMM8 0xD6
 #define RST_2 0xD7
 #define SBC_A_IMM8 0xDE
 #define RST_3 0xDF
+
+#define LD_star_IMM8_A 0xE0
 #define POP_HL  0xE1
+#define LD_star_C_A 0xE2
 #define PUSH_HL 0xE5
 #define AND_IMM8 0xE6
 #define RST_4 0xE7
+#define LD_star_IMM16_A 0xEA
 #define XOR_IMM8 0xEE
 #define RST_5 0xEF
+
+#define LD_A_star_IMM8 0xF0
 #define POP_AF  0xF1
+#define LD_A_star_C 0xF2
 #define PUSH_AF 0xF5
 #define OR_IMM8 0xF6
 #define RST_6 0xF7
+#define LD_HL_SP_plus_IMM8 0xF8
+#define LD_SP_HL 0xF9
+#define LD_A_star_IMM16 0xFA
 #define CP_IMM8 0xFE
 #define RST_7 0xFF
 
