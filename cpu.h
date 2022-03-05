@@ -114,5 +114,6 @@ void pop16(uint16_t *out);
 void pop16AF();
 void push16(uint16_t in);
 
+void rst(uint8_t opcode);
 
 

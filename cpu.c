@@ -868,6 +868,10 @@ unsigned int step()
         add8(&cp.A, &helper);
       }
       RETURN_FROM_INS(ADD_A_IMM8)
+    case RST_0:
+      PRINT_INS(RST_0)
+      rst(RST_0);
+      RETURN_FROM_INS(RST_0)
     case ADC_A_IMM8:
       PRINT_INS(ADC_A_IMM8)
       {
@@ -876,6 +880,10 @@ unsigned int step()
         adc8(&cp.A, &helper);
       }
       RETURN_FROM_INS(ADC_A_IMM8)
+    case RST_1:
+      PRINT_INS(RST_1)
+      rst(RST_1);
+      RETURN_FROM_INS(RST_1)
     case POP_DE:
       PRINT_INS(POP_DE)
       pop16(&cp.DE);
@@ -892,6 +900,10 @@ unsigned int step()
         sub8(&helper);
       }
       RETURN_FROM_INS(SUB_IMM8)
+    case RST_2:
+      PRINT_INS(RST_2)
+      rst(RST_2);
+      RETURN_FROM_INS(RST_2)
     case SBC_A_IMM8:
       PRINT_INS(SBC_A_IMM8)
       {
@@ -900,6 +912,10 @@ unsigned int step()
         sbc8(&helper);
       }
       RETURN_FROM_INS(SBC_A_IMM8)
+    case RST_3:
+      PRINT_INS(RST_3)
+      rst(RST_3);
+      RETURN_FROM_INS(RST_3)
     case POP_HL:
       PRINT_INS(POP_HL)
       pop16(&cp.HL);
@@ -916,6 +932,10 @@ unsigned int step()
         and8(&helper);
       }
       RETURN_FROM_INS(AND_IMM8)
+    case RST_4:
+      PRINT_INS(RST_4)
+      rst(RST_4);
+      RETURN_FROM_INS(RST_4)
     case XOR_IMM8:
       PRINT_INS(XOR_IMM8)
       {
@@ -924,6 +944,10 @@ unsigned int step()
         xor8(&helper);
       }
       RETURN_FROM_INS(XOR_IMM8)
+    case RST_5:
+      PRINT_INS(RST_5)
+      rst(RST_5);
+      RETURN_FROM_INS(RST_5)
     case POP_AF:
       PRINT_INS(POP_AF)
       pop16AF();
@@ -940,6 +964,10 @@ unsigned int step()
         or8(&helper);
       }
       RETURN_FROM_INS(OR_IMM8)
+    case RST_6:
+      PRINT_INS(RST_6)
+      rst(RST_6);
+      RETURN_FROM_INS(RST_6)
     case CP_IMM8:
       PRINT_INS(CP_IMM8)
       {
@@ -948,7 +976,10 @@ unsigned int step()
         cp8(&helper);
       }
       RETURN_FROM_INS(CP_IMM8)
-
+    case RST_7:
+      PRINT_INS(RST_7)
+      rst(RST_7);
+      RETURN_FROM_INS(RST_7)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -1263,6 +1294,7 @@ void pop16(uint16_t *out)
   ldOp16FromMemAtSP(out);
   cp.SP+=2;
 }
+
 void pop16AF()
 {
   ldOp16FromMemAtSP(&cp.AF);
@@ -1271,8 +1303,6 @@ void pop16AF()
   cp.SP+=2;
 }
 
-
-
 void push16(uint16_t in)
 {
   ldOp8ToMem(in >> 8, cp.SP-1);
@@ -1280,4 +1310,35 @@ void push16(uint16_t in)
   cp.SP-=2;
 }
 
+uint8_t getOffset(uint8_t opcode)
+{
+  uint8_t t;
+  //extract bit 5, 4, 3
+  t=opcode >>3;
+  t=t & 0x7;
+  if(t == 0)
+    return 0x0;
+  if(t == 1)
+    return 0x8;
+  if(t == 2)
+    return 0x10;
+  if(t == 3)
+    return 0x18;
+  if(t == 4)
+    return 0x20;
+  if(t == 5)
+    return 0x28;
+  if(t == 6)
+    return 0x30;
+  if(t == 7)
+    return 0x38;
 
+  printf("You should not end up here\n");
+}
+
+void rst(uint8_t opcode)
+{
+  push16(cp.PC);
+  cp.PC=0;
+  cp.PC = cp.PC | (getOffset(opcode) & 0xFF);
+}
