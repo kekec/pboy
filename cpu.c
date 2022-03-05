@@ -860,6 +860,22 @@ unsigned int step()
       PRINT_INS(PUSH_BC)
       push16(cp.BC);
       RETURN_FROM_INS(PUSH_BC)
+    case ADD_A_IMM8:
+      PRINT_INS(ADD_A_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        add8(&cp.A, &helper);
+      }
+      RETURN_FROM_INS(ADD_A_IMM8)
+    case ADC_A_IMM8:
+      PRINT_INS(ADC_A_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        adc8(&cp.A, &helper);
+      }
+      RETURN_FROM_INS(ADC_A_IMM8)
     case POP_DE:
       PRINT_INS(POP_DE)
       pop16(&cp.DE);
@@ -868,6 +884,22 @@ unsigned int step()
       PRINT_INS(PUSH_DE)
       push16(cp.DE);
       RETURN_FROM_INS(PUSH_DE)
+    case SUB_IMM8:
+      PRINT_INS(SUB_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        sub8(&helper);
+      }
+      RETURN_FROM_INS(SUB_IMM8)
+    case SBC_A_IMM8:
+      PRINT_INS(SBC_A_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        sbc8(&helper);
+      }
+      RETURN_FROM_INS(SBC_A_IMM8)
     case POP_HL:
       PRINT_INS(POP_HL)
       pop16(&cp.HL);
@@ -876,6 +908,22 @@ unsigned int step()
       PRINT_INS(PUSH_HL)
       push16(cp.HL);
       RETURN_FROM_INS(PUSH_HL)
+    case AND_IMM8:
+      PRINT_INS(AND_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        and8(&helper);
+      }
+      RETURN_FROM_INS(AND_IMM8)
+    case XOR_IMM8:
+      PRINT_INS(XOR_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        xor8(&helper);
+      }
+      RETURN_FROM_INS(XOR_IMM8)
     case POP_AF:
       PRINT_INS(POP_AF)
       pop16AF();
@@ -884,6 +932,23 @@ unsigned int step()
       PRINT_INS(PUSH_AF)
       push16(cp.AF);
       RETURN_FROM_INS(PUSH_AF)
+    case OR_IMM8:
+      PRINT_INS(OR_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        or8(&helper);
+      }
+      RETURN_FROM_INS(OR_IMM8)
+    case CP_IMM8:
+      PRINT_INS(CP_IMM8)
+      {
+	uint8_t helper;
+        ldOp8FromMemAtPC(&helper);
+        cp8(&helper);
+      }
+      RETURN_FROM_INS(CP_IMM8)
+
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
