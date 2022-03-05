@@ -851,6 +851,39 @@ unsigned int step()
       PRINT_INS(CP_A)
       cp8(&cp.A);
       RETURN_FROM_INS(CP_A)
+//    case RET_NZ
+    case POP_BC:
+      PRINT_INS(POP_BC)
+      pop16(&cp.BC);
+      RETURN_FROM_INS(POP_BC)
+    case PUSH_BC:
+      PRINT_INS(PUSH_BC)
+      push16(cp.BC);
+      RETURN_FROM_INS(PUSH_BC)
+    case POP_DE:
+      PRINT_INS(POP_DE)
+      pop16(&cp.DE);
+      RETURN_FROM_INS(POP_DE)
+    case PUSH_DE:
+      PRINT_INS(PUSH_DE)
+      push16(cp.DE);
+      RETURN_FROM_INS(PUSH_DE)
+    case POP_HL:
+      PRINT_INS(POP_HL)
+      pop16(&cp.HL);
+      RETURN_FROM_INS(POP_HL)
+    case PUSH_HL:
+      PRINT_INS(PUSH_HL)
+      push16(cp.HL);
+      RETURN_FROM_INS(PUSH_HL)
+    case POP_AF:
+      PRINT_INS(POP_AF)
+      pop16AF();
+      RETURN_FROM_INS(POP_AF)
+    case PUSH_AF:
+      PRINT_INS(PUSH_AF)
+      push16(cp.AF);
+      RETURN_FROM_INS(PUSH_AF)
     default: 
       printf("unknown instruction %x at addr %x\n", instr, cp.PC);
       break;
@@ -912,6 +945,11 @@ void ldOp16FromMem(uint16_t src, uint16_t *dest)
 void ldOp16FromMemAtPC(uint16_t *dest)
 {
   ldOp16FromMem(cp.PC, dest);
+}
+
+void ldOp16FromMemAtSP(uint16_t *dest)
+{
+  ldOp16FromMem(cp.SP, dest);
 }
 
 void inc8(uint8_t *data)
@@ -1138,6 +1176,7 @@ void rrOp8(uint8_t *data)
   if(temp & 0x01)
     cp.cf = 1;
 }
+
 void daa()
 {
   if(cp.n == 0) //if called after addition
@@ -1153,3 +1192,27 @@ void daa()
   cp.zf = (cp.A == 0);
   cp.h = 0;
 }
+
+void pop16(uint16_t *out)
+{
+  ldOp16FromMemAtSP(out);
+  cp.SP+=2;
+}
+void pop16AF()
+{
+  ldOp16FromMemAtSP(&cp.AF);
+  //lets clear the not used bits here
+  cp.F = cp.F & 0xF0;
+  cp.SP+=2;
+}
+
+
+
+void push16(uint16_t in)
+{
+  ldOp8ToMem(in >> 8, cp.SP-1);
+  ldOp8ToMem(in & 0xFF, cp.SP-2);
+  cp.SP-=2;
+}
+
+

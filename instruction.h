@@ -209,6 +209,31 @@
 #define CP_star_HL 0xBE
 #define CP_A 0xBF
 
+#define POP_BC  0xC1
+#define PUSH_BC 0xC5
+#define ADD_A_IMM8 0xC6
+#define RST_0 0xC7
+#define ADC_A_IMM8 0xCE
+#define RST_1 0xCF
+#define POP_DE  0xD1
+#define PUSH_DE 0xD5
+#define SUB_IMM8 0xD6
+#define RST_2 0xD7
+#define SBC_A_IMM8 0xDE
+#define RST_3 0xDF
+#define POP_HL  0xE1
+#define PUSH_HL 0xE5
+#define AND_IMM8 0xE6
+#define RST_4 0xE7
+#define XOR_IMM8 0xEE
+#define RST_5 0xEF
+#define POP_AF  0xF1
+#define PUSH_AF 0xF5
+#define OR_IMM8 0xF6
+#define RST_6 0xF7
+#define CP_IMM8 0xFE
+#define RST_7 0xFF
+
 struct instruction
 {
   char * string;
@@ -409,5 +434,68 @@ static struct instruction instructions[] =
   {"CP L", 1, 4},        //BD
   {"CP (HL)", 1, 8},     //BE
   {"CP A", 1, 4},        //BF
-
+  {"RET NZ", 1, 20},     //C0 TODO
+  {"POP BC", 1, 12},     //C1
+  {"JP NZ, imm16", 3, 16},//C2 TODO
+  {"JP imm16", 3, 16},   //C3
+  {"CALL NZ, imm16", 3, 24},//C4
+  {"PUSH BC", 1, 16},    //C5
+  {"ADD A, imm8", 2, 8}, //C6
+  {"RST_0", 1, 4},       //C7
+  {"RET_Z", 1, 20},      //C8 TODO
+  {"RET", 1, 4},         //C9
+  {"JP Z, imm16", 3, 16},//CA TODO
+  {"Illegal OP", 1, 4},  //CB
+  {"CALL Z, imm16", 3, 24}, //CC TODO
+  {"CALL imm16", 3, 24}, //CD
+  {"ADC A, imm8", 2, 8}, //CE
+  {"RST_1", 1, 16},       //CF
+  {"RET NC", 1, 20},     //D0 TODO
+  {"POP DE", 1, 12},     //D1
+  {"JP NC, imm16", 3, 16},//D2 TODO
+  {"Illegal OP", 1, 4},  //D3
+  {"CALL NC, imm16", 3, 24},//D4
+  {"PUSH DE", 1, 16},    //D5
+  {"SUB imm8", 2, 8},    //D6
+  {"RST_2", 1, 16},       //D7
+  {"RET_C", 1, 20},      //D8 TODO
+  {"RETI", 1, 4},        //D9
+  {"JP C, imm16", 3, 16},//DA TODO
+  {"Illegal OP", 1, 4},  //DB
+  {"CALL C, imm16", 3, 24}, //DC TODO
+  {"Illegal OP", 1, 4},  //DD
+  {"SBC A, imm8", 2, 8}, //DE
+  {"RST_3", 1, 16},       //DF
+  {"LD (a8), A", 2, 12}, //E0
+  {"POP HL", 1, 12},     //E1
+  {"LD (C), A", 1, 8},   //E2
+  {"Illegal OP", 1, 4},  //E3
+  {"Illegal OP", 1, 4},  //E4
+  {"PUSH HL", 1, 16},    //E5
+  {"AND imm8", 2, 8},    //E6
+  {"RST_4", 1, 16},       //E7
+  {"ADD SP, imm8", 2, 16},//E8 
+  {"JP HL", 1, 4},       //E9
+  {"LD (a16), A", 3, 16},//EA
+  {"Illegal OP", 1, 4},  //EB
+  {"Illegal OP", 1, 4},  //EB
+  {"Illegal OP", 1, 4},  //EB
+  {"XOR imm8", 2, 8},    //EE
+  {"RST_5", 1, 16},       //FF
+  {"LD A, (a8)", 2, 12}, //F0
+  {"POP AF", 1, 12},     //F1
+  {"LD A, (C)", 1, 8},   //F2
+  {"DI", 1, 4},          //F3
+  {"Illegal OP", 1, 4},  //F4
+  {"PUSH AF", 1, 16},    //F5
+  {"OR imm8", 2, 8},     //F6
+  {"RST_6", 1, 16},       //F7
+  {"LD HL, SP+imm8", 2, 12},//F8
+  {"LD SP, HL", 1, 8},   //F9
+  {"LD A, (imm16)", 3, 16},//FA
+  {"EI", 1, 4},          //FB
+  {"Illegal OP", 1, 4},  //FC
+  {"Illegal OP", 1, 4},  //FD
+  {"CP imm8", 2, 8},     //FE
+  {"RST_7", 1, 16},      //FF
 };

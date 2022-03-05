@@ -1,5 +1,5 @@
-Tested 37/67 instructions
-Successfully tested 192/244 opcodes
+Tested 39/67 instructions
+Successfully tested 200/244 opcodes
 
 Table of untested/incorrect opcodes:
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -14,8 +14,8 @@ Table of untested/incorrect opcodes:
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca -- cc cd ce cf 
-d0 d1 d2 -- d4 d5 d6 d7 d8 d9 da -- dc -- de df 
-e0 e1 e2 -- -- e5 e6 e7 e8 e9 ea -- -- -- ee ef 
-f0 f1 f2 f3 -- f5 f6 f7 f8 f9 fa fb -- -- fe ff 
+c0 -- c2 c3 c4 -- c6 c7 c8 c9 ca -- cc cd ce cf 
+d0 -- d2 -- d4 -- d6 d7 d8 d9 da -- dc -- de df 
+e0 -- e2 -- -- -- e6 e7 e8 e9 ea -- -- -- ee ef 
+f0 -- f2 f3 -- -- f6 f7 f8 f9 fa fb -- -- fe ff 
 

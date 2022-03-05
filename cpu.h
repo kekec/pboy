@@ -85,6 +85,7 @@ void ldOp8FromMemAtPC(uint8_t *out);
 void ldOp8FromMem(uint16_t src, uint8_t *dest);
 void ldOp16FromMem(uint16_t src, uint16_t *dest);
 void ldOp16FromMemAtPC(uint16_t *out);
+void ldOp16FromMemAtSP(uint16_t *out);
 
 void inc8(uint8_t *data);
 void dec8(uint8_t *data);
@@ -108,6 +109,10 @@ void rrcOp8(uint8_t *data);
 void rrOp8(uint8_t *data);
 
 void daa();
+
+void pop16(uint16_t *out);
+void pop16AF();
+void push16(uint16_t in);
 
 
 
