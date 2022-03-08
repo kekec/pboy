@@ -851,11 +851,47 @@ unsigned int step()
       PRINT_INS(CP_A)
       cp8(&cp.A);
       RETURN_FROM_INS(CP_A)
-//    case RET_NZ
+    case RET_NZ:
+      PRINT_INS(RET_NZ)
+      if(cp.zf == 0)
+        pop16(&cp.PC);
+      RETURN_FROM_INS(RET_NZ)
     case POP_BC:
       PRINT_INS(POP_BC)
       pop16(&cp.BC);
       RETURN_FROM_INS(POP_BC)
+    case JP_NZ_IMM16:
+      PRINT_INS(JP_NZ_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        if(cp.zf == 0)
+	{
+          cp.PC =  helper;
+	  break;
+	}
+      }
+      RETURN_FROM_INS(JP_NZ_IMM16)
+    case JP_IMM16:
+      PRINT_INS(JP_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC =  helper;
+	break;
+      }
+      RETURN_FROM_INS(JP_IMM16)
+    case CALL_NZ_IMM16:
+      PRINT_INS(CALL_NZ_IMM16)
+      if(cp.zf == 0)
+      {
+        push16(cp.PC + instructions[CALL_NZ_IMM16].len -1);
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC = helper;
+	break;
+      }
+      RETURN_FROM_INS(CALL_NZ_IMM16)
     case PUSH_BC:
       PRINT_INS(PUSH_BC)
       push16(cp.BC);
@@ -872,6 +908,49 @@ unsigned int step()
       PRINT_INS(RST_0)
       rst(RST_0);
       RETURN_FROM_INS(RST_0)
+    case RET_Z:
+      PRINT_INS(RET_Z)
+      if(cp.zf == 1)
+        pop16(&cp.PC);
+      RETURN_FROM_INS(RET_Z)
+    case RET:
+      PRINT_INS(RET)
+      pop16(&cp.PC);
+      break;
+      RETURN_FROM_INS(RET)
+    case JP_Z_IMM16:
+      PRINT_INS(JP_Z_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        if(cp.zf == 1)
+	{
+          cp.PC =  helper;
+	  break;
+	}
+      }
+      RETURN_FROM_INS(JP_Z_IMM16)
+    case CALL_Z_IMM16:
+      PRINT_INS(CALL_Z_IMM16)
+      if(cp.zf == 1)
+      {
+        push16(cp.PC + instructions[CALL_Z_IMM16].len -1);
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC = helper;
+	break;
+      }
+      RETURN_FROM_INS(CALL_Z_IMM16)
+    case CALL_IMM16:
+      PRINT_INS(CALL_IMM16)
+      {
+        push16(cp.PC + instructions[CALL_IMM16].len -1);
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC = helper;
+	break;
+      }
+      RETURN_FROM_INS(CALL_Z_IMM16)
     case ADC_A_IMM8:
       PRINT_INS(ADC_A_IMM8)
       {
@@ -884,10 +963,38 @@ unsigned int step()
       PRINT_INS(RST_1)
       rst(RST_1);
       RETURN_FROM_INS(RST_1)
+    case RET_NC:
+      PRINT_INS(RET_NC)
+      if(cp.cf == 0)
+        pop16(&cp.PC);
+      RETURN_FROM_INS(RET_NC)
     case POP_DE:
       PRINT_INS(POP_DE)
       pop16(&cp.DE);
       RETURN_FROM_INS(POP_DE)
+    case JP_NC_IMM16:
+      PRINT_INS(JP_NC_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        if(cp.cf == 0)
+        {
+          cp.PC =  helper;
+          break;
+	}
+      }
+      RETURN_FROM_INS(JP_NC_IMM16)
+    case CALL_NC_IMM16:
+      PRINT_INS(CALL_NC_IMM16)
+      if(cp.cf == 0)
+      {
+        push16(cp.PC + instructions[CALL_NC_IMM16].len -1);
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC = helper;
+	break;
+      }
+      RETURN_FROM_INS(CALL_NC_IMM16)
     case PUSH_DE:
       PRINT_INS(PUSH_DE)
       push16(cp.DE);
@@ -904,6 +1011,39 @@ unsigned int step()
       PRINT_INS(RST_2)
       rst(RST_2);
       RETURN_FROM_INS(RST_2)
+    case RET_C:
+      PRINT_INS(RET_C)
+      if(cp.cf == 1)
+        pop16(&cp.PC);
+      RETURN_FROM_INS(RET_C)
+    case RETI:
+      PRINT_INS(RETI)
+      pop16(&cp.PC);
+      cp.interrupts_master_enabled=1;
+      RETURN_FROM_INS(RETI);
+    case JP_C_IMM16:
+      PRINT_INS(JP_C_IMM16)
+      {
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        if(cp.cf == 1)
+	{
+          cp.PC =  helper;
+	  break;
+	}
+      }
+      RETURN_FROM_INS(JP_C_IMM16)
+    case CALL_C_IMM16:
+      PRINT_INS(CALL_C_IMM16)
+      if(cp.cf == 1)
+      {
+        push16(cp.PC + instructions[CALL_C_IMM16].len -1);
+	uint16_t helper;
+	ldOp16FromMemAtPC(&helper);
+        cp.PC = helper;
+	break;
+      }
+      RETURN_FROM_INS(CALL_NC_IMM16)
     case SBC_A_IMM8:
       PRINT_INS(SBC_A_IMM8)
       {
@@ -984,6 +1124,10 @@ unsigned int step()
       PRINT_INS(LD_A_star_C)
       ldOp8FromMem(0xFF00 | cp.C, &cp.A);
       RETURN_FROM_INS(LD_A_star_C)
+    case DI:
+      PRINT_INS(DI)
+      cp.interrupts_master_enabled = 0;
+      RETURN_FROM_INS(DI)
     case PUSH_AF:
       PRINT_INS(PUSH_AF)
       push16(cp.AF);
@@ -1000,6 +1144,21 @@ unsigned int step()
       PRINT_INS(RST_6)
       rst(RST_6);
       RETURN_FROM_INS(RST_6)
+    case ADD_SP_IMM8:
+      PRINT_INS(ADD_SP_IMM8)
+      {
+        int8_t helper;
+        ldOp8FromMemAtPC(&helper);
+	cp.zf = cp.n = 0;
+	cp.cf = ((cp.SP & 0xFF) + (helper & 0xFF)) > 0xFF;
+	cp.h = ((cp.SP & 0xF) + (helper & 0xF)) > 0xF;
+	cp.SP += helper;
+      }
+      RETURN_FROM_INS(ADD_SP_IMM8)
+    case JP_HL:
+      PRINT_INS(JP_HL)
+      cp.PC = cp.HL;
+      break;
     case LD_HL_SP_plus_IMM8:
       PRINT_INS(LD_HL_SP_plus_IMM8)
       {
@@ -1016,7 +1175,7 @@ unsigned int step()
       RETURN_FROM_INS(LD_HL_SP_plus_IMM8)
     case LD_SP_HL:
       PRINT_INS(LD_SP_HL)
-        cp.SP = cp.HL;
+      cp.SP = cp.HL;
       RETURN_FROM_INS(LD_SP_HL)
     case LD_A_star_IMM16:
       PRINT_INS(LD_A_star_IMM16)
@@ -1026,6 +1185,10 @@ unsigned int step()
         ldOp8FromMem(helper, &cp.A);  
       }
       RETURN_FROM_INS(LD_A_star_IMM16)
+    case EI:
+      PRINT_INS(EI)
+      cp.interrupts_master_enabled = 1;
+      RETURN_FROM_INS(EI)
     case CP_IMM8:
       PRINT_INS(CP_IMM8)
       {

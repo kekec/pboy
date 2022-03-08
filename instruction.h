@@ -209,17 +209,33 @@
 #define CP_star_HL 0xBE
 #define CP_A 0xBF
 
+#define RET_NZ 0xC0
 #define POP_BC  0xC1
+#define JP_NZ_IMM16 0xC2
+#define JP_IMM16 0xC3
+#define CALL_NZ_IMM16 0xC4
 #define PUSH_BC 0xC5
 #define ADD_A_IMM8 0xC6
 #define RST_0 0xC7
+#define RET_Z 0xC8
+#define RET 0xC9
+#define JP_Z_IMM16 0xCA
+#define CALL_Z_IMM16 0xCC
+#define CALL_IMM16 0xCD
 #define ADC_A_IMM8 0xCE
 #define RST_1 0xCF
 
+#define RET_NC 0xD0
 #define POP_DE  0xD1
+#define JP_NC_IMM16 0xD2
+#define CALL_NC_IMM16 0xD4
 #define PUSH_DE 0xD5
 #define SUB_IMM8 0xD6
 #define RST_2 0xD7
+#define RET_C 0xD8
+#define RETI 0xD9
+#define JP_C_IMM16 0xDA
+#define CALL_C_IMM16 0xDC
 #define SBC_A_IMM8 0xDE
 #define RST_3 0xDF
 
@@ -229,6 +245,8 @@
 #define PUSH_HL 0xE5
 #define AND_IMM8 0xE6
 #define RST_4 0xE7
+#define ADD_SP_IMM8 0xE8
+#define JP_HL 0xE9
 #define LD_star_IMM16_A 0xEA
 #define XOR_IMM8 0xEE
 #define RST_5 0xEF
@@ -236,12 +254,14 @@
 #define LD_A_star_IMM8 0xF0
 #define POP_AF  0xF1
 #define LD_A_star_C 0xF2
+#define DI 0xF3
 #define PUSH_AF 0xF5
 #define OR_IMM8 0xF6
 #define RST_6 0xF7
 #define LD_HL_SP_plus_IMM8 0xF8
 #define LD_SP_HL 0xF9
 #define LD_A_star_IMM16 0xFA
+#define EI 0xFB
 #define CP_IMM8 0xFE
 #define RST_7 0xFF
 
