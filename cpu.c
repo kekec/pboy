@@ -930,6 +930,8 @@ unsigned int step()
 	}
       }
       RETURN_FROM_INS(JP_Z_IMM16)
+    case CB_INST:
+      return decodeCB();
     case CALL_Z_IMM16:
       PRINT_INS(CALL_Z_IMM16)
       if(cp.zf == 1)
@@ -1237,6 +1239,16 @@ static inline void print_ins(uint8_t opcode)
 static inline void move_pc(uint8_t opcode)
 {
   cp.PC += instructions[opcode].len-1;
+}
+
+static inline void move_pc_cb(uint8_t opcode)
+{
+  cp.PC += instructionsCB[opcode].len-1;
+}
+
+static inline void print_ins_cb(uint8_t opcode)
+{
+  printf("%s \n", instructionsCB[opcode].string);
 }
 
 void ldOp8ToMem(uint8_t data, uint16_t dest)
@@ -1563,3 +1575,107 @@ void rst(uint8_t opcode)
   cp.PC=0;
   cp.PC = cp.PC | (getOffset(opcode) & 0xFF);
 }
+
+uint8_t decodeCB()
+{
+  uint8_t opcode;
+  ldOp8FromMemAtPC(&opcode);
+  switch(opcode)
+  {
+    case RLC_B:
+      PRINT_INS_CB(RLC_B)
+      rlc(&cp.B);
+      RETURN_FROM_INS_CB(RLC_B)
+    case RLC_C:
+      PRINT_INS_CB(RLC_C)
+      rlc(&cp.C);
+      RETURN_FROM_INS_CB(RLC_C)
+    case RLC_D:
+      PRINT_INS_CB(RLC_D)
+      rlc(&cp.D);
+      RETURN_FROM_INS_CB(RLC_D)
+    case RLC_E:
+      PRINT_INS_CB(RLC_E)
+      rlc(&cp.E);
+      RETURN_FROM_INS_CB(RLC_E)
+    case RLC_H:
+      PRINT_INS_CB(RLC_H)
+      rlc(&cp.H);
+      RETURN_FROM_INS_CB(RLC_H)
+    case RLC_L:
+      PRINT_INS_CB(RLC_L)
+      rlc(&cp.L);
+      RETURN_FROM_INS_CB(RLC_L)
+    case RLC_star_HL:
+      PRINT_INS_CB(RLC_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        rlc(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RLC_star_HL)
+    case RLC_A:
+      PRINT_INS_CB(RLC_A)
+      rlc(&cp.A);
+      RETURN_FROM_INS_CB(RLC_A)
+    case RRC_B:
+      PRINT_INS_CB(RRC_B)
+      rrc(&cp.B);
+      RETURN_FROM_INS_CB(RRC_B)
+    case RRC_C:
+      PRINT_INS_CB(RRC_C)
+      rrc(&cp.C);
+      RETURN_FROM_INS_CB(RRC_C)
+    case RRC_D:
+      PRINT_INS_CB(RRC_D)
+      rrc(&cp.D);
+      RETURN_FROM_INS_CB(RRC_D)
+    case RRC_E:
+      PRINT_INS_CB(RRC_E)
+      rrc(&cp.E);
+      RETURN_FROM_INS_CB(RRC_E)
+    case RRC_H:
+      PRINT_INS_CB(RRC_H)
+      rrc(&cp.H);
+      RETURN_FROM_INS_CB(RRC_H)
+    case RRC_L:
+      PRINT_INS_CB(RRC_L)
+      rrc(&cp.L);
+      RETURN_FROM_INS_CB(RRC_L)
+    case RRC_star_HL:
+      PRINT_INS_CB(RRC_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        rrc(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RRC_star_HL)
+    case RRC_A:
+      PRINT_INS_CB(RRC_A)
+      rrc(&cp.A);
+      RETURN_FROM_INS_CB(RRC_A)
+  }
+}
+
+void rlc(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op <<= 1;
+  *op = *op | (save >> 7);
+  cp.cf = save >> 7;
+  cp.zf = *op == 0;
+}
+
+void rrc(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op >>= 1;
+  *op = *op | (save << 7);
+  cp.cf =  (save & 0x1);
+  cp.zf = *op == 0;
+}
+

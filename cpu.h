@@ -4,7 +4,9 @@
 
 #define PRINT_INS_FOO(arg) print_ins(arg);
 #define PRINT_INS(arg)
-#define RETURN_FROM_INS(arg) move_pc(arg); break;
+#define RETURN_FROM_INS(arg) move_pc(arg); return instructions[arg].cycles_min;
+#define PRINT_INS_CB(arg)
+#define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); break;
 
 struct cpu
 {
@@ -73,13 +75,18 @@ void (*logWriteMem)(uint16_t, uint8_t);
 
 void init(uint8_t *address);
 unsigned int step();
+uint8_t decodeCB();
 uint8_t readMem(uint16_t addr);
 void writeMem(uint16_t addr, uint8_t data);
 void registerLogWriteMem(void (*func)(uint16_t, uint8_t));
 void registerLogReadMem(uint8_t (*func)(uint16_t));
+
 static inline void move_pc(uint8_t opcode);
-static inline void move_pc2(uint8_t opcode, uint8_t cycles);
 static inline void print_ins(uint8_t opcode);
+
+static inline void move_pc_cb(uint8_t opcode);
+static inline void move_ins_cb(uint8_t opcode);
+
 void ldOp8ToMem(uint8_t data, uint16_t dest);
 void ldOp8FromMemAtPC(uint8_t *out);
 void ldOp8FromMem(uint16_t src, uint8_t *dest);
@@ -116,4 +123,6 @@ void push16(uint16_t in);
 
 void rst(uint8_t opcode);
 
+void rlc(uint8_t *op);
+void rrc(uint8_t *op);
 
