@@ -1656,6 +1656,80 @@ uint8_t decodeCB()
       PRINT_INS_CB(RRC_A)
       rrc(&cp.A);
       RETURN_FROM_INS_CB(RRC_A)
+    case RL_B:
+      PRINT_INS_CB(RL_B)
+      rl(&cp.B);
+      RETURN_FROM_INS_CB(RL_B)
+    case RL_C:
+      PRINT_INS_CB(RL_C)
+      rl(&cp.C);
+      RETURN_FROM_INS_CB(RL_C)
+    case RL_D:
+      PRINT_INS_CB(RL_D)
+      rl(&cp.D);
+      RETURN_FROM_INS_CB(RL_D)
+    case RL_E:
+      PRINT_INS_CB(RL_E)
+      rl(&cp.E);
+      RETURN_FROM_INS_CB(RL_E)
+    case RL_H:
+      PRINT_INS_CB(RL_H)
+      rl(&cp.H);
+      RETURN_FROM_INS_CB(RL_H)
+    case RL_L:
+      PRINT_INS_CB(RL_L)
+      rl(&cp.L);
+      RETURN_FROM_INS_CB(RL_L)
+    case RL_star_HL:
+      PRINT_INS_CB(RL_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        rl(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RL_star_HL)
+    case RL_A:
+      PRINT_INS_CB(RL_A)
+      rl(&cp.A);
+      RETURN_FROM_INS_CB(RL_A)
+    case RR_B:
+      PRINT_INS_CB(RR_B)
+      rr(&cp.B);
+      RETURN_FROM_INS_CB(RR_B)
+    case RR_C:
+      PRINT_INS_CB(RR_C)
+      rr(&cp.C);
+      RETURN_FROM_INS_CB(RR_C)
+    case RR_D:
+      PRINT_INS_CB(RR_D)
+      rr(&cp.D);
+      RETURN_FROM_INS_CB(RR_D)
+    case RR_E:
+      PRINT_INS_CB(RR_E)
+      rr(&cp.E);
+      RETURN_FROM_INS_CB(RR_E)
+    case RR_H:
+      PRINT_INS_CB(RR_H)
+      rr(&cp.H);
+      RETURN_FROM_INS_CB(RR_H)
+    case RR_L:
+      PRINT_INS_CB(RR_L)
+      rr(&cp.L);
+      RETURN_FROM_INS_CB(RR_L)
+    case RR_star_HL:
+      PRINT_INS_CB(RR_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        rr(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RR_star_HL)
+    case RR_A:
+      PRINT_INS_CB(RR_A)
+      rr(&cp.A);
+      RETURN_FROM_INS_CB(RR_A)
   }
 }
 
@@ -1679,3 +1753,22 @@ void rrc(uint8_t *op)
   cp.zf = *op == 0;
 }
 
+void rl(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op <<= 1;
+  *op = *op | cp.cf;
+  cp.cf = (save >> 7) == 1;
+  cp.zf = *op == 0;
+}
+
+void rr(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op >>= 1;
+  *op = *op | (cp.cf << 7);
+  cp.cf = (save & 0x1) == 1;
+  cp.zf = *op == 0;
+}

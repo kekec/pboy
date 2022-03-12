@@ -6,7 +6,7 @@
 #define PRINT_INS(arg)
 #define RETURN_FROM_INS(arg) move_pc(arg); return instructions[arg].cycles_min;
 #define PRINT_INS_CB(arg)
-#define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); break;
+#define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); return instructionsCB[arg].cycles_min;
 
 struct cpu
 {
@@ -125,4 +125,6 @@ void rst(uint8_t opcode);
 
 void rlc(uint8_t *op);
 void rrc(uint8_t *op);
+void rl(uint8_t *op);
+void rr(uint8_t *op);
 
