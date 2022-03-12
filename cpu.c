@@ -1730,6 +1730,154 @@ uint8_t decodeCB()
       PRINT_INS_CB(RR_A)
       rr(&cp.A);
       RETURN_FROM_INS_CB(RR_A)
+    case SLA_B:
+      PRINT_INS_CB(SLA_B)
+      sla(&cp.B);
+      RETURN_FROM_INS_CB(SLA_B)
+    case SLA_C:
+      PRINT_INS_CB(SLA_C)
+      sla(&cp.C);
+      RETURN_FROM_INS_CB(SLA_C)
+    case SLA_D:
+      PRINT_INS_CB(SLA_D)
+      sla(&cp.D);
+      RETURN_FROM_INS_CB(SLA_D)
+    case SLA_E:
+      PRINT_INS_CB(SLA_E)
+      sla(&cp.E);
+      RETURN_FROM_INS_CB(SLA_E)
+    case SLA_H:
+      PRINT_INS_CB(SLA_H)
+      sla(&cp.H);
+      RETURN_FROM_INS_CB(SLA_H)
+    case SLA_L:
+      PRINT_INS_CB(SLA_L)
+      sla(&cp.L);
+      RETURN_FROM_INS_CB(SLA_L)
+    case SLA_star_HL:
+      PRINT_INS_CB(SLA_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        sla(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SLA_star_HL)
+    case SLA_A:
+      PRINT_INS_CB(SLA_A)
+      sla(&cp.A);
+      RETURN_FROM_INS_CB(SLA_A)
+    case SRA_B:
+      PRINT_INS_CB(SRA_B)
+      sra(&cp.B);
+      RETURN_FROM_INS_CB(SRA_B)
+    case SRA_C:
+      PRINT_INS_CB(SRA_C)
+      sra(&cp.C);
+      RETURN_FROM_INS_CB(SRA_C)
+    case SRA_D:
+      PRINT_INS_CB(SRA_D)
+      sra(&cp.D);
+      RETURN_FROM_INS_CB(SRA_D)
+    case SRA_E:
+      PRINT_INS_CB(SRA_E)
+      sra(&cp.E);
+      RETURN_FROM_INS_CB(SRA_E)
+    case SRA_H:
+      PRINT_INS_CB(SRA_H)
+      sra(&cp.H);
+      RETURN_FROM_INS_CB(SRA_H)
+    case SRA_L:
+      PRINT_INS_CB(SRA_L)
+      sra(&cp.L);
+      RETURN_FROM_INS_CB(SRA_L)
+    case SRA_star_HL:
+      PRINT_INS_CB(SRA_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        sra(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SRA_star_HL)
+    case SRA_A:
+      PRINT_INS_CB(SRA_A)
+      sra(&cp.A);
+      RETURN_FROM_INS_CB(SRA_A)
+    case SWAP_B:
+      PRINT_INS_CB(SWAP_B)
+      swap(&cp.B);
+      RETURN_FROM_INS_CB(SWAP_B)
+    case SWAP_C:
+      PRINT_INS_CB(SWAP_C)
+      swap(&cp.C);
+      RETURN_FROM_INS_CB(SWAP_C)
+    case SWAP_D:
+      PRINT_INS_CB(SWAP_D)
+      swap(&cp.D);
+      RETURN_FROM_INS_CB(SWAP_D)
+    case SWAP_E:
+      PRINT_INS_CB(SWAP_E)
+      swap(&cp.E);
+      RETURN_FROM_INS_CB(SWAP_E)
+    case SWAP_H:
+      PRINT_INS_CB(SWAP_H)
+      swap(&cp.H);
+      RETURN_FROM_INS_CB(SWAP_H)
+    case SWAP_L:
+      PRINT_INS_CB(SWAP_L)
+      swap(&cp.L);
+      RETURN_FROM_INS_CB(SWAP_L)
+    case SWAP_star_HL:
+      PRINT_INS_CB(SWAP_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        swap(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SWAP_star_HL)
+    case SWAP_A:
+      PRINT_INS_CB(SWAP_A)
+      swap(&cp.A);
+      RETURN_FROM_INS_CB(SWAP_A)
+    case SRL_B:
+      PRINT_INS_CB(SRL_B)
+      srl(&cp.B);
+      RETURN_FROM_INS_CB(SRL_B)
+    case SRL_C:
+      PRINT_INS_CB(SRL_C)
+      srl(&cp.C);
+      RETURN_FROM_INS_CB(SRL_C)
+    case SRL_D:
+      PRINT_INS_CB(SRL_D)
+      srl(&cp.D);
+      RETURN_FROM_INS_CB(SRL_D)
+    case SRL_E:
+      PRINT_INS_CB(SRL_E)
+      srl(&cp.E);
+      RETURN_FROM_INS_CB(SRL_E)
+    case SRL_H:
+      PRINT_INS_CB(SRL_H)
+      srl(&cp.H);
+      RETURN_FROM_INS_CB(SRL_H)
+    case SRL_L:
+      PRINT_INS_CB(SRL_L)
+      srl(&cp.L);
+      RETURN_FROM_INS_CB(SRL_L)
+    case SRL_star_HL:
+      PRINT_INS_CB(SRL_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        srl(&dummy);
+        ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SRL_star_HL)
+    case SRL_A:
+      PRINT_INS_CB(SRL_A)
+      srl(&cp.A);
+      RETURN_FROM_INS_CB(SRL_A)
   }
 }
 
@@ -1770,5 +1918,44 @@ void rr(uint8_t *op)
   *op >>= 1;
   *op = *op | (cp.cf << 7);
   cp.cf = (save & 0x1) == 1;
+  cp.zf = *op == 0;
+}
+
+void sla(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op <<= 1;
+  cp.cf = (save & 0x80) == 0x80;
+  *op = *op & 0xFE; 
+  cp.zf = *op == 0;
+}
+
+void sra(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op >>= 1;
+  *op = *op | (save & 0x80);
+  cp.cf = ((save & 0x01) == 1);
+  cp.zf = *op == 0;
+}
+
+void swap(uint8_t *op)
+{
+  cp.n = cp.h = cp.cf = 0;
+  uint8_t temp;
+  temp = ((*op & 0xF0) >> 4) | ((*op & 0x0F) << 4);
+  *op = temp;
+  cp.zf = *op == 0;
+}
+
+void srl(uint8_t *op)
+{
+  cp.n = cp.h = 0;
+  uint8_t save = *op;
+  *op >>= 1;
+  cp.cf = ((save & 0x01) == 1);
+  *op = (*op & 0x7F);
   cp.zf = *op == 0;
 }

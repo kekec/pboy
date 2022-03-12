@@ -579,6 +579,40 @@ static struct instruction instructionsCB[] =
   {"RR L",2,8},            // 1D
   {"RR (HL)",2,16},        // 1E
   {"RR A",2,8},            // 1F
+  {"SLA B",2,8},           // 20
+  {"SLA C",2,8},           // 21
+  {"SLA D",2,8},           // 22
+  {"SLA E",2,8},           // 23
+  {"SLA H",2,8},           // 24
+  {"SLA L",2,8},           // 25
+  {"SLA (HL)",2,16},       // 26
+  {"SLA A",2,8},           // 27
+  {"SRA B",2,8},           // 28
+  {"SRA C",2,8},           // 29
+  {"SRA D",2,8},           // 2A
+  {"SRA E",2,8},           // 2B
+  {"SRA H",2,8},           // 2C
+  {"SRA L",2,8},           // 2D
+  {"SRA (HL)",2,16},       // 2E
+  {"SRA A",2,8},           // 2F
+  {"SWAP B",2,8},          // 30
+  {"SWAP C",2,8},          // 31
+  {"SWAP D",2,8},          // 32
+  {"SWAP E",2,8},          // 33
+  {"SWAP H",2,8},          // 34
+  {"SWAP L",2,8},          // 35
+  {"SWAP (HL)",2,16},      // 36
+  {"SWAP A",2,8},          // 37
+  {"SRL B",2,8},           // 38
+  {"SRL C",2,8},           // 39
+  {"SRL D",2,8},           // 3A
+  {"SRL E",2,8},           // 3B
+  {"SRL H",2,8},           // 3C
+  {"SRL L",2,8},           // 3D
+  {"SRL (HL)",2,16},       // 3E
+  {"SRL A",2,8},           // 3F
+
+
 };
 
 static struct instruction instructions[] =

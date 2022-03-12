@@ -127,4 +127,7 @@ void rlc(uint8_t *op);
 void rrc(uint8_t *op);
 void rl(uint8_t *op);
 void rr(uint8_t *op);
-
+void sla(uint8_t *op);
+void sra(uint8_t *op);
+void swap(uint8_t *op);
+void srl(uint8_t *op);
