@@ -1878,6 +1878,295 @@ uint8_t decodeCB()
       PRINT_INS_CB(SRL_A)
       srl(&cp.A);
       RETURN_FROM_INS_CB(SRL_A)
+    case BIT_0_B:
+      PRINT_INS_CB(BIT_0_B)
+      bit0(&cp.B);
+      RETURN_FROM_INS_CB(BIT_0_B)
+    case BIT_0_C:
+      PRINT_INS_CB(BIT_0_C)
+      bit0(&cp.C);
+      RETURN_FROM_INS_CB(BIT_0_C)
+    case BIT_0_D:
+      PRINT_INS_CB(BIT_0_D)
+      bit0(&cp.D);
+      RETURN_FROM_INS_CB(BIT_0_D)
+    case BIT_0_E:
+      PRINT_INS_CB(BIT_0_E)
+      bit0(&cp.E);
+      RETURN_FROM_INS_CB(BIT_0_E)
+    case BIT_0_H:
+      PRINT_INS_CB(BIT_0_H)
+      bit0(&cp.H);
+      RETURN_FROM_INS_CB(BIT_0_H)
+    case BIT_0_L:
+      PRINT_INS_CB(BIT_0_L)
+      bit0(&cp.L);
+      RETURN_FROM_INS_CB(BIT_0_L)
+    case BIT_0_star_HL:
+      PRINT_INS_CB(BIT_0_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit0(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_0_star_HL)
+    case BIT_0_A:
+      PRINT_INS_CB(BIT_0_A)
+      bit0(&cp.A);
+      RETURN_FROM_INS_CB(BIT_0_A)
+    case BIT_1_B:
+      PRINT_INS_CB(BIT_1_B)
+      bit1(&cp.B);
+      RETURN_FROM_INS_CB(BIT_1_B)
+    case BIT_1_C:
+      PRINT_INS_CB(BIT_1_C)
+      bit1(&cp.C);
+      RETURN_FROM_INS_CB(BIT_1_C)
+    case BIT_1_D:
+      PRINT_INS_CB(BIT_1_D)
+      bit1(&cp.D);
+      RETURN_FROM_INS_CB(BIT_1_D)
+    case BIT_1_E:
+      PRINT_INS_CB(BIT_1_E)
+      bit1(&cp.E);
+      RETURN_FROM_INS_CB(BIT_1_E)
+    case BIT_1_H:
+      PRINT_INS_CB(BIT_1_H)
+      bit1(&cp.H);
+      RETURN_FROM_INS_CB(BIT_1_H)
+    case BIT_1_L:
+      PRINT_INS_CB(BIT_1_L)
+      bit1(&cp.L);
+      RETURN_FROM_INS_CB(BIT_1_L)
+    case BIT_1_star_HL:
+      PRINT_INS_CB(BIT_1_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit1(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_1_star_HL)
+    case BIT_1_A:
+      PRINT_INS_CB(BIT_1_A)
+      bit1(&cp.A);
+      RETURN_FROM_INS_CB(BIT_1_A)
+    case BIT_2_B:
+      PRINT_INS_CB(BIT_2_B)
+      bit2(&cp.B);
+      RETURN_FROM_INS_CB(BIT_2_B)
+    case BIT_2_C:
+      PRINT_INS_CB(BIT_2_C)
+      bit2(&cp.C);
+      RETURN_FROM_INS_CB(BIT_2_C)
+    case BIT_2_D:
+      PRINT_INS_CB(BIT_2_D)
+      bit2(&cp.D);
+      RETURN_FROM_INS_CB(BIT_2_D)
+    case BIT_2_E:
+      PRINT_INS_CB(BIT_2_E)
+      bit2(&cp.E);
+      RETURN_FROM_INS_CB(BIT_2_E)
+    case BIT_2_H:
+      PRINT_INS_CB(BIT_2_H)
+      bit2(&cp.H);
+      RETURN_FROM_INS_CB(BIT_2_H)
+    case BIT_2_L:
+      PRINT_INS_CB(BIT_2_L)
+      bit2(&cp.L);
+      RETURN_FROM_INS_CB(BIT_2_L)
+    case BIT_2_star_HL:
+      PRINT_INS_CB(BIT_2_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit2(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_2_star_HL)
+    case BIT_2_A:
+      PRINT_INS_CB(BIT_2_A)
+      bit2(&cp.A);
+      RETURN_FROM_INS_CB(BIT_2_A)
+    case BIT_3_B:
+      PRINT_INS_CB(BIT_3_B)
+      bit3(&cp.B);
+      RETURN_FROM_INS_CB(BIT_3_B)
+    case BIT_3_C:
+      PRINT_INS_CB(BIT_3_C)
+      bit3(&cp.C);
+      RETURN_FROM_INS_CB(BIT_3_C)
+    case BIT_3_D:
+      PRINT_INS_CB(BIT_3_D)
+      bit3(&cp.D);
+      RETURN_FROM_INS_CB(BIT_3_D)
+    case BIT_3_E:
+      PRINT_INS_CB(BIT_3_E)
+      bit3(&cp.E);
+      RETURN_FROM_INS_CB(BIT_3_E)
+    case BIT_3_H:
+      PRINT_INS_CB(BIT_3_H)
+      bit3(&cp.H);
+      RETURN_FROM_INS_CB(BIT_3_H)
+    case BIT_3_L:
+      PRINT_INS_CB(BIT_3_L)
+      bit3(&cp.L);
+      RETURN_FROM_INS_CB(BIT_3_L)
+    case BIT_3_star_HL:
+      PRINT_INS_CB(BIT_3_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit3(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_3_star_HL)
+    case BIT_3_A:
+      PRINT_INS_CB(BIT_3_A)
+      bit3(&cp.A);
+      RETURN_FROM_INS_CB(BIT_3_A)
+    case BIT_4_B:
+      PRINT_INS_CB(BIT_4_B)
+      bit4(&cp.B);
+      RETURN_FROM_INS_CB(BIT_4_B)
+    case BIT_4_C:
+      PRINT_INS_CB(BIT_4_C)
+      bit4(&cp.C);
+      RETURN_FROM_INS_CB(BIT_4_C)
+    case BIT_4_D:
+      PRINT_INS_CB(BIT_4_D)
+      bit4(&cp.D);
+      RETURN_FROM_INS_CB(BIT_4_D)
+    case BIT_4_E:
+      PRINT_INS_CB(BIT_4_E)
+      bit4(&cp.E);
+      RETURN_FROM_INS_CB(BIT_4_E)
+    case BIT_4_H:
+      PRINT_INS_CB(BIT_4_H)
+      bit4(&cp.H);
+      RETURN_FROM_INS_CB(BIT_4_H)
+    case BIT_4_L:
+      PRINT_INS_CB(BIT_4_L)
+      bit4(&cp.L);
+      RETURN_FROM_INS_CB(BIT_4_L)
+    case BIT_4_star_HL:
+      PRINT_INS_CB(BIT_4_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit4(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_4_star_HL)
+    case BIT_4_A:
+      PRINT_INS_CB(BIT_4_A)
+      bit4(&cp.A);
+      RETURN_FROM_INS_CB(BIT_4_A)
+    case BIT_5_B:
+      PRINT_INS_CB(BIT_5_B)
+      bit5(&cp.B);
+      RETURN_FROM_INS_CB(BIT_5_B)
+    case BIT_5_C:
+      PRINT_INS_CB(BIT_5_C)
+      bit5(&cp.C);
+      RETURN_FROM_INS_CB(BIT_5_C)
+    case BIT_5_D:
+      PRINT_INS_CB(BIT_5_D)
+      bit5(&cp.D);
+      RETURN_FROM_INS_CB(BIT_5_D)
+    case BIT_5_E:
+      PRINT_INS_CB(BIT_5_E)
+      bit5(&cp.E);
+      RETURN_FROM_INS_CB(BIT_5_E)
+    case BIT_5_H:
+      PRINT_INS_CB(BIT_5_H)
+      bit5(&cp.H);
+      RETURN_FROM_INS_CB(BIT_5_H)
+    case BIT_5_L:
+      PRINT_INS_CB(BIT_5_L)
+      bit5(&cp.L);
+      RETURN_FROM_INS_CB(BIT_5_L)
+    case BIT_5_star_HL:
+      PRINT_INS_CB(BIT_5_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit5(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_5_star_HL)
+    case BIT_5_A:
+      PRINT_INS_CB(BIT_5_A)
+      bit5(&cp.A);
+      RETURN_FROM_INS_CB(BIT_5_A)
+    case BIT_6_B:
+      PRINT_INS_CB(BIT_6_B)
+      bit6(&cp.B);
+      RETURN_FROM_INS_CB(BIT_6_B)
+    case BIT_6_C:
+      PRINT_INS_CB(BIT_6_C)
+      bit6(&cp.C);
+      RETURN_FROM_INS_CB(BIT_6_C)
+    case BIT_6_D:
+      PRINT_INS_CB(BIT_6_D)
+      bit6(&cp.D);
+      RETURN_FROM_INS_CB(BIT_6_D)
+    case BIT_6_E:
+      PRINT_INS_CB(BIT_6_E)
+      bit6(&cp.E);
+      RETURN_FROM_INS_CB(BIT_6_E)
+    case BIT_6_H:
+      PRINT_INS_CB(BIT_6_H)
+      bit6(&cp.H);
+      RETURN_FROM_INS_CB(BIT_6_H)
+    case BIT_6_L:
+      PRINT_INS_CB(BIT_6_L)
+      bit6(&cp.L);
+      RETURN_FROM_INS_CB(BIT_6_L)
+    case BIT_6_star_HL:
+      PRINT_INS_CB(BIT_6_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit6(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_6_star_HL)
+    case BIT_6_A:
+      PRINT_INS_CB(BIT_6_A)
+      bit6(&cp.A);
+      RETURN_FROM_INS_CB(BIT_6_A)
+    case BIT_7_B:
+      PRINT_INS_CB(BIT_7_B)
+      bit7(&cp.B);
+      RETURN_FROM_INS_CB(BIT_7_B)
+    case BIT_7_C:
+      PRINT_INS_CB(BIT_7_C)
+      bit7(&cp.C);
+      RETURN_FROM_INS_CB(BIT_7_C)
+    case BIT_7_D:
+      PRINT_INS_CB(BIT_7_D)
+      bit7(&cp.D);
+      RETURN_FROM_INS_CB(BIT_7_D)
+    case BIT_7_E:
+      PRINT_INS_CB(BIT_7_E)
+      bit7(&cp.E);
+      RETURN_FROM_INS_CB(BIT_7_E)
+    case BIT_7_H:
+      PRINT_INS_CB(BIT_7_H)
+      bit7(&cp.H);
+      RETURN_FROM_INS_CB(BIT_7_H)
+    case BIT_7_L:
+      PRINT_INS_CB(BIT_7_L)
+      bit7(&cp.L);
+      RETURN_FROM_INS_CB(BIT_7_L)
+    case BIT_7_star_HL:
+      PRINT_INS_CB(BIT_7_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        bit7(&dummy);
+      }
+      RETURN_FROM_INS_CB(BIT_7_star_HL)
+    case BIT_7_A:
+      PRINT_INS_CB(BIT_7_A)
+      bit7(&cp.A);
+      RETURN_FROM_INS_CB(BIT_7_A)
+
   }
 }
 
@@ -1958,4 +2247,13 @@ void srl(uint8_t *op)
   cp.cf = ((save & 0x01) == 1);
   *op = (*op & 0x7F);
   cp.zf = *op == 0;
+}
+
+void bit(uint8_t *op, uint8_t bit)
+{
+  cp.n = 0;
+  cp.h = 1;
+  uint8_t flag;
+  flag = (*op & (1<<bit)) >> bit;
+  cp.zf = ~flag;
 }

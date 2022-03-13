@@ -8,6 +8,15 @@
 #define PRINT_INS_CB(arg)
 #define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); return instructionsCB[arg].cycles_min;
 
+#define bit0(arg) bit(arg, 0)
+#define bit1(arg) bit(arg, 1)
+#define bit2(arg) bit(arg, 2)
+#define bit3(arg) bit(arg, 3)
+#define bit4(arg) bit(arg, 4)
+#define bit5(arg) bit(arg, 5)
+#define bit6(arg) bit(arg, 6)
+#define bit7(arg) bit(arg, 7)
+
 struct cpu
 {
   union 
@@ -131,3 +140,4 @@ void sla(uint8_t *op);
 void sra(uint8_t *op);
 void swap(uint8_t *op);
 void srl(uint8_t *op);
+void bit(uint8_t *op, uint8_t bit);
