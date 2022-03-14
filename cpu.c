@@ -2166,6 +2166,598 @@ uint8_t decodeCB()
       PRINT_INS_CB(BIT_7_A)
       bit7(&cp.A);
       RETURN_FROM_INS_CB(BIT_7_A)
+    case RES_0_B:
+      PRINT_INS_CB(RES_0_B)
+      res0(&cp.B);
+      RETURN_FROM_INS_CB(RES_0_B)
+    case RES_0_C:
+      PRINT_INS_CB(RES_0_C)
+      res0(&cp.C);
+      RETURN_FROM_INS_CB(RES_0_C)
+    case RES_0_D:
+      PRINT_INS_CB(RES_0_D)
+      res0(&cp.D);
+      RETURN_FROM_INS_CB(RES_0_D)
+    case RES_0_E:
+      PRINT_INS_CB(RES_0_E)
+      res0(&cp.E);
+      RETURN_FROM_INS_CB(RES_0_E)
+    case RES_0_H:
+      PRINT_INS_CB(RES_0_H)
+      res0(&cp.H);
+      RETURN_FROM_INS_CB(RES_0_H)
+    case RES_0_L:
+      PRINT_INS_CB(RES_0_L)
+      res0(&cp.L);
+      RETURN_FROM_INS_CB(RES_0_L)
+    case RES_0_star_HL:
+      PRINT_INS_CB(RES_0_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res0(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_0_star_HL)
+    case RES_0_A:
+      PRINT_INS_CB(RES_0_A)
+      res0(&cp.A);
+      RETURN_FROM_INS_CB(RES_0_A)
+    case RES_1_B:
+      PRINT_INS_CB(RES_1_B)
+      res1(&cp.B);
+      RETURN_FROM_INS_CB(RES_1_B)
+    case RES_1_C:
+      PRINT_INS_CB(RES_1_C)
+      res1(&cp.C);
+      RETURN_FROM_INS_CB(RES_1_C)
+    case RES_1_D:
+      PRINT_INS_CB(RES_1_D)
+      res1(&cp.D);
+      RETURN_FROM_INS_CB(RES_1_D)
+    case RES_1_E:
+      PRINT_INS_CB(RES_1_E)
+      res1(&cp.E);
+      RETURN_FROM_INS_CB(RES_1_E)
+    case RES_1_H:
+      PRINT_INS_CB(RES_1_H)
+      res1(&cp.H);
+      RETURN_FROM_INS_CB(RES_1_H)
+    case RES_1_L:
+      PRINT_INS_CB(RES_1_L)
+      res1(&cp.L);
+      RETURN_FROM_INS_CB(RES_1_L)
+    case RES_1_star_HL:
+      PRINT_INS_CB(RES_1_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res1(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_1_star_HL)
+    case RES_1_A:
+      PRINT_INS_CB(RES_1_A)
+      res1(&cp.A);
+      RETURN_FROM_INS_CB(RES_1_A)
+    case RES_2_B:
+      PRINT_INS_CB(RES_2_B)
+      res2(&cp.B);
+      RETURN_FROM_INS_CB(RES_2_B)
+    case RES_2_C:
+      PRINT_INS_CB(RES_2_C)
+      res2(&cp.C);
+      RETURN_FROM_INS_CB(RES_2_C)
+    case RES_2_D:
+      PRINT_INS_CB(RES_2_D)
+      res2(&cp.D);
+      RETURN_FROM_INS_CB(RES_2_D)
+    case RES_2_E:
+      PRINT_INS_CB(RES_2_E)
+      res2(&cp.E);
+      RETURN_FROM_INS_CB(RES_2_E)
+    case RES_2_H:
+      PRINT_INS_CB(RES_2_H)
+      res2(&cp.H);
+      RETURN_FROM_INS_CB(RES_2_H)
+    case RES_2_L:
+      PRINT_INS_CB(RES_2_L)
+      res2(&cp.L);
+      RETURN_FROM_INS_CB(RES_2_L)
+    case RES_2_star_HL:
+      PRINT_INS_CB(RES_2_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res2(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_2_star_HL)
+    case RES_2_A:
+      PRINT_INS_CB(RES_2_A)
+      res2(&cp.A);
+      RETURN_FROM_INS_CB(RES_2_A)
+    case RES_3_B:
+      PRINT_INS_CB(RES_3_B)
+      res3(&cp.B);
+      RETURN_FROM_INS_CB(RES_3_B)
+    case RES_3_C:
+      PRINT_INS_CB(RES_3_C)
+      res3(&cp.C);
+      RETURN_FROM_INS_CB(RES_3_C)
+    case RES_3_D:
+      PRINT_INS_CB(RES_3_D)
+      res3(&cp.D);
+      RETURN_FROM_INS_CB(RES_3_D)
+    case RES_3_E:
+      PRINT_INS_CB(RES_3_E)
+      res3(&cp.E);
+      RETURN_FROM_INS_CB(RES_3_E)
+    case RES_3_H:
+      PRINT_INS_CB(RES_3_H)
+      res3(&cp.H);
+      RETURN_FROM_INS_CB(RES_3_H)
+    case RES_3_L:
+      PRINT_INS_CB(RES_3_L)
+      res3(&cp.L);
+      RETURN_FROM_INS_CB(RES_3_L)
+    case RES_3_star_HL:
+      PRINT_INS_CB(RES_3_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res3(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_3_star_HL)
+    case RES_3_A:
+      PRINT_INS_CB(RES_3_A)
+      res3(&cp.A);
+      RETURN_FROM_INS_CB(RES_3_A)
+    case RES_4_B:
+      PRINT_INS_CB(RES_4_B)
+      res4(&cp.B);
+      RETURN_FROM_INS_CB(RES_4_B)
+    case RES_4_C:
+      PRINT_INS_CB(RES_4_C)
+      res4(&cp.C);
+      RETURN_FROM_INS_CB(RES_4_C)
+    case RES_4_D:
+      PRINT_INS_CB(RES_4_D)
+      res4(&cp.D);
+      RETURN_FROM_INS_CB(RES_4_D)
+    case RES_4_E:
+      PRINT_INS_CB(RES_4_E)
+      res4(&cp.E);
+      RETURN_FROM_INS_CB(RES_4_E)
+    case RES_4_H:
+      PRINT_INS_CB(RES_4_H)
+      res4(&cp.H);
+      RETURN_FROM_INS_CB(RES_4_H)
+    case RES_4_L:
+      PRINT_INS_CB(RES_4_L)
+      res4(&cp.L);
+      RETURN_FROM_INS_CB(RES_4_L)
+    case RES_4_star_HL:
+      PRINT_INS_CB(RES_4_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res4(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_4_star_HL)
+    case RES_4_A:
+      PRINT_INS_CB(RES_4_A)
+      res4(&cp.A);
+      RETURN_FROM_INS_CB(RES_4_A)
+    case RES_5_B:
+      PRINT_INS_CB(RES_5_B)
+      res5(&cp.B);
+      RETURN_FROM_INS_CB(RES_5_B)
+    case RES_5_C:
+      PRINT_INS_CB(RES_5_C)
+      res5(&cp.C);
+      RETURN_FROM_INS_CB(RES_5_C)
+    case RES_5_D:
+      PRINT_INS_CB(RES_5_D)
+      res5(&cp.D);
+      RETURN_FROM_INS_CB(RES_5_D)
+    case RES_5_E:
+      PRINT_INS_CB(RES_5_E)
+      res5(&cp.E);
+      RETURN_FROM_INS_CB(RES_5_E)
+    case RES_5_H:
+      PRINT_INS_CB(RES_5_H)
+      res5(&cp.H);
+      RETURN_FROM_INS_CB(RES_5_H)
+    case RES_5_L:
+      PRINT_INS_CB(RES_5_L)
+      res5(&cp.L);
+      RETURN_FROM_INS_CB(RES_5_L)
+    case RES_5_star_HL:
+      PRINT_INS_CB(RES_5_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res5(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_5_star_HL)
+    case RES_5_A:
+      PRINT_INS_CB(RES_5_A)
+      res5(&cp.A);
+      RETURN_FROM_INS_CB(RES_5_A)
+    case RES_6_B:
+      PRINT_INS_CB(RES_6_B)
+      res6(&cp.B);
+      RETURN_FROM_INS_CB(RES_6_B)
+    case RES_6_C:
+      PRINT_INS_CB(RES_6_C)
+      res6(&cp.C);
+      RETURN_FROM_INS_CB(RES_6_C)
+    case RES_6_D:
+      PRINT_INS_CB(RES_6_D)
+      res6(&cp.D);
+      RETURN_FROM_INS_CB(RES_6_D)
+    case RES_6_E:
+      PRINT_INS_CB(RES_6_E)
+      res6(&cp.E);
+      RETURN_FROM_INS_CB(RES_6_E)
+    case RES_6_H:
+      PRINT_INS_CB(RES_6_H)
+      res6(&cp.H);
+      RETURN_FROM_INS_CB(RES_6_H)
+    case RES_6_L:
+      PRINT_INS_CB(RES_6_L)
+      res6(&cp.L);
+      RETURN_FROM_INS_CB(RES_6_L)
+    case RES_6_star_HL:
+      PRINT_INS_CB(RES_6_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res6(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_6_star_HL)
+    case RES_6_A:
+      PRINT_INS_CB(RES_6_A)
+      res6(&cp.A);
+      RETURN_FROM_INS_CB(RES_6_A)
+    case RES_7_B:
+      PRINT_INS_CB(RES_7_B)
+      res7(&cp.B);
+      RETURN_FROM_INS_CB(RES_7_B)
+    case RES_7_C:
+      PRINT_INS_CB(RES_7_C)
+      res7(&cp.C);
+      RETURN_FROM_INS_CB(RES_7_C)
+    case RES_7_D:
+      PRINT_INS_CB(RES_7_D)
+      res7(&cp.D);
+      RETURN_FROM_INS_CB(RES_7_D)
+    case RES_7_E:
+      PRINT_INS_CB(RES_7_E)
+      res7(&cp.E);
+      RETURN_FROM_INS_CB(RES_7_E)
+    case RES_7_H:
+      PRINT_INS_CB(RES_7_H)
+      res7(&cp.H);
+      RETURN_FROM_INS_CB(RES_7_H)
+    case RES_7_L:
+      PRINT_INS_CB(RES_7_L)
+      res7(&cp.L);
+      RETURN_FROM_INS_CB(RES_7_L)
+    case RES_7_star_HL:
+      PRINT_INS_CB(RES_7_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        res7(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(RES_7_star_HL)
+    case RES_7_A:
+      PRINT_INS_CB(RES_7_A)
+      res7(&cp.A);
+      RETURN_FROM_INS_CB(RES_7_A)
+    case SET_0_B:
+      PRINT_INS_CB(SET_0_B)
+      set0(&cp.B);
+      RETURN_FROM_INS_CB(SET_0_B)
+    case SET_0_C:
+      PRINT_INS_CB(SET_0_C)
+      set0(&cp.C);
+      RETURN_FROM_INS_CB(SET_0_C)
+    case SET_0_D:
+      PRINT_INS_CB(SET_0_D)
+      set0(&cp.D);
+      RETURN_FROM_INS_CB(SET_0_D)
+    case SET_0_E:
+      PRINT_INS_CB(SET_0_E)
+      set0(&cp.E);
+      RETURN_FROM_INS_CB(SET_0_E)
+    case SET_0_H:
+      PRINT_INS_CB(SET_0_H)
+      set0(&cp.H);
+      RETURN_FROM_INS_CB(SET_0_H)
+    case SET_0_L:
+      PRINT_INS_CB(SET_0_L)
+      set0(&cp.L);
+      RETURN_FROM_INS_CB(SET_0_L)
+    case SET_0_star_HL:
+      PRINT_INS_CB(SET_0_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set0(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_0_star_HL)
+    case SET_0_A:
+      PRINT_INS_CB(SET_0_A)
+      set0(&cp.A);
+      RETURN_FROM_INS_CB(SET_0_A)
+    case SET_1_B:
+      PRINT_INS_CB(SET_1_B)
+      set1(&cp.B);
+      RETURN_FROM_INS_CB(SET_1_B)
+    case SET_1_C:
+      PRINT_INS_CB(SET_1_C)
+      set1(&cp.C);
+      RETURN_FROM_INS_CB(SET_1_C)
+    case SET_1_D:
+      PRINT_INS_CB(SET_1_D)
+      set1(&cp.D);
+      RETURN_FROM_INS_CB(SET_1_D)
+    case SET_1_E:
+      PRINT_INS_CB(SET_1_E)
+      set1(&cp.E);
+      RETURN_FROM_INS_CB(SET_1_E)
+    case SET_1_H:
+      PRINT_INS_CB(SET_1_H)
+      set1(&cp.H);
+      RETURN_FROM_INS_CB(SET_1_H)
+    case SET_1_L:
+      PRINT_INS_CB(SET_1_L)
+      set1(&cp.L);
+      RETURN_FROM_INS_CB(SET_1_L)
+    case SET_1_star_HL:
+      PRINT_INS_CB(SET_1_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set1(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_1_star_HL)
+    case SET_1_A:
+      PRINT_INS_CB(SET_1_A)
+      set1(&cp.A);
+      RETURN_FROM_INS_CB(SET_1_A)
+    case SET_2_B:
+      PRINT_INS_CB(SET_2_B)
+      set2(&cp.B);
+      RETURN_FROM_INS_CB(SET_2_B)
+    case SET_2_C:
+      PRINT_INS_CB(SET_2_C)
+      set2(&cp.C);
+      RETURN_FROM_INS_CB(SET_2_C)
+    case SET_2_D:
+      PRINT_INS_CB(SET_2_D)
+      set2(&cp.D);
+      RETURN_FROM_INS_CB(SET_2_D)
+    case SET_2_E:
+      PRINT_INS_CB(SET_2_E)
+      set2(&cp.E);
+      RETURN_FROM_INS_CB(SET_2_E)
+    case SET_2_H:
+      PRINT_INS_CB(SET_2_H)
+      set2(&cp.H);
+      RETURN_FROM_INS_CB(SET_2_H)
+    case SET_2_L:
+      PRINT_INS_CB(SET_2_L)
+      set2(&cp.L);
+      RETURN_FROM_INS_CB(SET_2_L)
+    case SET_2_star_HL:
+      PRINT_INS_CB(SET_2_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set2(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_2_star_HL)
+    case SET_2_A:
+      PRINT_INS_CB(SET_2_A)
+      set2(&cp.A);
+      RETURN_FROM_INS_CB(SET_2_A)
+    case SET_3_B:
+      PRINT_INS_CB(SET_3_B)
+      set3(&cp.B);
+      RETURN_FROM_INS_CB(SET_3_B)
+    case SET_3_C:
+      PRINT_INS_CB(SET_3_C)
+      set3(&cp.C);
+      RETURN_FROM_INS_CB(SET_3_C)
+    case SET_3_D:
+      PRINT_INS_CB(SET_3_D)
+      set3(&cp.D);
+      RETURN_FROM_INS_CB(SET_3_D)
+    case SET_3_E:
+      PRINT_INS_CB(SET_3_E)
+      set3(&cp.E);
+      RETURN_FROM_INS_CB(SET_3_E)
+    case SET_3_H:
+      PRINT_INS_CB(SET_3_H)
+      set3(&cp.H);
+      RETURN_FROM_INS_CB(SET_3_H)
+    case SET_3_L:
+      PRINT_INS_CB(SET_3_L)
+      set3(&cp.L);
+      RETURN_FROM_INS_CB(SET_3_L)
+    case SET_3_star_HL:
+      PRINT_INS_CB(SET_3_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set3(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_3_star_HL)
+    case SET_3_A:
+      PRINT_INS_CB(SET_3_A)
+      set3(&cp.A);
+      RETURN_FROM_INS_CB(SET_3_A)
+    case SET_4_B:
+      PRINT_INS_CB(SET_4_B)
+      set4(&cp.B);
+      RETURN_FROM_INS_CB(SET_4_B)
+    case SET_4_C:
+      PRINT_INS_CB(SET_4_C)
+      set4(&cp.C);
+      RETURN_FROM_INS_CB(SET_4_C)
+    case SET_4_D:
+      PRINT_INS_CB(SET_4_D)
+      set4(&cp.D);
+      RETURN_FROM_INS_CB(SET_4_D)
+    case SET_4_E:
+      PRINT_INS_CB(SET_4_E)
+      set4(&cp.E);
+      RETURN_FROM_INS_CB(SET_4_E)
+    case SET_4_H:
+      PRINT_INS_CB(SET_4_H)
+      set4(&cp.H);
+      RETURN_FROM_INS_CB(SET_4_H)
+    case SET_4_L:
+      PRINT_INS_CB(SET_4_L)
+      set4(&cp.L);
+      RETURN_FROM_INS_CB(SET_4_L)
+    case SET_4_star_HL:
+      PRINT_INS_CB(SET_4_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set4(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_4_star_HL)
+    case SET_4_A:
+      PRINT_INS_CB(SET_4_A)
+      set4(&cp.A);
+      RETURN_FROM_INS_CB(SET_4_A)
+    case SET_5_B:
+      PRINT_INS_CB(SET_5_B)
+      set5(&cp.B);
+      RETURN_FROM_INS_CB(SET_5_B)
+    case SET_5_C:
+      PRINT_INS_CB(SET_5_C)
+      set5(&cp.C);
+      RETURN_FROM_INS_CB(SET_5_C)
+    case SET_5_D:
+      PRINT_INS_CB(SET_5_D)
+      set5(&cp.D);
+      RETURN_FROM_INS_CB(SET_5_D)
+    case SET_5_E:
+      PRINT_INS_CB(SET_5_E)
+      set5(&cp.E);
+      RETURN_FROM_INS_CB(SET_5_E)
+    case SET_5_H:
+      PRINT_INS_CB(SET_5_H)
+      set5(&cp.H);
+      RETURN_FROM_INS_CB(SET_5_H)
+    case SET_5_L:
+      PRINT_INS_CB(SET_5_L)
+      set5(&cp.L);
+      RETURN_FROM_INS_CB(SET_5_L)
+    case SET_5_star_HL:
+      PRINT_INS_CB(SET_5_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set5(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_5_star_HL)
+    case SET_5_A:
+      PRINT_INS_CB(SET_5_A)
+      set5(&cp.A);
+      RETURN_FROM_INS_CB(SET_5_A)
+    case SET_6_B:
+      PRINT_INS_CB(SET_6_B)
+      set6(&cp.B);
+      RETURN_FROM_INS_CB(SET_6_B)
+    case SET_6_C:
+      PRINT_INS_CB(SET_6_C)
+      set6(&cp.C);
+      RETURN_FROM_INS_CB(SET_6_C)
+    case SET_6_D:
+      PRINT_INS_CB(SET_6_D)
+      set6(&cp.D);
+      RETURN_FROM_INS_CB(SET_6_D)
+    case SET_6_E:
+      PRINT_INS_CB(SET_6_E)
+      set6(&cp.E);
+      RETURN_FROM_INS_CB(SET_6_E)
+    case SET_6_H:
+      PRINT_INS_CB(SET_6_H)
+      set6(&cp.H);
+      RETURN_FROM_INS_CB(SET_6_H)
+    case SET_6_L:
+      PRINT_INS_CB(SET_6_L)
+      set6(&cp.L);
+      RETURN_FROM_INS_CB(SET_6_L)
+    case SET_6_star_HL:
+      PRINT_INS_CB(SET_6_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set6(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_6_star_HL)
+    case SET_6_A:
+      PRINT_INS_CB(SET_6_A)
+      set6(&cp.A);
+      RETURN_FROM_INS_CB(SET_6_A)
+    case SET_7_B:
+      PRINT_INS_CB(SET_7_B)
+      set7(&cp.B);
+      RETURN_FROM_INS_CB(SET_7_B)
+    case SET_7_C:
+      PRINT_INS_CB(SET_7_C)
+      set7(&cp.C);
+      RETURN_FROM_INS_CB(SET_7_C)
+    case SET_7_D:
+      PRINT_INS_CB(SET_7_D)
+      set7(&cp.D);
+      RETURN_FROM_INS_CB(SET_7_D)
+    case SET_7_E:
+      PRINT_INS_CB(SET_7_E)
+      set7(&cp.E);
+      RETURN_FROM_INS_CB(SET_7_E)
+    case SET_7_H:
+      PRINT_INS_CB(SET_7_H)
+      set7(&cp.H);
+      RETURN_FROM_INS_CB(SET_7_H)
+    case SET_7_L:
+      PRINT_INS_CB(SET_7_L)
+      set7(&cp.L);
+      RETURN_FROM_INS_CB(SET_7_L)
+    case SET_7_star_HL:
+      PRINT_INS_CB(SET_7_star_HL)
+      {
+        uint8_t dummy;
+        ldOp8FromMem(cp.HL, &dummy);
+        set7(&dummy);
+	ldOp8ToMem(dummy, cp.HL);
+      }
+      RETURN_FROM_INS_CB(SET_7_star_HL)
+    case SET_7_A:
+      PRINT_INS_CB(SET_7_A)
+      set7(&cp.A);
+      RETURN_FROM_INS_CB(SET_7_A)
 
   }
 }
@@ -2256,4 +2848,18 @@ void bit(uint8_t *op, uint8_t bit)
   uint8_t flag;
   flag = (*op & (1<<bit)) >> bit;
   cp.zf = ~flag;
+}
+
+void res(uint8_t *op, uint8_t bit)
+{
+  uint8_t mask;
+  mask = ~(1<<bit);
+  *op &= mask;
+}
+
+void set(uint8_t *op, uint8_t bit)
+{
+  uint8_t mask;
+  mask = 1<<bit;
+  *op |= mask;
 }

@@ -17,6 +17,24 @@
 #define bit6(arg) bit(arg, 6)
 #define bit7(arg) bit(arg, 7)
 
+#define res0(arg) res(arg, 0)
+#define res1(arg) res(arg, 1)
+#define res2(arg) res(arg, 2)
+#define res3(arg) res(arg, 3)
+#define res4(arg) res(arg, 4)
+#define res5(arg) res(arg, 5)
+#define res6(arg) res(arg, 6)
+#define res7(arg) res(arg, 7)
+
+#define set0(arg) set(arg, 0)
+#define set1(arg) set(arg, 1)
+#define set2(arg) set(arg, 2)
+#define set3(arg) set(arg, 3)
+#define set4(arg) set(arg, 4)
+#define set5(arg) set(arg, 5)
+#define set6(arg) set(arg, 6)
+#define set7(arg) set(arg, 7)
+
 struct cpu
 {
   union 
@@ -141,3 +159,5 @@ void sra(uint8_t *op);
 void swap(uint8_t *op);
 void srl(uint8_t *op);
 void bit(uint8_t *op, uint8_t bit);
+void res(uint8_t *op, uint8_t bit);
+void set(uint8_t *op, uint8_t bit);
