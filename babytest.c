@@ -65,12 +65,9 @@ void main(uint8_t argc, char *argv[])
     exit(-1);
   }
   fread(buffer, sb.st_size, 1, fd);
-  printf("buffer is %s\n", buffer);
-
-  test_regs();
   init(buffer);
 
-  for(int i=0; i<10; i++)
+  for(int i=0; i<100; i++)
     step();
 
   pclose(fd);

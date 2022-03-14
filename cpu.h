@@ -3,7 +3,7 @@
 #include "stdio.h"
 
 #define PRINT_INS_FOO(arg) print_ins(arg);
-#define PRINT_INS(arg)
+#define PRINT_INS(arg) PRINT_INS_FOO(arg)
 #define RETURN_FROM_INS(arg) move_pc(arg); return instructions[arg].cycles_min;
 #define PRINT_INS_CB(arg)
 #define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); return instructionsCB[arg].cycles_min;

@@ -7,13 +7,14 @@
 void init(uint8_t * address)
 {
   mem = address;
-  cp.PC = 0;
+  cp.PC = 0x100;
   logReadMem = NULL;
   logWriteMem = NULL;
 }
 
 unsigned int step()
 {
+  printf("PC is %x :", cp.PC);
   uint8_t instr = readMem(cp.PC++);
   switch(instr)
   {
@@ -1213,12 +1214,14 @@ void writeMem(uint16_t addr, uint8_t data)
 {
   if( logWriteMem != NULL )
     (*logWriteMem)(addr, data);
+  mem[addr] = data;
 }
 
 uint8_t readMem(uint16_t addr)
 {
   if( logReadMem != NULL )
     return (*logReadMem)(addr);
+  return mem[addr];
 }
 
 void registerLogReadMem(uint8_t (*func) (uint16_t) )

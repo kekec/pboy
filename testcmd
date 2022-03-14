@@ -1,2 +1,2 @@
 #!/bin/bash
-python -c 'print("\x00"*9 + "\x10")' > rom.gb
+python -c 'print("\x00"*256 + "\x10")' > rom.gb
