@@ -22,7 +22,7 @@ test_cpu.o: test_cpu.c
 	gcc -I$(SUBDIR) -c test_cpu.c
 clean:
 	make -C $(SUBDIR) clean
-	rm -rf *.o main babytest
+	rm -rf *.o main babytest rom.gb
 
 install: testlib
 	sudo cp $(SUBDIR)/libgbit.so /usr/lib

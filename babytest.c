@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <sys/stat.h>
 #include "cpu.h"
 
 void test_regs()
@@ -27,13 +30,49 @@ void test_regs()
   printf("flag is %x\n", rf.F);
 }
 
-void main()
+void main(uint8_t argc, char *argv[])
 {
-  uint8_t mem[10];
-  memset(mem, sizeof(mem), 0);
+  FILE *fd;
+  struct stat sb;
+  uint8_t * buffer;
+
+  printf("argc %d\n", argc);
+  if (argc !=2 )
+  {
+    printf("Usage: %s romfile\n", argv[0]);
+    exit(-1);
+  }
+  
+  printf("try to open");
+  fd = fopen(argv[1], "rb");
+  printf("file opened");
+  if (fd == NULL )
+  {
+    printf("Cannot open file %s\n", argv[1]);
+    exit(-1);
+  }
+
+  //get file size
+  printf("try to get filesize");
+  stat(argv[1], &sb);
+  printf("Filesize %ld", sb.st_size);
+  buffer = (uint8_t*)malloc(sb.st_size);
+
+  if(buffer == NULL)
+  {
+    printf("Memory could not be allocated\n");
+    free(buffer);
+    exit(-1);
+  }
+  fread(buffer, sb.st_size, 1, fd);
+  printf("buffer is %s\n", buffer);
+
   test_regs();
-  init(mem);
+  init(buffer);
 
   for(int i=0; i<10; i++)
     step();
+
+  pclose(fd);
+  free(buffer);
 }
