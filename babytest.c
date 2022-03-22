@@ -35,17 +35,15 @@ void main(uint8_t argc, char *argv[])
   FILE *fd;
   struct stat sb;
   uint8_t * buffer;
+  uint32_t cycles;
 
-  printf("argc %d\n", argc);
   if (argc !=2 )
   {
     printf("Usage: %s romfile\n", argv[0]);
     exit(-1);
   }
   
-  printf("try to open");
   fd = fopen(argv[1], "rb");
-  printf("file opened");
   if (fd == NULL )
   {
     printf("Cannot open file %s\n", argv[1]);
@@ -53,9 +51,7 @@ void main(uint8_t argc, char *argv[])
   }
 
   //get file size
-  printf("try to get filesize");
   stat(argv[1], &sb);
-  printf("Filesize %ld", sb.st_size);
   buffer = (uint8_t*)malloc(sb.st_size);
 
   if(buffer == NULL)
@@ -65,10 +61,12 @@ void main(uint8_t argc, char *argv[])
     exit(-1);
   }
   fread(buffer, sb.st_size, 1, fd);
-  init(buffer);
+  init(buffer, 0x100);
 
-  for(int i=0; i<100; i++)
-    step();
+  for(;;)
+  {
+    cycles += step();
+  }
 
   pclose(fd);
   free(buffer);

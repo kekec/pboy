@@ -838,7 +838,7 @@ static struct instruction instructions[] =
   {"DEC E",1,4},         //1D
   {"LD E, imm8",2,8},    //1E
   {"RRA",1,4},           //1F
-  {"JR NZ, imm8",2,4},   //20 //4 or 8 cycles
+  {"JR NZ, imm8",2,8,12},//20
   {"LD HL, imm16",3,12}, //21
   {"LD (HL+), A",1,8},   //22
   {"INC HL",1,8},        //23
@@ -846,7 +846,7 @@ static struct instruction instructions[] =
   {"DEC H",1,4},         //25
   {"LD H, imm8",2,8},    //26
   {"DAA",1,4},           //27
-  {"JR Z, imm8",2,4},    //28 //4 or 8 cycles
+  {"JR Z, imm8",2,8,12}, //28
   {"ADD HL,HL",1,8},     //29
   {"LD_A_star_DE",1,4},  //2A
   {"DEC HL",1,8},        //2B
@@ -854,7 +854,7 @@ static struct instruction instructions[] =
   {"DEC L",1,4},         //2D
   {"LD L",2,8},          //2E
   {"CPL",1,4},           //2F
-  {"JR NZ, imm8",2,4},   //30 //4 or 8 cycles
+  {"JR NZ, imm8",2,8,12},//30
   {"LD SP, imm16",3,12}, //31
   {"LD (HL-), A",1,8},   //32
   {"INC SP",1,8},        //33
@@ -862,7 +862,7 @@ static struct instruction instructions[] =
   {"DEC (HL)",1,4},      //35
   {"LD (HL), imm8",2,12},//36
   {"SCF",1,4},           //37
-  {"JR C, imm8",2,4},    //38 //4 or 8 cylces
+  {"JR C, imm8",2,8,12}, //38
   {"ADD HL,SP",1,8},     //39
   {"LD A, (HL-)",1,8},   //3A
   {"DEC SP",1,8},        //3B
@@ -998,38 +998,38 @@ static struct instruction instructions[] =
   {"CP L", 1, 4},        //BD
   {"CP (HL)", 1, 8},     //BE
   {"CP A", 1, 4},        //BF
-  {"RET NZ", 1, 20},     //C0 TODO
+  {"RET NZ", 1, 8,20},   //C0
   {"POP BC", 1, 12},     //C1
-  {"JP NZ, imm16", 3, 16},//C2 TODO
+  {"JP NZ, imm16",3,12,16},//C2
   {"JP imm16", 3, 16},   //C3
-  {"CALL NZ, imm16", 3, 24},//C4
+  {"CALL NZ, imm16",3,12,24},//C4
   {"PUSH BC", 1, 16},    //C5
   {"ADD A, imm8", 2, 8}, //C6
   {"RST_0", 1, 4},       //C7
-  {"RET_Z", 1, 20},      //C8 TODO
+  {"RET_Z", 1, 8, 20},   //C8
   {"RET", 1, 4},         //C9
-  {"JP Z, imm16", 3, 16},//CA TODO
+  {"JP Z, imm16", 3, 12 ,16},//CA
   {"Illegal OP", 1, 4},  //CB
-  {"CALL Z, imm16", 3, 24}, //CC TODO
+  {"CALL Z, imm16", 3, 12, 24}, //CC
   {"CALL imm16", 3, 24}, //CD
   {"ADC A, imm8", 2, 8}, //CE
-  {"RST_1", 1, 16},       //CF
-  {"RET NC", 1, 20},     //D0 TODO
+  {"RST_1", 1, 16},      //CF
+  {"RET NC", 1, 8, 20},  //D0
   {"POP DE", 1, 12},     //D1
-  {"JP NC, imm16", 3, 16},//D2 TODO
+  {"JP NC, imm16", 3, 12, 16},//D2
   {"Illegal OP", 1, 4},  //D3
-  {"CALL NC, imm16", 3, 24},//D4
+  {"CALL NC, imm16", 3, 12, 24},//D4
   {"PUSH DE", 1, 16},    //D5
   {"SUB imm8", 2, 8},    //D6
-  {"RST_2", 1, 16},       //D7
-  {"RET_C", 1, 20},      //D8 TODO
+  {"RST_2", 1, 16},      //D7
+  {"RET_C", 1, 8, 20},   //D8
   {"RETI", 1, 4},        //D9
-  {"JP C, imm16", 3, 16},//DA TODO
+  {"JP C, imm16", 3, 12, 16},//DA
   {"Illegal OP", 1, 4},  //DB
-  {"CALL C, imm16", 3, 24}, //DC TODO
+  {"CALL C, imm16", 3, 12 ,24}, //DC
   {"Illegal OP", 1, 4},  //DD
   {"SBC A, imm8", 2, 8}, //DE
-  {"RST_3", 1, 16},       //DF
+  {"RST_3", 1, 16},      //DF
   {"LD (a8), A", 2, 12}, //E0
   {"POP HL", 1, 12},     //E1
   {"LD (C), A", 1, 8},   //E2
@@ -1037,7 +1037,7 @@ static struct instruction instructions[] =
   {"Illegal OP", 1, 4},  //E4
   {"PUSH HL", 1, 16},    //E5
   {"AND imm8", 2, 8},    //E6
-  {"RST_4", 1, 16},       //E7
+  {"RST_4", 1, 16},      //E7
   {"ADD SP, imm8", 2, 16},//E8 
   {"JP HL", 1, 4},       //E9
   {"LD (a16), A", 3, 16},//EA
@@ -1045,7 +1045,7 @@ static struct instruction instructions[] =
   {"Illegal OP", 1, 4},  //EB
   {"Illegal OP", 1, 4},  //EB
   {"XOR imm8", 2, 8},    //EE
-  {"RST_5", 1, 16},       //FF
+  {"RST_5", 1, 16},      //FF
   {"LD A, (a8)", 2, 12}, //F0
   {"POP AF", 1, 12},     //F1
   {"LD A, (C)", 1, 8},   //F2
@@ -1053,7 +1053,7 @@ static struct instruction instructions[] =
   {"Illegal OP", 1, 4},  //F4
   {"PUSH AF", 1, 16},    //F5
   {"OR imm8", 2, 8},     //F6
-  {"RST_6", 1, 16},       //F7
+  {"RST_6", 1, 16},      //F7
   {"LD HL, SP+imm8", 2, 12},//F8
   {"LD SP, HL", 1, 8},   //F9
   {"LD A, (imm16)", 3, 16},//FA

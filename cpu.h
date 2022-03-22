@@ -3,8 +3,10 @@
 #include "stdio.h"
 
 #define PRINT_INS_FOO(arg) print_ins(arg);
-#define PRINT_INS(arg) PRINT_INS_FOO(arg)
+#define PRINT_INS(arg)
 #define RETURN_FROM_INS(arg) move_pc(arg); return instructions[arg].cycles_min;
+#define RETURN_MAX_CYCLES(arg) return instructions[arg].cycles_max;
+
 #define PRINT_INS_CB(arg)
 #define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); return instructionsCB[arg].cycles_min;
 
@@ -100,7 +102,7 @@ struct cpu cp;
 uint8_t (*logReadMem)(uint16_t);
 void (*logWriteMem)(uint16_t, uint8_t);
 
-void init(uint8_t *address);
+void init(uint8_t *address, uint16_t start);
 unsigned int step();
 uint8_t decodeCB();
 uint8_t readMem(uint16_t addr);

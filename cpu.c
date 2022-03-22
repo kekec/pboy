@@ -4,23 +4,21 @@
 #include "cpu.h"
 #include "instruction.h"
 
-void init(uint8_t * address)
+void init(uint8_t * address, uint16_t start)
 {
   mem = address;
-  cp.PC = 0x100;
+  cp.PC = start;
   logReadMem = NULL;
   logWriteMem = NULL;
 }
 
 unsigned int step()
 {
-  printf("PC is %x :", cp.PC);
   uint8_t instr = readMem(cp.PC++);
   switch(instr)
   {
-
     case NOP:
-      PRINT_INS(NOP)
+      //PRINT_INS(NOP)
       RETURN_FROM_INS(NOP)
     case LD_BC_IMM16:
       PRINT_INS(LD_BC_IMM16)
@@ -165,7 +163,7 @@ unsigned int step()
         int8_t data;
 	ldOp8FromMemAtPC(&data);
         cp.PC += data;
-	//TODO: cycles += 4;
+        RETURN_MAX_CYCLES(JR_NZ_imm8)
       }
       RETURN_FROM_INS(JR_NZ_imm8)
     case LD_HL_IMM16:
@@ -879,7 +877,6 @@ unsigned int step()
 	uint16_t helper;
 	ldOp16FromMemAtPC(&helper);
         cp.PC =  helper;
-	break;
       }
       RETURN_FROM_INS(JP_IMM16)
     case CALL_NZ_IMM16:
@@ -890,7 +887,7 @@ unsigned int step()
 	uint16_t helper;
 	ldOp16FromMemAtPC(&helper);
         cp.PC = helper;
-	break;
+        RETURN_MAX_CYCLES(CALL_NZ_IMM16)
       }
       RETURN_FROM_INS(CALL_NZ_IMM16)
     case PUSH_BC:
@@ -912,7 +909,10 @@ unsigned int step()
     case RET_Z:
       PRINT_INS(RET_Z)
       if(cp.zf == 1)
+      {
         pop16(&cp.PC);
+        RETURN_MAX_CYCLES(RET_Z)
+      }
       RETURN_FROM_INS(RET_Z)
     case RET:
       PRINT_INS(RET)
@@ -1212,6 +1212,8 @@ unsigned int step()
 
 void writeMem(uint16_t addr, uint8_t data)
 {
+  if(addr == 0xFF01 || addr == 0xFF02)
+    printf("serial link write\n");
   if( logWriteMem != NULL )
     (*logWriteMem)(addr, data);
   mem[addr] = data;
@@ -1219,6 +1221,8 @@ void writeMem(uint16_t addr, uint8_t data)
 
 uint8_t readMem(uint16_t addr)
 {
+  if(addr == 0xFF01 || addr == 0xFF02)
+    printf("serial link read\n");
   if( logReadMem != NULL )
     return (*logReadMem)(addr);
   return mem[addr];
