@@ -18,7 +18,7 @@ unsigned int step()
   switch(instr)
   {
     case NOP:
-      //PRINT_INS(NOP)
+      PRINT_INS(NOP)
       RETURN_FROM_INS(NOP)
     case LD_BC_IMM16:
       PRINT_INS(LD_BC_IMM16)
@@ -163,6 +163,7 @@ unsigned int step()
         int8_t data;
 	ldOp8FromMemAtPC(&data);
         cp.PC += data;
+	cp.PC++; //PC seems to be off by one if I don't increment
         RETURN_MAX_CYCLES(JR_NZ_imm8)
       }
       RETURN_FROM_INS(JR_NZ_imm8)
@@ -877,6 +878,7 @@ unsigned int step()
 	uint16_t helper;
 	ldOp16FromMemAtPC(&helper);
         cp.PC =  helper;
+	break;
       }
       RETURN_FROM_INS(JP_IMM16)
     case CALL_NZ_IMM16:
@@ -1214,8 +1216,12 @@ void writeMem(uint16_t addr, uint8_t data)
 {
   if(addr == 0xFF01 || addr == 0xFF02)
     printf("serial link write\n");
+
   if( logWriteMem != NULL )
+  {
     (*logWriteMem)(addr, data);
+    return;
+  }
   mem[addr] = data;
 }
 
@@ -1223,8 +1229,10 @@ uint8_t readMem(uint16_t addr)
 {
   if(addr == 0xFF01 || addr == 0xFF02)
     printf("serial link read\n");
+
   if( logReadMem != NULL )
     return (*logReadMem)(addr);
+
   return mem[addr];
 }
 
