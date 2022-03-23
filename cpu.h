@@ -97,7 +97,6 @@ struct cpu
   bool interrupts_master_enabled;
 };
 
-uint8_t *mem;
 struct cpu cp;
 uint8_t (*logReadMem)(uint16_t);
 void (*logWriteMem)(uint16_t, uint8_t);

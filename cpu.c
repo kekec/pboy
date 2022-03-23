@@ -3,10 +3,11 @@
 #include "stdio.h"
 #include "cpu.h"
 #include "instruction.h"
+#include "mmu.h"
 
 void init(uint8_t * address, uint16_t start)
 {
-  mem = address;
+  mmuInit(address);
   cp.PC = start;
   logReadMem = NULL;
   logWriteMem = NULL;
@@ -1222,7 +1223,7 @@ void writeMem(uint16_t addr, uint8_t data)
     (*logWriteMem)(addr, data);
     return;
   }
-  mem[addr] = data;
+  mmuWriteMem(addr, data);
 }
 
 uint8_t readMem(uint16_t addr)
@@ -1233,7 +1234,7 @@ uint8_t readMem(uint16_t addr)
   if( logReadMem != NULL )
     return (*logReadMem)(addr);
 
-  return mem[addr];
+  return mmuReadMem(addr);
 }
 
 void registerLogReadMem(uint8_t (*func) (uint16_t) )
