@@ -98,8 +98,6 @@ struct cpu
 };
 
 struct cpu cp;
-uint8_t (*logReadMem)(uint16_t);
-void (*logWriteMem)(uint16_t, uint8_t);
 
 void init(uint8_t *address, uint16_t start);
 unsigned int step();

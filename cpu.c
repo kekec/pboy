@@ -1215,36 +1215,22 @@ unsigned int step()
 
 void writeMem(uint16_t addr, uint8_t data)
 {
-  if(addr == 0xFF01 || addr == 0xFF02)
-    printf("serial link write\n");
-
-  if( logWriteMem != NULL )
-  {
-    (*logWriteMem)(addr, data);
-    return;
-  }
   mmuWriteMem(addr, data);
 }
 
 uint8_t readMem(uint16_t addr)
 {
-  if(addr == 0xFF01 || addr == 0xFF02)
-    printf("serial link read\n");
-
-  if( logReadMem != NULL )
-    return (*logReadMem)(addr);
-
   return mmuReadMem(addr);
 }
 
 void registerLogReadMem(uint8_t (*func) (uint16_t) )
 {
-  logReadMem =  func;
+  mmuRegisterLogReadMem(func);
 }
 
 void registerLogWriteMem( void (*func) (uint16_t, uint8_t) )
 {
-  logWriteMem = func;
+  mmuRegisterLogWriteMem(func);
 }
 
 static inline void print_ins(uint8_t opcode)
