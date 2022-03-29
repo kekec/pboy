@@ -160,3 +160,5 @@ void srl(uint8_t *op);
 void bit(uint8_t *op, uint8_t bit);
 void res(uint8_t *op, uint8_t bit);
 void set(uint8_t *op, uint8_t bit);
+
+void checkInterrupt();

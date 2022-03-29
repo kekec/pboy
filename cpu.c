@@ -1405,7 +1405,7 @@ void add16(uint16_t *op1, uint16_t *op2)
 void add8(uint8_t *op1, uint8_t *op2)
 {
   uint16_t overflow8 = ((*op1 + *op2) >> 8);
-  uint8_t overflow3 = ((*op1 & 0x7) + (*op2 & 0x7)) >> 3;
+  uint8_t overflow3 = ((*op1 & 0xF) + (*op2 & 0xF)) >> 4;
   cp.n = cp.h = cp.cf = cp.zf = 0;
   if(overflow8)
     cp.cf = 1;
@@ -2864,4 +2864,54 @@ void set(uint8_t *op, uint8_t bit)
   uint8_t mask;
   mask = 1<<bit;
   *op |= mask;
+}
+
+void checkInterrupt()
+{
+  if(!cp.interrupts_master_enabled)
+    return;
+
+  cp.interrupts_master_enabled = 0;
+  
+  //read Interrupt enable register
+  uint8_t ie_reg;
+  ldOp8FromMem(IE, &ie_reg);
+
+  //read Interrupt flag register
+  uint8_t if_reg;
+  ldOp8FromMem(IF, &if_reg);
+
+  //check if interrupt is enabled and triggered
+  for(uint8_t num = 1; num*=2; num <= 8)
+  {
+    if(!(num & ie_reg & if_reg))
+      continue;
+
+    printf("Interrupt num %d was set\n", num);
+
+    push16(cp.PC);
+
+    //clear int flag
+    if_reg = if_reg & ~num;
+    mem[IF] = if_reg;
+
+    //vblank
+    if(num & 1)
+      cp.PC = 0x40;
+
+    //LCD
+    if(num & 2)
+      cp.PC = 0x48;
+
+    //TIMER
+    if(num & 4)
+    {
+      printf("Jumpin to TMR int\n");
+      cp.PC = 0x50;
+    }
+
+    //JOYPAD
+    if(num & 8)
+      cp.PC = 0x60;
+  }
 }

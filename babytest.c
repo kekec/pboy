@@ -52,7 +52,7 @@ void main(uint8_t argc, char *argv[])
 
   //get file size
   stat(argv[1], &sb);
-  buffer = (uint8_t*)malloc(sb.st_size);
+  buffer = (uint8_t*)malloc(65536);
 
   if(buffer == NULL)
   {
@@ -60,12 +60,19 @@ void main(uint8_t argc, char *argv[])
     free(buffer);
     exit(-1);
   }
-  fread(buffer, sb.st_size, 1, fd);
-  init(buffer, 0x100);
 
+  fread(buffer, sb.st_size, 1, fd);
+  printf("file size %ld", sb.st_size);
+
+  //check if rom bigger than 32k
+  if(sb.st_size > (2^15))
+    exit(0);
+  init(buffer, 0x100);
+  
   for(;;)
   {
     cycles += step();
+    checkInterrupt();
   }
 
   pclose(fd);

@@ -1,4 +1,6 @@
 #include "mmu.h"
+#include "cpu.h"
+#include "stdlib.h"
 
 void mmuInit(uint8_t *address)
 {
@@ -14,13 +16,22 @@ uint8_t mmuReadMem(uint16_t addr)
   if(mem == NULL)
     printf("Ouch\n");
 
-  if(addr == 0xFF01 || addr == 0xFF02)
-    printf("serial link read\n");
- 
   if( logReadMem != NULL )
     return (*logReadMem)(addr);
 
+//  if((addr & 0xFF00) == 0xFF00)
+//  {
+//    if(addr == SC)
+//      printf("Read SC %X\n", highmem[addr & 0xFF]);
+//    return highmem[addr & 0xFF];
+//  }
+//
+//  if((addr >= 0xC000) && (addr <= 0xDFFF))
+//    return iram[addr & 0x1FF];
+//
+  printf("Read SC %X\n", highmem[addr & 0xFF]);
   return mem[addr];
+
 }
 
 void mmuWriteMem(uint16_t addr, uint8_t data)
@@ -28,16 +39,41 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
   if(mem == NULL)
     printf("Ouch\n");
 
-  if(addr == 0xFF01 || addr == 0xFF02)
-    printf("serial link write\n");
-
   if( logWriteMem != NULL )
   {
     (*logWriteMem)(addr, data);
     return;
   }
 
+//  if((addr & 0xFF00) == 0xFF00)
+//  {
+//
+//    highmem[addr & 0xFF] = data;
+//    if(addr == SB)
+//    {
+//      printf("Data written to SB %X", data);
+//    }
+//    if(addr == SC)
+//      printf("%c", data);
+//    return;
+//  }
+//
+//  if((addr >= 0xC000) && (addr <= 0xDFFF))
+//  {
+//    iram[addr & 0x1FF] = data;
+//    return;
+//  }
+  if(addr == SC)
+  {
+    printf("Data written to SC %x ", data);
+    printf("%c", data);
+  }
+
+  if(addr == SB)
+    printf("Data written to SB %X", data);
+
   mem[addr] = data;
+
 }
 
 void mmuRegisterLogWriteMem(void (*func)(uint16_t, uint8_t))
