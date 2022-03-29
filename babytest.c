@@ -62,11 +62,7 @@ void main(uint8_t argc, char *argv[])
   }
 
   fread(buffer, sb.st_size, 1, fd);
-  printf("file size %ld", sb.st_size);
 
-  //check if rom bigger than 32k
-  if(sb.st_size > (2^15))
-    exit(0);
   init(buffer, 0x100);
   
   for(;;)

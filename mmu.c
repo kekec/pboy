@@ -29,7 +29,7 @@ uint8_t mmuReadMem(uint16_t addr)
 //  if((addr >= 0xC000) && (addr <= 0xDFFF))
 //    return iram[addr & 0x1FF];
 //
-  printf("Read SC %X\n", highmem[addr & 0xFF]);
+//  printf("Read SC %X\n", highmem[addr & 0xFF]);
   return mem[addr];
 
 }
@@ -63,16 +63,13 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
 //    iram[addr & 0x1FF] = data;
 //    return;
 //  }
-  if(addr == SC)
-  {
-    printf("Data written to SC %x ", data);
-    printf("%c", data);
-  }
-
-  if(addr == SB)
-    printf("Data written to SB %X", data);
-
   mem[addr] = data;
+  if((addr == SC) && (data == 0x81))
+  {
+    char c = mem[SB];
+    printf("%c", c);
+    mem[SC] = 0;
+  }
 
 }
 
