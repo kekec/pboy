@@ -2870,8 +2870,6 @@ void checkInterrupt()
 {
   if(!cp.interrupts_master_enabled)
     return;
-
-  cp.interrupts_master_enabled = 0;
   
   //read Interrupt enable register
   uint8_t ie_reg;
@@ -2887,13 +2885,12 @@ void checkInterrupt()
     if(!(num & ie_reg & if_reg))
       continue;
 
-    printf("Interrupt num %d was set\n", num);
-
+    cp.interrupts_master_enabled = 0;
     push16(cp.PC);
 
     //clear int flag
     if_reg = if_reg & ~num;
-    mem[IF] = if_reg;
+    ldOp8ToMem(if_reg, IF);
 
     //vblank
     if(num & 1)
@@ -2906,7 +2903,6 @@ void checkInterrupt()
     //TIMER
     if(num & 4)
     {
-      printf("Jumpin to TMR int\n");
       cp.PC = 0x50;
     }
 
