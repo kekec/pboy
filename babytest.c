@@ -36,6 +36,7 @@ void main(uint8_t argc, char *argv[])
   struct stat sb;
   uint8_t * buffer;
   uint32_t cycles;
+  char c = 0;
 
   if (argc !=2 )
   {
@@ -63,12 +64,10 @@ void main(uint8_t argc, char *argv[])
 
   fread(buffer, sb.st_size, 1, fd);
 
-  init(buffer, 0x100);
-  
-  for(;;)
+  cpuInit(buffer, 0x100);
+  while(1)
   {
-    cycles += step();
-    checkInterrupt();
+    cpuStep();
   }
 
   pclose(fd);

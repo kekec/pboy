@@ -36,9 +36,10 @@ static void mycpu_init(size_t tester_instruction_mem_size,
 {
     instruction_mem_size = tester_instruction_mem_size;
     instruction_mem = tester_instruction_mem;
-    init(tester_instruction_mem, 0);
+    cpuInit(tester_instruction_mem, 0);
     registerLogWriteMem(mymmu_write);
     registerLogReadMem(mymmu_read);
+    cpuEnableSim();
 }
 
 /*
@@ -83,9 +84,8 @@ static void mycpu_get_state(struct state *state)
  */
 static int mycpu_step(void)
 {
-    int cycles = 0;
-    cycles = step();
-    return cycles;
+    cpuStep();
+    return 1;
 }
 
 struct tester_operations myops = {

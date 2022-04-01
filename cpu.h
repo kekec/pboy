@@ -37,6 +37,11 @@
 #define set6(arg) set(arg, 6)
 #define set7(arg) set(arg, 7)
 
+#define INT_VBLANK 1
+#define INT_LCD 2
+#define INT_TMR 4
+#define INT_JOYPAD 8
+
 struct cpu
 {
   union 
@@ -98,9 +103,13 @@ struct cpu
 };
 
 struct cpu cp;
+static uint32_t cycles = 0;
+static uint8_t simulated = 0;
 
-void init(uint8_t *address, uint16_t start);
-unsigned int step();
+void cpuInit(uint8_t *address, uint16_t start);
+void cpuEnableSim();
+void cpuStep();
+unsigned int executeInstruction();
 uint8_t decodeCB();
 uint8_t readMem(uint16_t addr);
 void writeMem(uint16_t addr, uint8_t data);

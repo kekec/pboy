@@ -8,8 +8,6 @@
 #define IE 0xFFFF
 
 static uint8_t *mem = NULL;
-static uint8_t highmem[256];
-static uint8_t iram[2*256];
 
 uint8_t (*logReadMem)(uint16_t);
 void (*logWriteMem)(uint16_t, uint8_t);

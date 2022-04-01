@@ -4,16 +4,37 @@
 #include "cpu.h"
 #include "instruction.h"
 #include "mmu.h"
+#include "timer.h"
 
-void init(uint8_t * address, uint16_t start)
+void cpuInit(uint8_t * address, uint16_t start)
 {
   mmuInit(address);
+  timerInit(address);
   cp.PC = start;
   logReadMem = NULL;
   logWriteMem = NULL;
 }
 
-unsigned int step()
+void cpuEnableSim()
+{
+  simulated = 1;
+}
+
+void cpuStep()
+{
+  if(!cp.halted)
+    cycles += executeInstruction();
+  else
+    cycles += 4;
+
+  if(simulated)
+    return;
+
+  timerProcess(cycles);
+  checkInterrupt();
+}
+
+unsigned int executeInstruction()
 {
   uint8_t instr = readMem(cp.PC++);
   switch(instr)
@@ -2892,22 +2913,16 @@ void checkInterrupt()
     if_reg = if_reg & ~num;
     ldOp8ToMem(if_reg, IF);
 
-    //vblank
-    if(num & 1)
+    if(num & INT_VBLANK)
       cp.PC = 0x40;
 
-    //LCD
-    if(num & 2)
+    if(num & INT_LCD)
       cp.PC = 0x48;
 
-    //TIMER
-    if(num & 4)
-    {
+    if(num & INT_TMR)
       cp.PC = 0x50;
-    }
 
-    //JOYPAD
-    if(num & 8)
+    if(num & INT_JOYPAD)
       cp.PC = 0x60;
   }
 }

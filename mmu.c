@@ -45,24 +45,6 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
     return;
   }
 
-//  if((addr & 0xFF00) == 0xFF00)
-//  {
-//
-//    highmem[addr & 0xFF] = data;
-//    if(addr == SB)
-//    {
-//      printf("Data written to SB %X", data);
-//    }
-//    if(addr == SC)
-//      printf("%c", data);
-//    return;
-//  }
-//
-//  if((addr >= 0xC000) && (addr <= 0xDFFF))
-//  {
-//    iram[addr & 0x1FF] = data;
-//    return;
-//  }
   mem[addr] = data;
   if((addr == SC) && (data == 0x81))
   {
