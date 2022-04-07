@@ -37,11 +37,6 @@
 #define set6(arg) set(arg, 6)
 #define set7(arg) set(arg, 7)
 
-#define INT_VBLANK 1
-#define INT_LCD 2
-#define INT_TMR 4
-#define INT_JOYPAD 8
-
 struct cpu
 {
   union 

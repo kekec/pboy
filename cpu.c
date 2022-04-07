@@ -6,10 +6,12 @@
 #include "mmu.h"
 #include "timer.h"
 
+uint8_t *mem;
+
 void cpuInit(uint8_t * address, uint16_t start)
 {
   mmuInit(address);
-  timerInit(address);
+  timerInit();
   cp.PC = start;
   logReadMem = NULL;
   logWriteMem = NULL;
@@ -2889,7 +2891,8 @@ void set(uint8_t *op, uint8_t bit)
 
 void checkInterrupt()
 {
-  if(!cp.interrupts_master_enabled)
+  //do not trigger int if IME is disabled or cpu not halted
+  if(!cp.interrupts_master_enabled && !cp.halted)
     return;
   
   //read Interrupt enable register
@@ -2905,6 +2908,12 @@ void checkInterrupt()
   {
     if(!(num & ie_reg & if_reg))
       continue;
+
+    if(cp.halted)
+    {
+      cp.halted = 0;
+      return;
+    }
 
     cp.interrupts_master_enabled = 0;
     push16(cp.PC);

@@ -53,7 +53,7 @@ void main(uint8_t argc, char *argv[])
 
   //get file size
   stat(argv[1], &sb);
-  buffer = (uint8_t*)malloc(65536);
+  buffer = (uint8_t*)malloc(0x10000);
 
   if(buffer == NULL)
   {
@@ -63,7 +63,6 @@ void main(uint8_t argc, char *argv[])
   }
 
   fread(buffer, sb.st_size, 1, fd);
-
   cpuInit(buffer, 0x100);
   while(1)
   {
