@@ -1,5 +1,6 @@
 #include "mmu.h"
 #include "cpu.h"
+#include "timer.h"
 #include "stdlib.h"
 
 void mmuInit(uint8_t *address)
@@ -25,6 +26,7 @@ uint8_t mmuReadMem(uint16_t addr)
 
 void mmuWriteMem(uint16_t addr, uint8_t data)
 {
+
   if(mem == NULL)
     printf("Ouch\n");
 
@@ -34,6 +36,7 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
     return;
   }
 
+  uint8_t old_mem = mem[addr];
   mem[addr] = data;
   if((addr == SC) && (data == 0x81))
   {
@@ -41,6 +44,20 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
     printf("%c", c);
     mem[SC] = 0;
   }
+
+  if(addr == DIV)
+    mem[addr] = 0;
+
+  if(addr != TAC)
+    return;
+
+  if(old_mem == data)
+    return;
+
+  //let the timer know that the clock changed
+  //maybe shall use callback here?
+  if((old_mem & 0x3) != (data & 0x03))
+    updateClk();
 }
 
 void mmuRegisterLogWriteMem(void (*func)(uint16_t, uint8_t))

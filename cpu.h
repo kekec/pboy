@@ -10,6 +10,8 @@
 #define PRINT_INS_CB(arg)
 #define RETURN_FROM_INS_CB(arg) move_pc_cb(arg); return instructionsCB[arg].cycles_min;
 
+#define MAX_CYLCES 1234;
+
 #define bit0(arg) bit(arg, 0)
 #define bit1(arg) bit(arg, 1)
 #define bit2(arg) bit(arg, 2)
@@ -98,7 +100,6 @@ struct cpu
 };
 
 struct cpu cp;
-static uint32_t cycles = 0;
 static uint8_t simulated = 0;
 
 void cpuInit(uint8_t *address, uint16_t start);

@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include "cpu.h"
+#include "gdb_stub.h"
 
 void test_regs()
 {
@@ -38,9 +39,9 @@ void main(uint8_t argc, char *argv[])
   uint32_t cycles;
   char c = 0;
 
-  if (argc !=2 )
+  if (argc > 3)
   {
-    printf("Usage: %s romfile\n", argv[0]);
+    printf("Usage: %s romfile -d (optional: start gdbserver)\n", argv[0]);
     exit(-1);
   }
   
@@ -64,6 +65,11 @@ void main(uint8_t argc, char *argv[])
 
   fread(buffer, sb.st_size, 1, fd);
   cpuInit(buffer, 0x100);
+
+  //launch gdb server?
+  if (argc == 3) 
+    initGdb();
+
   while(1)
   {
     cpuStep();

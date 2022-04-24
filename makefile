@@ -3,8 +3,8 @@ SUBDIR = gbit
 all: cpu.o main.o test_cpu.o mmu.o timer.o testlib
 	gcc -g -L$(SUBDIR) main.o cpu.o test_cpu.o timer.o mmu.o -o main -lgbit
 
-babytest: cpu.o babytest.o mmu.o timer.o
-	gcc -g babytest.o cpu.o mmu.o timer.o -o babytest
+babytest: cpu.o babytest.o mmu.o timer.o gdb_stub.o
+	gcc -g babytest.o cpu.o mmu.o timer.o gdb_stub.o -o babytest
 
 babytest.o: babytest.c
 	gcc -g -c babytest.c
@@ -21,6 +21,9 @@ mmu.o: mmu.c mmu.h
 timer.o: timer.c timer.h
 	gcc -g -I$(SUBDIR) -c timer.c
 
+gdb_stub.o: gdb_stub.c
+	gcc -g -I minigdbstub -c gdb_stub.c
+
 main.o: main.c
 	gcc -g -I$(SUBDIR) -c main.c
 
@@ -28,7 +31,7 @@ test_cpu.o: test_cpu.c
 	gcc -g -I$(SUBDIR) -c test_cpu.c
 clean:
 	make -C $(SUBDIR) clean
-	rm -rf *.o main babytest rom.gb
+	rm -rf *.o main babytest
 
 install: testlib
 	sudo cp $(SUBDIR)/libgbit.so /usr/lib

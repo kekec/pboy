@@ -22,18 +22,25 @@ void cpuEnableSim()
   simulated = 1;
 }
 
+//I assume that the cpuStep function will be called 60 times per second
 void cpuStep()
 {
-  if(!cp.halted)
-    cycles += executeInstruction();
-  else
-    cycles += 4;
+  uint32_t cycles=0;
+  const uint32_t MAX_CYCLES = CPU_CLK/60;
+  
+  while(cycles <= MAX_CYCLES) 
+  {
+    if(!cp.halted)
+      cycles += executeInstruction();
+    else
+      cycles += 4;
 
-  if(simulated)
-    return;
+    if(simulated)
+      return;
 
-  timerProcess(cycles);
-  checkInterrupt();
+    timerProcess(cycles);
+    checkInterrupt();
+  }
 }
 
 unsigned int executeInstruction()
