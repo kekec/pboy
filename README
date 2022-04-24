@@ -1,2 +1,20 @@
-Tested 67/67 instructions
-Successfully tested 244/244 opcodes
+#What is pboy?
+My own version of a gameboy (DMG) emulator
+with experimental dgb stub
+
+#Design background
+Idea of the project is to learn and understand how a simple CPU works.
+First step was to get some if the instructions working.
+I used a test framework called gbit to do so.
+I wanted to understand how remote debugging can be implemented.
+
+#Dev status
+All individidual instructions are pass (according to gbit)
+Some basic blargg testroms are pass
+blarggs instruction test are fail (due to timer)
+I have added a very basic implementation of a gdb stub for my emulator.
+
+#TODO
+Timer implementation
+Display
+Rom banking
