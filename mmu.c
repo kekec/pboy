@@ -57,7 +57,7 @@ void mmuWriteMem(uint16_t addr, uint8_t data)
   //let the timer know that the clock changed
   //maybe shall use callback here?
   if((old_mem & 0x3) != (data & 0x03))
-    updateClk();
+    setClk();
 }
 
 void mmuRegisterLogWriteMem(void (*func)(uint16_t, uint8_t))

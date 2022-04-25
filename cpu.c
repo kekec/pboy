@@ -11,7 +11,7 @@ uint8_t *mem;
 void cpuInit(uint8_t * address, uint16_t start)
 {
   mmuInit(address);
-  timerInit();
+  timerInit(mem);
   cp.PC = start;
   logReadMem = NULL;
   logWriteMem = NULL;
